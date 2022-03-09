@@ -44,9 +44,9 @@ allprojects {
         all {
             resolutionStrategy {
                 force 'org.jooq:jooq:3.16.4'
-//                force 'io.r2dbc:r2dbc-pool:0.9.0.RELEASE'
-//                force 'io.r2dbc:r2dbc-spi:0.9.0.RELEASE'
-//                force 'io.r2dbc:r2dbc-postgresql:0.8.11.RELEASE'
+                force 'io.r2dbc:r2dbc-pool:0.9.0.RELEASE'
+                force 'io.r2dbc:r2dbc-spi:0.9.0.RELEASE'
+                force 'io.r2dbc:r2dbc-postgresql:0.8.11.RELEASE'
                 force 'io.micronaut.kubernetes:micronaut-kubernetes-discovery-client:3.2.1'
                 force 'io.micronaut.kubernetes:micronaut-kubernetes-client-reactor:3.2.1'
                 force 'io.micronaut.kubernetes:micronaut-kubernetes-client:3.2.1'
