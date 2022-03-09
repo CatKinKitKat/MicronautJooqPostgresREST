@@ -1,0 +1,103 @@
+import org.jooq.codegen.GenerationTool
+import org.jooq.meta.jaxb.Database
+import org.jooq.meta.jaxb.Generate
+import org.jooq.meta.jaxb.Generator
+import org.jooq.meta.jaxb.Strategy
+import org.jooq.meta.jaxb.Target
+
+buildscript {
+    dependencies {
+        classpath("org.jooq:jooq-codegen:$jooqVersion")
+        classpath("org.jooq:jooq-meta-extensions:$jooqVersion")
+    }
+}
+
+plugins {
+    id 'java'
+    id("io.micronaut.library") version "3.2.2"
+}
+
+group 'com.optiply.infrastructure.data.jooq'
+version '1.0.0-RELEASE'
+
+sourceSets {
+    main {
+        java {
+            srcDir("$buildDir/generated-src/jooq/mainDB")
+        }
+    }
+
+    test {
+        java {
+            srcDir("$buildDir/generated-src/jooq/mainDB")
+        }
+    }
+}
+
+dependencies {
+    implementation project(":core.reactor")
+
+    implementation("org.jooq:jooq-meta:${jooqVersion}")
+    implementation("org.jooq:jooq-codegen:${jooqVersion}")
+
+    annotationProcessor("org.projectlombok:lombok")
+    annotationProcessor("io.micronaut.data:micronaut-data-processor")
+    annotationProcessor("org.mapstruct:mapstruct-processor:1.4.2.Final")
+
+    implementation("io.micronaut.data:micronaut-data-jdbc")
+    implementation("io.micronaut.data:micronaut-data-r2dbc")
+
+    implementation('com.google.code.findbugs:jsr305:3.0.2')
+
+    compileOnly("org.projectlombok:lombok")
+
+    implementation("org.mapstruct:mapstruct:1.4.2.Final")
+
+    testImplementation 'org.junit.jupiter:junit-jupiter-api'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
+}
+
+test {
+    useJUnitPlatform()
+}
+
+task generateJooqSources {
+    outputs.upToDateWhen { false }
+    def mainDB = new org.jooq.meta.jaxb.Configuration()
+            .withLogging(org.jooq.meta.jaxb.Logging.DEBUG)
+            .withGenerator(new Generator()
+                    .withName("org.jooq.codegen.JavaGenerator")
+                    .withStrategy(new Strategy()
+                            .withName('org.jooq.codegen.DefaultGeneratorStrategy'))
+                    .withDatabase(new Database()
+                            .withName('org.jooq.meta.extensions.ddl.DDLDatabase')
+                            .withRecordTimestampFields(".*.*\\.UPDATED_AT")
+                            .withProperties(
+                                    new org.jooq.meta.jaxb.Property()
+                                            .withKey("scripts")
+                                            .withValue("${projectDir}/build/resources/main/jooq_schema.sql"),
+                                    new org.jooq.meta.jaxb.Property()
+                                            .withKey("sort")
+                                            .withValue("semantic")))
+                    .withGenerate(new Generate()
+                            .withPojos(true)
+                            .withDaos(true)
+                            .withInterfaces(true)
+                            .withFluentSetters(true)
+                            .withRelations(true)
+                            .withPojosEqualsAndHashCode(true))
+                    .withTarget(new Target()
+                            .withPackageName('com.optiply.infrastructure.data.jooq.repositories')
+                            .withDirectory("${projectDir}/build/generated-src/jooq/mainDB")))
+
+    doLast {
+        GenerationTool.generate(mainDB)
+    }
+}
+
+compileJava.dependsOn(generateJooqSources)
+generateJooqSources.dependsOn = [processResources, processTestResources]
+
+java {
+    modularity.inferModulePath = true
+}

@@ -1,0 +1,4 @@
+rootProject.name="project-template"
+include 'endpoint'
+include 'infrastructure.data.jooq'
+include 'core.reactor'

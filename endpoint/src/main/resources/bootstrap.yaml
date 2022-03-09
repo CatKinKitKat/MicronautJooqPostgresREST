@@ -1,0 +1,17 @@
+micronaut:
+  application:
+    name: endpoint
+  config-client:
+    enabled: true
+#kubernetes:
+#  config-client:
+#    enabled: true
+#  client:
+#    discovery:
+#      enabled: false
+#    secrets:
+#      enabled: false
+#    config-maps:
+#      watch: true
+#      includes:
+#        - project-template-endpoint-config

@@ -1,0 +1,133 @@
+buildscript {
+    ext {
+        jooqVersion = "3.16.4"
+    }
+}
+
+plugins {
+    id "java"
+    id "jacoco"
+    id("com.github.johnrengelman.shadow") version "7.1.1"
+    id("io.micronaut.application") version "3.2.2"
+    id("org.flywaydb.flyway") version "8.3.0"
+    id("io.micronaut.aot") version "3.2.2"
+}
+
+group = "com.optiply.services.project.endpoint"
+
+micronaut {
+    runtime("netty")
+    testRuntime("junit5")
+    processing {
+        incremental(true)
+        annotations("com.optiply.services.project.endpoint.*")
+    }
+
+    aot {
+        version.set("1.0.0-M5")
+        cacheEnvironment.set(true)
+        optimizeServiceLoading.set(true)
+        optimizeClassLoading.set(true)
+        convertYamlToJava.set(false)
+        precomputeOperations.set(true)
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation project(":core.reactor")
+    implementation project(":infrastructure.data.jooq")
+
+    implementation("org.jooq:jooq-meta:${jooqVersion}")
+
+    annotationProcessor('org.projectlombok:lombok')
+    annotationProcessor("org.mapstruct:mapstruct-processor:1.4.2.Final")
+
+    annotationProcessor("io.micronaut:micronaut-http-validation")
+    annotationProcessor("io.micronaut.data:micronaut-data-processor")
+    annotationProcessor("io.micronaut.security:micronaut-security-annotations")
+    annotationProcessor("io.micronaut:micronaut-validation")
+
+    implementation("org.mapstruct:mapstruct:1.4.2.Final")
+    compileOnly("org.projectlombok:lombok")
+
+    implementation("io.micronaut:micronaut-http-client")
+    implementation("io.micronaut:micronaut-management")
+    implementation("io.micronaut:micronaut-runtime")
+    implementation("io.micronaut.tracing:micronaut-tracing-jaeger")
+    implementation("io.micronaut.flyway:micronaut-flyway")
+    //implementation("io.micronaut.grpc:micronaut-grpc-runtime");
+    implementation("io.micronaut.kubernetes:micronaut-kubernetes-discovery-client")
+    implementation("io.micronaut.r2dbc:micronaut-r2dbc-core")
+    implementation("io.micronaut.reactor:micronaut-reactor")
+    implementation("io.micronaut.reactor:micronaut-reactor-http-client")
+    implementation("io.micronaut.security:micronaut-security-annotations")
+    implementation("io.micronaut.security:micronaut-security-jwt")
+    implementation("io.micronaut.data:micronaut-data-r2dbc")
+    implementation("io.micronaut.data:micronaut-data-jdbc")
+    implementation("io.micronaut.sql:micronaut-jdbc-hikari")
+    implementation("io.micronaut.sql:micronaut-jooq")
+    //implementation("io.micronaut.kafka:micronaut-kafka")
+    implementation("io.micronaut:micronaut-validation")
+    implementation("io.micronaut.micrometer:micronaut-micrometer-core")
+    implementation("io.micronaut.micrometer:micronaut-micrometer-registry-prometheus")
+
+    //implementation("javax.annotation:javax.annotation-api")
+
+    runtimeOnly("ch.qos.logback:logback-classic")
+    runtimeOnly("io.r2dbc:r2dbc-postgresql")
+    runtimeOnly("org.postgresql:postgresql")
+    runtimeOnly('io.r2dbc:r2dbc-pool:0.9.0.RELEASE')
+
+    //testImplementation("org.testcontainers:junit-jupiter")
+    //testImplementation("org.testcontainers:r2dbc")
+    //testImplementation("org.testcontainers:postgresql")
+    //testImplementation("org.testcontainers:testcontainers")
+    //testImplementation("org.testcontainers:kafka:1.16.3")
+
+    //implementation ("io.confluent:kafka-protobuf-serializer:6.2.1")
+
+    testImplementation("org.junit.jupiter:junit-jupiter-api")
+    testImplementation("io.micronaut.test:micronaut-test-junit5")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine")
+    testImplementation("org.mockito:mockito-core")
+    testImplementation('io.projectreactor:reactor-test:3.4.14')
+    testImplementation('com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.13.1')
+}
+
+test {
+    useJUnitPlatform()
+}
+
+application {
+    mainClass.set("com.optiply.services.project.endpoint.EndpointApplication")
+}
+
+sourceSets {
+    main {
+        java {
+            srcDirs("build/generated/source/proto/main/java")
+        }
+    }
+}
+
+jacocoTestReport {
+    reports {
+        xml.enabled true
+    }
+}
+
+plugins.withType(JacocoPlugin) {
+    tasks["test"].finalizedBy 'jacocoTestReport'
+}
+
+flyway {
+    url = System.env.DATASOURCE_URL ? System.env.DATASOURCE_URL : 'jdbc:postgresql://localhost:5432/postgres'
+    user = System.env.DATASOURCE_USERNAME ? System.env.DATASOURCE_USERNAME : 'postgres'
+    password = System.env.DATASOURCE_PASSWORD ? System.env.DATASOURCE_PASSWORD : 'postgres'
+    schemas = ['public']
+    locations = ["classpath:db/migration"]
+}

@@ -1,0 +1,80 @@
+micronaut:
+  application:
+    name: project-template
+  server:
+    port: ${HTTP_PORT:8080}
+    host: ${HTTP_LISTEN_IP:0.0.0.0}
+  executors:
+    scheduled:
+      core-pool-size: ${EXECUTOR_SCHEDULED_POOL_SIZE:8}
+      name: scheduled
+  metrics:
+    enabled: ${ENABLE_METRICS:true}
+    export:
+      prometheus:
+        enabled: true
+        step: PT30S
+        descriptions: false
+  security:
+    enabled: false
+endpoints:
+  health:
+    details-visible: ANONYMOUS
+    sensitive: false
+    discovery-client:
+      enabled: false
+    disk-space:
+      enabled: true
+    jdbc:
+      enabled: false
+    enabled: true
+  prometheus:
+    sensitive: false
+jooq:
+  datasources:
+    default:
+      sql-dialect: 'POSTGRES'
+flyway:
+  enabled: true
+  datasources:
+    default:
+      enabled: true
+datasources:
+  default:
+    password: ${DATASOURCE_PASSWORD:postgres}
+    driverClassName: org.postgresql.Driver
+    url: ${DATASOURCE_URL:`jdbc:postgresql://localhost:5432/postgres`}
+    username: ${DATASOURCE_USERNAME:postgres}
+    schema-generate: NONE
+    dialect: POSTGRES
+    pool-name: default-pool
+    maximumPoolSize: 5
+    schema: public
+    autoCommit: true
+    minimumIdle: 1
+    maxLifetime: 280000
+    idleTimeout: 60000
+r2dbc:
+  datasources:
+    default:
+      password: ${R2DBC_DATASOURCE_PASSWORD:postgres}
+      url: ${R2DBC_DATASOURCE_URL:`r2dbc:postgresql://localhost:5432/postgres`}
+      username: ${R2DBC_DATASOURCE_USERNAME:postgres}
+      schema-generate: NONE
+      dialect: POSTGRES
+      options:
+        autoCommit: true
+        maxSize: 5
+        driver: pool
+        protocol: postgres
+        initialSize: 1
+        maxLifeTime: PT280S
+        maxIdleTime: PT60S
+        maxAcquireTime: PT6S
+        poolName: r2dbc-default
+        registerJmx: true
+tracing:
+  jaeger:
+    sampler:
+      probability: '0.1'
+    enabled: 'false'
