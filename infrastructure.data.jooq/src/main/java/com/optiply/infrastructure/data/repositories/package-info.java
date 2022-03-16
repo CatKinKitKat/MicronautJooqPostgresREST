@@ -1,4 +1,4 @@
 @ParametersAreNonnullByDefault
-package com.optiply.infrastructure.data.jooq.repositories;
+package com.optiply.infrastructure.data.repositories;
 
 import javax.annotation.ParametersAreNonnullByDefault;

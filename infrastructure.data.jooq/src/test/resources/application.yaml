@@ -14,11 +14,11 @@ datasources:
   default:
     password: postgres
     driverClassName: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5432/postgres
+    url: jdbc:postgresql://localhost:5432/webshop
     username: postgres
     schema-generate: CREATE
     dialect: POSTGRES
-    pool-name: default-pool
+    pool-name: hikari-pool
     maximumPoolSize: 5
     schema: public
     autoCommit: true
@@ -29,7 +29,7 @@ r2dbc:
   datasources:
     default:
       password: postgres
-      url: r2dbc:postgresql://localhost:5432/postgres
+      url: r2dbc:postgresql://localhost:5432/webshop
       username: postgres
       schema-generate: CREATE
       dialect: POSTGRES

@@ -14,16 +14,32 @@ import org.jooq.impl.DefaultDSLContext;
 
 import javax.sql.DataSource;
 
+/**
+ * The type Data source config.
+ */
 @Factory
 @Singleton
 public class DataSourceConfig {
 
+    /**
+     * The Connection factory.
+     */
     private final ConnectionFactory connectionFactory;
 
+    /**
+     * Instantiates a new Data source config.
+     *
+     * @param connectionFactory the connection factory
+     */
     public DataSourceConfig(ConnectionFactory connectionFactory) {
         this.connectionFactory = connectionFactory;
     }
 
+    /**
+     * Configuration default configuration.
+     *
+     * @return the default configuration
+     */
     @Bean
     public DefaultConfiguration configuration() {
         DefaultConfiguration jooqConfiguration = new DefaultConfiguration();
@@ -37,6 +53,11 @@ public class DataSourceConfig {
         return jooqConfiguration;
     }
 
+    /**
+     * Dsl dsl context.
+     *
+     * @return the dsl context
+     */
     @Bean
     @Named("dsl")
     public DSLContext dsl() {

@@ -87,8 +87,8 @@ task generateJooqSources {
                             .withRelations(true)
                             .withPojosEqualsAndHashCode(true))
                     .withTarget(new Target()
-                            .withPackageName('com.optiply.infrastructure.data.jooq.repositories')
-                            .withDirectory("${projectDir}/build/generated-src/jooq/mainDB")))
+                            .withPackageName('com.optiply.infrastructure.data.models')
+                            .withDirectory("${projectDir}/src/main/java/")))
 
     doLast {
         GenerationTool.generate(mainDB)

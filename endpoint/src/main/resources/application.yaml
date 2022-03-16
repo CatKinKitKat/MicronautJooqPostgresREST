@@ -43,11 +43,11 @@ datasources:
   default:
     password: ${DATASOURCE_PASSWORD:postgres}
     driverClassName: org.postgresql.Driver
-    url: ${DATASOURCE_URL:`jdbc:postgresql://localhost:5432/postgres`}
+    url: ${DATASOURCE_URL:`jdbc:postgresql://localhost:5432/webshop`}
     username: ${DATASOURCE_USERNAME:postgres}
     schema-generate: NONE
     dialect: POSTGRES
-    pool-name: default-pool
+    pool-name: hikari-pool
     maximumPoolSize: 5
     schema: public
     autoCommit: true
@@ -58,7 +58,7 @@ r2dbc:
   datasources:
     default:
       password: ${R2DBC_DATASOURCE_PASSWORD:postgres}
-      url: ${R2DBC_DATASOURCE_URL:`r2dbc:postgresql://localhost:5432/postgres`}
+      url: ${R2DBC_DATASOURCE_URL:`r2dbc:postgresql://localhost:5432/webshop`}
       username: ${R2DBC_DATASOURCE_USERNAME:postgres}
       schema-generate: NONE
       dialect: POSTGRES

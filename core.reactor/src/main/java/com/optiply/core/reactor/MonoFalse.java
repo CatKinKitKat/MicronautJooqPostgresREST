@@ -12,6 +12,9 @@ import java.time.Duration;
  * Represents a boolean publisher with a value of false.
  */
 public class MonoFalse extends Mono<Boolean> implements Fuseable.ScalarCallable<Boolean>, Fuseable {
+    /**
+     * The Instance.
+     */
     static final Publisher<Boolean> INSTANCE = new MonoFalse();
 
     /**
@@ -24,21 +27,42 @@ public class MonoFalse extends Mono<Boolean> implements Fuseable.ScalarCallable<
         return (Mono<T>) INSTANCE;
     }
 
+    /**
+     * Subscribe.
+     *
+     * @param actual the actual
+     */
     @Override
     public void subscribe(CoreSubscriber<? super Boolean> actual) {
         actual.onSubscribe(Operators.scalarSubscription(actual, false));
     }
 
+    /**
+     * Call boolean.
+     *
+     * @return the boolean
+     */
     @Override
     public Boolean call() {
         return false;
     }
 
+    /**
+     * Block boolean.
+     *
+     * @param m the m
+     * @return the boolean
+     */
     @Override
     public Boolean block(Duration m) {
         return false;
     }
 
+    /**
+     * Block boolean.
+     *
+     * @return the boolean
+     */
     @Override
     public Boolean block() {
         return false;

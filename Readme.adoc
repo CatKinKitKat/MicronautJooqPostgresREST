@@ -1,0 +1,54 @@
+= Webshop Service Specification
+
+== Introduction
+
+This is an Internship Project, it aims to the Development of a Microservice for a Webshop Service Specification, that means a Service that can be used to check the details of a Webshop.
+
+== Requirements
+
+The Service should be able to:
+
+* Fetch a single Webshop resource
+* Fetch multiple Webshop resources
+* Delete a single Webshop resource
+* Create a single Webshop resource
+* Update any field of the Webshop resource
+* Should be able to sort and filter by any column fields
+* Only single column ordering is needed.
+Results should be consistent with every request.
+
+Extra points if:
+
+* Multiple column filtering
+* Multiple create Webshop resources
+* Fetch a Webshop resource Webshop Settings
+* Update a Webshop resource Webshop Settings
+
+Only a single column filter is needed.
+Supported filter keywords:
+
+* ":" means "EQUALS".
+Example: handle:optiply
+* "%" means "ILIKE" (case-insensitive fuzzy-find).
+Example: handle%optiply
+
+Extra points if:
+
+* "&gt;" means "GREATER THAN".
+Example: interestRate&gt;20
+* "&lt;" means "LESSER THAN".
+Example: interestRate&lt;20
+
+Let's see if I can get this done in a few days.
+
+== Testing
+
+Unit testing and integration testing are required.
+At least 80% of the code should be tested.
+I'll use JUnit and Mockito.
+
+== Documentation
+
+The project must be documented in a clear and concise way.
+The documentation can be written in any markup language.
+I'll use AsciiDoc, with the AsciiDoctor IDEA Plugin, to help me with the documentation.
