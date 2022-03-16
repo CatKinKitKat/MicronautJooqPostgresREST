@@ -2,6 +2,7 @@ plugins {
     id "java"
     id "jacoco"
     id("org.openrewrite.rewrite") version "5.14.0"
+    id("org.asciidoctor.jvm.convert") version "3.3.2"
 }
 
 jacoco {
@@ -13,6 +14,7 @@ jacocoTestReport {
         xml.enabled true
     }
 }
+
 
 allprojects {
     buildscript {
@@ -47,18 +49,18 @@ allprojects {
                 force 'io.r2dbc:r2dbc-pool:0.9.0.RELEASE'
                 force 'io.r2dbc:r2dbc-spi:0.9.0.RELEASE'
                 force 'io.r2dbc:r2dbc-postgresql:0.8.11.RELEASE'
+                force 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.13.1'
+                force 'org.junit.jupiter:junit-jupiter-api:5.8.2'
+                force 'org.junit.jupiter:junit-jupiter-engine:5.8.2'
                 //force 'io.micronaut.kubernetes:micronaut-kubernetes-discovery-client:3.2.1'
                 //force 'io.micronaut.kubernetes:micronaut-kubernetes-client-reactor:3.2.1'
                 //force 'io.micronaut.kubernetes:micronaut-kubernetes-client:3.2.1'
                 //force 'io.micronaut.kubernetes:micronaut-kubernetes-informer:3.2.1'
-                force 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.13.1'
                 //force 'com.google.api.grpc:proto-google-common-protos:2.7.2'
                 //force 'com.google.protobuf:protobuf-java:3.19.3'
                 //force 'com.google.protobuf:protobuf-java-util:3.19.3'
                 //force 'org.apache.avro:avro:1.11.0'
                 //force 'org.apache.avro:avro-protobuf:1.11.0'
-                force 'org.junit.jupiter:junit-jupiter-api:5.8.2'
-                force 'org.junit.jupiter:junit-jupiter-engine:5.8.2'
             }
         }
     }

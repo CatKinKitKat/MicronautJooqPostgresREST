@@ -17,22 +17,8 @@ plugins {
     id("io.micronaut.library") version "3.2.2"
 }
 
-group 'com.optiply.infrastructure.data.jooq'
+group 'com.optiply.infrastructure.data'
 version '1.0.0-RELEASE'
-
-sourceSets {
-    main {
-        java {
-            srcDir("$buildDir/generated-src/jooq/mainDB")
-        }
-    }
-
-    test {
-        java {
-            srcDir("$buildDir/generated-src/jooq/mainDB")
-        }
-    }
-}
 
 dependencies {
     implementation project(":core.reactor")
