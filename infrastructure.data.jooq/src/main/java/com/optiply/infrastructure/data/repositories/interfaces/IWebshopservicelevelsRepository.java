@@ -3,8 +3,6 @@ package com.optiply.infrastructure.data.repositories.interfaces;
 import com.optiply.infrastructure.data.models.tables.pojos.Webshopservicelevels;
 import reactor.core.publisher.Mono;
 
-import java.util.UUID;
-
 /**
  * The interface Webshopservicelevels repository.
  */
@@ -19,7 +17,7 @@ public interface IWebshopservicelevelsRepository {
      * @param slcC      the slc c
      * @return the mono
      */
-    Mono<Void> create(UUID webshopId, Double slcA, Double slcB, Double slcC);
+    Mono<Void> create(Long webshopId, Double slcA, Double slcB, Double slcC);
 
     /**
      * Read mono.
@@ -27,7 +25,7 @@ public interface IWebshopservicelevelsRepository {
      * @param webshopId the webshop id
      * @return the mono
      */
-    Mono<Webshopservicelevels> read(UUID webshopId);
+    Mono<Webshopservicelevels> read(Long webshopId);
 
     /**
      * Update mono.
@@ -38,7 +36,7 @@ public interface IWebshopservicelevelsRepository {
      * @param slcC      the slc c
      * @return the mono
      */
-    Mono<Void> update(UUID webshopId, Double slcA, Double slcB, Double slcC);
+    Mono<Void> update(Long webshopId, Double slcA, Double slcB, Double slcC);
 
     /**
      * Delete mono.
@@ -46,5 +44,5 @@ public interface IWebshopservicelevelsRepository {
      * @param webshopId the webshop id
      * @return the mono
      */
-    Mono<Void> delete(UUID webshopId);
+    Mono<Void> delete(Long webshopId);
 }

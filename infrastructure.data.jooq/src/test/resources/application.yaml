@@ -14,7 +14,7 @@ datasources:
   default:
     password: postgres
     driverClassName: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5432/webshop
+    url: jdbc:postgresql://localhost:5432/postgres
     username: postgres
     schema-generate: CREATE
     dialect: POSTGRES
@@ -29,7 +29,7 @@ r2dbc:
   datasources:
     default:
       password: postgres
-      url: r2dbc:postgresql://localhost:5432/webshop
+      url: r2dbc:postgresql://localhost:5432/postgres
       username: postgres
       schema-generate: CREATE
       dialect: POSTGRES

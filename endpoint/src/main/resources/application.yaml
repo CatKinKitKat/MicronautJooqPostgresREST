@@ -35,7 +35,7 @@ jooq:
     default:
       sql-dialect: 'POSTGRES'
 flyway:
-  enabled: true
+  enabled: false
   datasources:
     default:
       enabled: true
@@ -43,7 +43,7 @@ datasources:
   default:
     password: ${DATASOURCE_PASSWORD:postgres}
     driverClassName: org.postgresql.Driver
-    url: ${DATASOURCE_URL:`jdbc:postgresql://localhost:5432/webshop`}
+    url: ${DATASOURCE_URL:`jdbc:postgresql://localhost:5432/postgres`}
     username: ${DATASOURCE_USERNAME:postgres}
     schema-generate: NONE
     dialect: POSTGRES
@@ -58,7 +58,7 @@ r2dbc:
   datasources:
     default:
       password: ${R2DBC_DATASOURCE_PASSWORD:postgres}
-      url: ${R2DBC_DATASOURCE_URL:`r2dbc:postgresql://localhost:5432/webshop`}
+      url: ${R2DBC_DATASOURCE_URL:`r2dbc:postgresql://localhost:5432/postgres`}
       username: ${R2DBC_DATASOURCE_USERNAME:postgres}
       schema-generate: NONE
       dialect: POSTGRES

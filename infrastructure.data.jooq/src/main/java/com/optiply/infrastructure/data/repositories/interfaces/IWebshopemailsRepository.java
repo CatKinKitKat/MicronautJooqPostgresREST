@@ -4,8 +4,6 @@ import com.optiply.infrastructure.data.models.tables.pojos.Webshopemails;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-import java.util.UUID;
-
 /**
  * The interface Webshopemails repository.
  */
@@ -18,7 +16,7 @@ public interface IWebshopemailsRepository {
      * @param email     the email
      * @return the mono
      */
-    Mono<Void> create(UUID webshopId, String email);
+    Mono<Void> create(Long webshopId, String email);
 
     /**
      * Read by webshop id flux.
@@ -26,7 +24,7 @@ public interface IWebshopemailsRepository {
      * @param webshopId the webshop id
      * @return the flux
      */
-    Flux<Webshopemails> readByWebshopId(UUID webshopId);
+    Flux<Webshopemails> readByWebshopId(Long webshopId);
 
     /**
      * Update mono.
@@ -35,7 +33,7 @@ public interface IWebshopemailsRepository {
      * @param email the email
      * @return the mono
      */
-    Mono<Void> update(UUID id, String email);
+    Mono<Void> update(Long id, String email);
 
     /**
      * Delete mono.
@@ -43,6 +41,6 @@ public interface IWebshopemailsRepository {
      * @param id the id
      * @return the mono
      */
-    Mono<Void> delete(UUID id);
+    Mono<Void> delete(Long id);
 
 }

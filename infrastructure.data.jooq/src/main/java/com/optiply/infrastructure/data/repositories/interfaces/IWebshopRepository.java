@@ -4,8 +4,6 @@ import com.optiply.infrastructure.data.models.tables.pojos.Webshop;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-import java.util.UUID;
-
 /**
  * The interface Webshop repository.
  */
@@ -19,7 +17,7 @@ public interface IWebshopRepository {
      * @param interestRate the interest rate
      * @return the mono
      */
-    Mono<Void> create(String handle, String url, Integer interestRate);
+    Mono<Void> create(String handle, String url, Short interestRate);
 
     /**
      * Read by handle mono.
@@ -38,6 +36,14 @@ public interface IWebshopRepository {
     Flux<Webshop> readByHandles(String... handles);
 
     /**
+     * Read by handle like flux.
+     *
+     * @param handle the handle
+     * @return the flux
+     */
+    Flux<Webshop> readByHandleLike(String handle);
+
+    /**
      * Update mono.
      *
      * @param id           the id
@@ -46,7 +52,7 @@ public interface IWebshopRepository {
      * @param interestRate the interest rate
      * @return the mono
      */
-    Mono<Void> update(UUID id, String handle, String url, Integer interestRate);
+    Mono<Void> update(Long id, String handle, String url, Short interestRate);
 
     /**
      * Delete mono.
@@ -54,6 +60,6 @@ public interface IWebshopRepository {
      * @param id the id
      * @return the mono
      */
-    Mono<Void> delete(UUID id);
+    Mono<Void> delete(Long id);
 
 }

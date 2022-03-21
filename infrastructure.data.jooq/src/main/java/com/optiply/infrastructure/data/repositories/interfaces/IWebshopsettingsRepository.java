@@ -3,8 +3,6 @@ package com.optiply.infrastructure.data.repositories.interfaces;
 import com.optiply.infrastructure.data.models.tables.pojos.Webshopsettings;
 import reactor.core.publisher.Mono;
 
-import java.util.UUID;
-
 /**
  * The interface Webshopsettings repository.
  */
@@ -19,7 +17,7 @@ public interface IWebshopsettingsRepository {
      * @param multiSupplier the multi supplier
      * @return the mono
      */
-    Mono<Void> create(UUID webshopId, String currency, Boolean runJobs, Boolean multiSupplier);
+    Mono<Void> create(Long webshopId, String currency, Boolean runJobs, Boolean multiSupplier);
 
     /**
      * Read mono.
@@ -27,7 +25,7 @@ public interface IWebshopsettingsRepository {
      * @param webshopId the webshop id
      * @return the mono
      */
-    Mono<Webshopsettings> read(UUID webshopId);
+    Mono<Webshopsettings> read(Long webshopId);
 
     /**
      * Update mono.
@@ -38,7 +36,7 @@ public interface IWebshopsettingsRepository {
      * @param multiSupplier the multi supplier
      * @return the mono
      */
-    Mono<Void> update(UUID webshopId, String currency, Boolean runJobs, Boolean multiSupplier);
+    Mono<Void> update(Long webshopId, String currency, Boolean runJobs, Boolean multiSupplier);
 
     /**
      * Delete mono.
@@ -46,5 +44,5 @@ public interface IWebshopsettingsRepository {
      * @param webshopId the webshop id
      * @return the mono
      */
-    Mono<Void> delete(UUID webshopId);
+    Mono<Void> delete(Long webshopId);
 }
