@@ -1,3 +1,3 @@
-rootProject.name="webshop"
+rootProject.name = "webshop"
 include 'endpoint'
 include 'infrastructure'

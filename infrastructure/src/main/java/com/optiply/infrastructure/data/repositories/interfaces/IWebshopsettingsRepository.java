@@ -8,41 +8,41 @@ import reactor.core.publisher.Mono;
  */
 public interface IWebshopsettingsRepository {
 
-    /**
-     * Create mono.
-     *
-     * @param webshopId     the webshop id
-     * @param currency      the currency
-     * @param runJobs       the run jobs
-     * @param multiSupplier the multi supplier
-     * @return the mono
-     */
-    Mono<Boolean> create(Long webshopId, String currency, Boolean runJobs, Boolean multiSupplier);
+	/**
+	 * Create mono.
+	 *
+	 * @param webshopId     the webshop id
+	 * @param currency      the currency
+	 * @param runJobs       the run jobs
+	 * @param multiSupplier the multi supplier
+	 * @return the mono
+	 */
+	Mono<Boolean> create(Long webshopId, String currency, Boolean runJobs, Boolean multiSupplier);
 
-    /**
-     * Read mono.
-     *
-     * @param webshopId the webshop id
-     * @return the mono
-     */
-    Mono<Webshopsettings> read(Long webshopId);
+	/**
+	 * Read mono.
+	 *
+	 * @param webshopId the webshop id
+	 * @return the mono
+	 */
+	Mono<Webshopsettings> read(Long webshopId);
 
-    /**
-     * Update mono.
-     *
-     * @param webshopId     the webshop id
-     * @param currency      the currency
-     * @param runJobs       the run jobs
-     * @param multiSupplier the multi supplier
-     * @return the mono
-     */
-    Mono<Boolean> update(Long webshopId, String currency, Boolean runJobs, Boolean multiSupplier);
+	/**
+	 * Update mono.
+	 *
+	 * @param webshopId     the webshop id
+	 * @param currency      the currency
+	 * @param runJobs       the run jobs
+	 * @param multiSupplier the multi supplier
+	 * @return the mono
+	 */
+	Mono<Boolean> update(Long webshopId, String currency, Boolean runJobs, Boolean multiSupplier);
 
-    /**
-     * Delete mono.
-     *
-     * @param webshopId the webshop id
-     * @return the mono
-     */
-    Mono<Boolean> delete(Long webshopId);
+	/**
+	 * Delete mono.
+	 *
+	 * @param webshopId the webshop id
+	 * @return the mono
+	 */
+	Mono<Boolean> delete(Long webshopId);
 }
