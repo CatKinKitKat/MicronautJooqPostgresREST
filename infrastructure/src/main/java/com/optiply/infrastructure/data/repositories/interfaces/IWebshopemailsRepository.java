@@ -16,7 +16,7 @@ public interface IWebshopemailsRepository {
      * @param email     the email
      * @return the mono
      */
-    Mono<Void> create(Long webshopId, String email);
+    Mono<Boolean> create(Long webshopId, String email);
 
     /**
      * Read by webshop id flux.
@@ -33,7 +33,7 @@ public interface IWebshopemailsRepository {
      * @param email the email
      * @return the mono
      */
-    Mono<Void> update(Long id, String email);
+    Mono<Boolean> update(Long id, String email);
 
     /**
      * Delete mono.
@@ -41,6 +41,6 @@ public interface IWebshopemailsRepository {
      * @param id the id
      * @return the mono
      */
-    Mono<Void> delete(Long id);
+    Mono<Boolean> delete(Long id);
 
 }

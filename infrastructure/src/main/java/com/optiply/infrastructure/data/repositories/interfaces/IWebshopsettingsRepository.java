@@ -17,7 +17,7 @@ public interface IWebshopsettingsRepository {
      * @param multiSupplier the multi supplier
      * @return the mono
      */
-    Mono<Void> create(Long webshopId, String currency, Boolean runJobs, Boolean multiSupplier);
+    Mono<Boolean> create(Long webshopId, String currency, Boolean runJobs, Boolean multiSupplier);
 
     /**
      * Read mono.
@@ -36,7 +36,7 @@ public interface IWebshopsettingsRepository {
      * @param multiSupplier the multi supplier
      * @return the mono
      */
-    Mono<Void> update(Long webshopId, String currency, Boolean runJobs, Boolean multiSupplier);
+    Mono<Boolean> update(Long webshopId, String currency, Boolean runJobs, Boolean multiSupplier);
 
     /**
      * Delete mono.
@@ -44,5 +44,5 @@ public interface IWebshopsettingsRepository {
      * @param webshopId the webshop id
      * @return the mono
      */
-    Mono<Void> delete(Long webshopId);
+    Mono<Boolean> delete(Long webshopId);
 }

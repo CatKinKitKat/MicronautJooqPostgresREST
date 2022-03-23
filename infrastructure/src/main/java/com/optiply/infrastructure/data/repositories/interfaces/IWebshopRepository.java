@@ -17,7 +17,7 @@ public interface IWebshopRepository {
      * @param interestRate the interest rate
      * @return the mono
      */
-    Mono<Void> create(String handle, String url, Short interestRate);
+    Mono<Boolean> create(String handle, String url, Short interestRate);
 
     /**
      * Read by handle mono.
@@ -26,6 +26,16 @@ public interface IWebshopRepository {
      * @return the mono
      */
     Mono<Webshop> readByHandle(String handle);
+
+    /**
+     * Update mono.
+     *
+     * @param handle       the handle
+     * @param url          the url
+     * @param interestRate the interest rate
+     * @return the mono
+     */
+    Mono<Boolean> update(String handle, String url, Short interestRate);
 
     /**
      * Read by handles flux.
@@ -52,7 +62,7 @@ public interface IWebshopRepository {
      * @param interestRate the interest rate
      * @return the mono
      */
-    Mono<Void> update(Long id, String handle, String url, Short interestRate);
+    Mono<Boolean> update(Long id, String handle, String url, Short interestRate);
 
     /**
      * Delete mono.
@@ -60,6 +70,6 @@ public interface IWebshopRepository {
      * @param id the id
      * @return the mono
      */
-    Mono<Void> delete(Long id);
+    Mono<Boolean> delete(Long id);
 
 }

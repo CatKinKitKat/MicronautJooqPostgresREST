@@ -17,7 +17,7 @@ public interface IWebshopservicelevelsRepository {
      * @param slcC      the slc c
      * @return the mono
      */
-    Mono<Void> create(Long webshopId, Double slcA, Double slcB, Double slcC);
+    Mono<Boolean> create(Long webshopId, Double slcA, Double slcB, Double slcC);
 
     /**
      * Read mono.
@@ -36,7 +36,7 @@ public interface IWebshopservicelevelsRepository {
      * @param slcC      the slc c
      * @return the mono
      */
-    Mono<Void> update(Long webshopId, Double slcA, Double slcB, Double slcC);
+    Mono<Boolean> update(Long webshopId, Double slcA, Double slcB, Double slcC);
 
     /**
      * Delete mono.
@@ -44,5 +44,5 @@ public interface IWebshopservicelevelsRepository {
      * @param webshopId the webshop id
      * @return the mono
      */
-    Mono<Void> delete(Long webshopId);
+    Mono<Boolean> delete(Long webshopId);
 }
