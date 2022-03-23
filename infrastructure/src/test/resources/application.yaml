@@ -9,7 +9,7 @@ flyway:
       enabled: false
 micronaut:
   application:
-    name: project-template
+    name: webshop
 datasources:
   default:
     password: postgres
@@ -18,7 +18,7 @@ datasources:
     username: postgres
     schema-generate: CREATE
     dialect: POSTGRES
-    pool-name: hikari-pool
+    pool-name: hikari-default
     maximumPoolSize: 5
     schema: public
     autoCommit: true

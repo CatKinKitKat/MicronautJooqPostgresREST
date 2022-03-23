@@ -18,11 +18,9 @@ plugins {
 }
 
 group 'com.optiply.infrastructure.data'
-version '1.0.0-RELEASE'
+version '0.0.1-ALPHA'
 
 dependencies {
-    implementation project(":core.reactor")
-
     implementation("org.jooq:jooq-meta:${jooqVersion}")
     implementation("org.jooq:jooq-codegen:${jooqVersion}")
 

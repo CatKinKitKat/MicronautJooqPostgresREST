@@ -22,6 +22,14 @@ micronaut {
         incremental(true)
         annotations("com.optiply.services.project.endpoint.*")
     }
+
+    aot {
+        cacheEnvironment.set(true)
+        optimizeServiceLoading.set(true)
+        optimizeClassLoading.set(true)
+        convertYamlToJava.set(false)
+        precomputeOperations.set(true)
+    }
 }
 
 repositories {
@@ -29,8 +37,7 @@ repositories {
 }
 
 dependencies {
-    implementation project(":core.reactor")
-    implementation project(":infrastructure.data.jooq")
+    implementation project(":infrastructure")
     annotationProcessor('org.projectlombok:lombok')
     annotationProcessor("org.mapstruct:mapstruct-processor:1.4.2.Final")
     annotationProcessor("io.micronaut:micronaut-http-validation")
@@ -106,7 +113,7 @@ plugins.withType(JacocoPlugin) {
 }
 
 flyway {
-    url = System.env.DATASOURCE_URL ? System.env.DATASOURCE_URL : 'jdbc:postgresql://localhost:5432/webshop'
+    url = System.env.DATASOURCE_URL ? System.env.DATASOURCE_URL : 'jdbc:postgresql://localhost:5432/postgres'
     user = System.env.DATASOURCE_USERNAME ? System.env.DATASOURCE_USERNAME : 'postgres'
     password = System.env.DATASOURCE_PASSWORD ? System.env.DATASOURCE_PASSWORD : 'postgres'
     schemas = ['public']

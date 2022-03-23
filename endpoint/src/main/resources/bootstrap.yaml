@@ -14,4 +14,4 @@ micronaut:
 #    config-maps:
 #      watch: true
 #      includes:
-#        - project-template-endpoint-config
+#        - webshop-endpoint-config

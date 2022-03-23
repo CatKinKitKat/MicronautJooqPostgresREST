@@ -1,6 +1,10 @@
 micronaut:
   application:
-    name: project-template
+    name: webshop
+  netty:
+    default:
+      allocator:
+        max-order: 3
   server:
     port: ${HTTP_PORT:8080}
     host: ${HTTP_LISTEN_IP:0.0.0.0}
@@ -33,7 +37,7 @@ endpoints:
 jooq:
   datasources:
     default:
-      sql-dialect: 'POSTGRES'
+      sql-dialect: POSTGRES
 flyway:
   enabled: false
   datasources:
@@ -43,7 +47,7 @@ datasources:
   default:
     password: ${DATASOURCE_PASSWORD:postgres}
     driverClassName: org.postgresql.Driver
-    url: ${DATASOURCE_URL:`jdbc:postgresql://localhost:5432/postgres`}
+    url: ${DATASOURCE_URL:jdbc:postgresql://localhost:5432/postgres}
     username: ${DATASOURCE_USERNAME:postgres}
     schema-generate: NONE
     dialect: POSTGRES
@@ -58,7 +62,7 @@ r2dbc:
   datasources:
     default:
       password: ${R2DBC_DATASOURCE_PASSWORD:postgres}
-      url: ${R2DBC_DATASOURCE_URL:`r2dbc:postgresql://localhost:5432/postgres`}
+      url: ${R2DBC_DATASOURCE_URL:r2dbc:postgresql://localhost:5432/postgres}
       username: ${R2DBC_DATASOURCE_USERNAME:postgres}
       schema-generate: NONE
       dialect: POSTGRES
