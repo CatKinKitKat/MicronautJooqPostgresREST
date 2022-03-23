@@ -1,12 +1,18 @@
 package com.optiply.infrastructure.data.repositories;
 
+import com.optiply.infrastructure.data.models.Tables;
 import com.optiply.infrastructure.data.models.tables.pojos.Webshopsettings;
 import com.optiply.infrastructure.data.repositories.interfaces.IWebshopsettingsRepository;
+import com.optiply.infrastructure.data.support.sql.QueryResult;
 import io.micronaut.data.r2dbc.operations.R2dbcOperations;
+import io.micronaut.transaction.TransactionDefinition;
+import io.micronaut.transaction.support.DefaultTransactionDefinition;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
 import jakarta.inject.Singleton;
 import org.jooq.DSLContext;
+import org.jooq.SQLDialect;
+import org.jooq.impl.DSL;
 import reactor.core.publisher.Mono;
 
 /**
@@ -48,7 +54,19 @@ public class WebshopsettingsRepository implements IWebshopsettingsRepository {
 	 */
 	@Override
 	public Mono<Boolean> create(Long webshopId, String currency, Boolean runJobs, Boolean multiSupplier) {
-		return null;
+		return Mono.from(operations.withTransaction(
+				new DefaultTransactionDefinition(
+						TransactionDefinition.Propagation.MANDATORY
+				), status -> Mono.from(DSL
+								.using(status.getConnection(), SQLDialect.POSTGRES, dslContext.settings())
+								.insertInto(Tables.WEBSHOPSETTINGS)
+								.columns(
+										Tables.WEBSHOPSETTINGS.WEBSHOPID,
+										Tables.WEBSHOPSETTINGS.CURRENCY,
+										Tables.WEBSHOPSETTINGS.RUNJOBS,
+										Tables.WEBSHOPSETTINGS.MULTISUPPLY
+								).values(webshopId, currency, runJobs, multiSupplier))
+						.map(result -> result == QueryResult.SUCCESS.ordinal())));
 	}
 
 	/**
@@ -59,7 +77,13 @@ public class WebshopsettingsRepository implements IWebshopsettingsRepository {
 	 */
 	@Override
 	public Mono<Webshopsettings> read(Long webshopId) {
-		return null;
+		return Mono
+				.from(operations.withTransaction(TransactionDefinition.READ_ONLY, status -> DSL
+						.using(status.getConnection(), SQLDialect.POSTGRES, dslContext.settings())
+						.select(Tables.WEBSHOPSETTINGS.asterisk())
+						.from(Tables.WEBSHOPSETTINGS)
+						.where(Tables.WEBSHOPSETTINGS.WEBSHOPID.eq(webshopId))))
+				.map(result -> result.into(Webshopsettings.class));
 	}
 
 	/**
@@ -73,7 +97,17 @@ public class WebshopsettingsRepository implements IWebshopsettingsRepository {
 	 */
 	@Override
 	public Mono<Boolean> update(Long webshopId, String currency, Boolean runJobs, Boolean multiSupplier) {
-		return null;
+		return Mono.from(operations.withTransaction(
+				new DefaultTransactionDefinition(
+						TransactionDefinition.Propagation.MANDATORY
+				), status -> Mono.from(DSL
+								.using(status.getConnection(), SQLDialect.POSTGRES, dslContext.settings())
+								.update(Tables.WEBSHOPSETTINGS)
+								.set(Tables.WEBSHOPSETTINGS.CURRENCY, currency)
+								.set(Tables.WEBSHOPSETTINGS.RUNJOBS, runJobs)
+								.set(Tables.WEBSHOPSETTINGS.MULTISUPPLY, multiSupplier)
+								.where(Tables.WEBSHOPSETTINGS.WEBSHOPID.eq(webshopId)))
+						.map(result -> result == QueryResult.SUCCESS.ordinal())));
 	}
 
 	/**
@@ -84,6 +118,13 @@ public class WebshopsettingsRepository implements IWebshopsettingsRepository {
 	 */
 	@Override
 	public Mono<Boolean> delete(Long webshopId) {
-		return null;
+		return Mono.from(operations.withTransaction(
+				new DefaultTransactionDefinition(
+						TransactionDefinition.Propagation.MANDATORY
+				), status -> Mono.from(DSL
+								.using(status.getConnection(), SQLDialect.POSTGRES, dslContext.settings())
+								.delete(Tables.WEBSHOPSETTINGS)
+								.where(Tables.WEBSHOPSETTINGS.WEBSHOPID.eq(webshopId)))
+						.map(result -> result == QueryResult.SUCCESS.ordinal())));
 	}
 }

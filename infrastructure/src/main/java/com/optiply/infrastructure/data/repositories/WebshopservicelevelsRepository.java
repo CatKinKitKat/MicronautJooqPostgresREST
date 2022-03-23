@@ -79,12 +79,13 @@ public class WebshopservicelevelsRepository implements IWebshopservicelevelsRepo
 	 */
 	@Override
 	public Mono<Webshopservicelevels> read(Long webshopId) {
-		return Mono.from(operations.withTransaction(TransactionDefinition.READ_ONLY, status -> Mono
-				.from(DSL
-						.using(status.getConnection(), SQLDialect.POSTGRES, dslContext.settings())
-						.selectFrom(Tables.WEBSHOPSERVICELEVELS)
-						.where(Tables.WEBSHOPSERVICELEVELS.WEBSHOPID.eq(webshopId)))
-				.map(result -> result.into(Webshopservicelevels.class))));
+		return Mono
+				.from(operations.withTransaction(TransactionDefinition.READ_ONLY, status -> Mono
+						.from(DSL
+								.using(status.getConnection(), SQLDialect.POSTGRES, dslContext.settings())
+								.selectFrom(Tables.WEBSHOPSERVICELEVELS)
+								.where(Tables.WEBSHOPSERVICELEVELS.WEBSHOPID.eq(webshopId)))
+						.map(result -> result.into(Webshopservicelevels.class))));
 	}
 
 	/**
