@@ -17,22 +17,16 @@ group 'com.optiply.infrastructure.data'
 version '0.0.1-ALPHA'
 
 dependencies {
-	implementation("org.jooq:jooq-meta:${jooqVersion}")
-	implementation("org.jooq:jooq-codegen:${jooqVersion}")
-
 	annotationProcessor("org.projectlombok:lombok")
 	annotationProcessor("io.micronaut.data:micronaut-data-processor")
 	annotationProcessor("org.mapstruct:mapstruct-processor:1.4.2.Final")
-
+	implementation("org.jooq:jooq-meta:${jooqVersion}")
+	implementation("org.jooq:jooq-codegen:${jooqVersion}")
+	implementation("org.mapstruct:mapstruct:1.4.2.Final")
+	implementation('com.google.code.findbugs:jsr305:3.0.2')
 	implementation("io.micronaut.data:micronaut-data-jdbc")
 	implementation("io.micronaut.data:micronaut-data-r2dbc")
-
-	implementation('com.google.code.findbugs:jsr305:3.0.2')
-
 	compileOnly("org.projectlombok:lombok")
-
-	implementation("org.mapstruct:mapstruct:1.4.2.Final")
-
 	testImplementation 'org.junit.jupiter:junit-jupiter-api'
 	testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
 }

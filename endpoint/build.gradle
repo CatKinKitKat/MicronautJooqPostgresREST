@@ -2,6 +2,9 @@ buildscript {
     ext {
         jooqVersion = "3.16.4"
     }
+    dependencies {
+        classpath 'com.google.protobuf:protobuf-gradle-plugin:0.8.18'
+    }
 }
 
 plugins {
@@ -9,6 +12,7 @@ plugins {
     id "jacoco"
     id("com.github.johnrengelman.shadow") version "7.1.1"
     id("io.micronaut.application") version "3.2.2"
+    id("com.google.protobuf") version "0.8.18"
     id("org.flywaydb.flyway") version "8.3.0"
     id("io.micronaut.aot") version "3.2.2"
 }
@@ -118,4 +122,16 @@ flyway {
     password = System.env.DATASOURCE_PASSWORD ? System.env.DATASOURCE_PASSWORD : 'postgres'
     schemas = ['public']
     locations = ["classpath:db/migration"]
+}
+
+protobuf {
+    generatedFilesBaseDir = "${projectDir}/src/"
+    protoc {
+        artifact = 'com.google.protobuf:protoc:3.0.0'
+    }
+    plugins {
+        grpc {
+            artifact = 'io.grpc:protoc-gen-grpc-java:1.0.0-pre2'
+        }
+    }
 }

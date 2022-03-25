@@ -1,0 +1,62 @@
+= Bodies
+
+== Protobuf
+
+[source]
+----
+
+syntax = "proto3";
+
+message SomeMessage {
+
+    message Emails {
+        repeated string emails = 1;
+    }
+
+    message Servicelevels {
+        double slcA = 1;
+        double slcB = 2;
+        double slcC = 3;
+    }
+
+    message Settings {
+        string currency = 1;
+        bool runJobs = 2;
+        bool multiSupplier = 3;
+    }
+
+    string handle = 1;
+    string url = 2;
+    uint32 interestRate = 3;
+    Emails emails = 4;
+    Servicelevels serviceLevels = 5;
+    Settings settings = 6;
+}
+----
+
+== JSON
+
+[source]
+----
+{
+  "handle": "optiply",
+  "url": "https://optiply.nl",
+  "interestRate": 20,
+  "emails": {
+    "emails": [
+      "management@optiply.nl",
+      "social@optiply.nl"
+    ]
+  },
+  "serviceLevels": {
+    "slcA": 33.3,
+    "slcB": 33.3,
+    "slcC": 33.4
+  },
+  "settings": {
+    "currency": "EUR",
+    "runJobs": true,
+    "multiSupplier": false
+  }
+}
+----
