@@ -2,7 +2,6 @@ package com.optiply.infrastructure.data.repositories;
 
 import com.optiply.infrastructure.data.models.Tables;
 import com.optiply.infrastructure.data.models.tables.pojos.Webshopemails;
-import com.optiply.infrastructure.data.repositories.interfaces.IWebshopemailsRepository;
 import com.optiply.infrastructure.data.support.sql.QueryResult;
 import io.micronaut.data.r2dbc.operations.R2dbcOperations;
 import io.micronaut.transaction.TransactionDefinition;
@@ -20,7 +19,7 @@ import reactor.core.publisher.Mono;
  * The type Webshopemails repository.
  */
 @Singleton
-public class WebshopemailsRepository implements IWebshopemailsRepository {
+public class WebshopemailsRepository {
 
 	/**
 	 * The Dsl context.
@@ -51,7 +50,7 @@ public class WebshopemailsRepository implements IWebshopemailsRepository {
 	 * @param email     the email
 	 * @return the mono
 	 */
-	@Override
+
 	public Mono<Boolean> create(Long webshopId, String email) {
 		return Mono.from(operations.withTransaction(
 				new DefaultTransactionDefinition(
@@ -70,7 +69,7 @@ public class WebshopemailsRepository implements IWebshopemailsRepository {
 	 * @param webshopId the webshop id
 	 * @return the flux
 	 */
-	@Override
+
 	public Flux<Webshopemails> readByWebshopId(Long webshopId) {
 		return Flux
 				.from(operations.withTransaction(TransactionDefinition.READ_ONLY, status -> Mono.from(DSL
@@ -88,7 +87,7 @@ public class WebshopemailsRepository implements IWebshopemailsRepository {
 	 * @param email the email
 	 * @return the mono
 	 */
-	@Override
+
 	public Mono<Boolean> update(Long id, String email) {
 		return Mono.from(operations.withTransaction(
 				new DefaultTransactionDefinition(
@@ -107,7 +106,7 @@ public class WebshopemailsRepository implements IWebshopemailsRepository {
 	 * @param id the id
 	 * @return the mono
 	 */
-	@Override
+
 	public Mono<Boolean> delete(Long id) {
 		return Mono.from(operations.withTransaction(
 				new DefaultTransactionDefinition(

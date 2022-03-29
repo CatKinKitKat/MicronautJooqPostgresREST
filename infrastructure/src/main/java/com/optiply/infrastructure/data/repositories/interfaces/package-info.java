@@ -1,4 +1,0 @@
-@ParametersAreNonnullByDefault
-package com.optiply.infrastructure.data.repositories.interfaces;
-
-import javax.annotation.ParametersAreNonnullByDefault;

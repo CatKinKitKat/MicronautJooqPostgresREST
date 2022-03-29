@@ -2,7 +2,6 @@ package com.optiply.infrastructure.data.repositories;
 
 import com.optiply.infrastructure.data.models.Tables;
 import com.optiply.infrastructure.data.models.tables.pojos.Webshopsettings;
-import com.optiply.infrastructure.data.repositories.interfaces.IWebshopsettingsRepository;
 import com.optiply.infrastructure.data.support.sql.QueryResult;
 import io.micronaut.data.r2dbc.operations.R2dbcOperations;
 import io.micronaut.transaction.TransactionDefinition;
@@ -19,7 +18,7 @@ import reactor.core.publisher.Mono;
  * The type Webshopsettings repository.
  */
 @Singleton
-public class WebshopsettingsRepository implements IWebshopsettingsRepository {
+public class WebshopsettingsRepository {
 
 	/**
 	 * The Dsl context.
@@ -52,7 +51,7 @@ public class WebshopsettingsRepository implements IWebshopsettingsRepository {
 	 * @param multiSupplier the multi supplier
 	 * @return the mono
 	 */
-	@Override
+
 	public Mono<Boolean> create(Long webshopId, String currency, Boolean runJobs, Boolean multiSupplier) {
 		return Mono.from(operations.withTransaction(
 				new DefaultTransactionDefinition(
@@ -75,7 +74,7 @@ public class WebshopsettingsRepository implements IWebshopsettingsRepository {
 	 * @param webshopId the webshop id
 	 * @return the mono
 	 */
-	@Override
+
 	public Mono<Webshopsettings> read(Long webshopId) {
 		return Mono
 				.from(operations.withTransaction(TransactionDefinition.READ_ONLY, status -> DSL
@@ -95,7 +94,7 @@ public class WebshopsettingsRepository implements IWebshopsettingsRepository {
 	 * @param multiSupplier the multi supplier
 	 * @return the mono
 	 */
-	@Override
+
 	public Mono<Boolean> update(Long webshopId, String currency, Boolean runJobs, Boolean multiSupplier) {
 		return Mono.from(operations.withTransaction(
 				new DefaultTransactionDefinition(
@@ -116,7 +115,7 @@ public class WebshopsettingsRepository implements IWebshopsettingsRepository {
 	 * @param webshopId the webshop id
 	 * @return the mono
 	 */
-	@Override
+
 	public Mono<Boolean> delete(Long webshopId) {
 		return Mono.from(operations.withTransaction(
 				new DefaultTransactionDefinition(

@@ -2,7 +2,6 @@ package com.optiply.infrastructure.data.repositories;
 
 import com.optiply.infrastructure.data.models.Tables;
 import com.optiply.infrastructure.data.models.tables.pojos.Webshop;
-import com.optiply.infrastructure.data.repositories.interfaces.IWebshopRepository;
 import com.optiply.infrastructure.data.support.sql.QueryResult;
 import io.micronaut.data.r2dbc.operations.R2dbcOperations;
 import io.micronaut.transaction.TransactionDefinition;
@@ -10,6 +9,7 @@ import io.micronaut.transaction.support.DefaultTransactionDefinition;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
 import jakarta.inject.Singleton;
+import org.jooq.Condition;
 import org.jooq.DSLContext;
 import org.jooq.SQLDialect;
 import org.jooq.impl.DSL;
@@ -20,7 +20,7 @@ import reactor.core.publisher.Mono;
  * The type Webshop repository.
  */
 @Singleton
-public class WebshopRepository implements IWebshopRepository {
+public class WebshopRepository {
 
 	/**
 	 * The Dsl context.
@@ -68,12 +68,28 @@ public class WebshopRepository implements IWebshopRepository {
 	}
 
 	/**
+	 * Read by id mono.
+	 *
+	 * @param id the id
+	 * @return the mono
+	 */
+	public Mono<Webshop> readById(Long id) {
+
+		return Mono
+				.from(operations.withTransaction(TransactionDefinition.READ_ONLY, status -> DSL
+						.using(status.getConnection(), SQLDialect.POSTGRES, dslContext.settings())
+						.select(Tables.WEBSHOP.asterisk())
+						.from(Tables.WEBSHOP)
+						.where(Tables.WEBSHOP.WEBSHOPID.eq(id))))
+				.map(result -> result.into(Webshop.class));
+	}
+
+	/**
 	 * Read by handle mono.
 	 *
 	 * @param handle the handle
 	 * @return the mono
 	 */
-	@Override
 	public Mono<Webshop> readByHandle(String handle) {
 
 		return Mono
@@ -94,7 +110,6 @@ public class WebshopRepository implements IWebshopRepository {
 	 * @param interestRate the interest rate
 	 * @return the mono
 	 */
-	@Override
 	public Mono<Boolean> update(String handle, String url, Short interestRate) {
 
 
@@ -118,7 +133,6 @@ public class WebshopRepository implements IWebshopRepository {
 	 * @param handles the handles
 	 * @return the flux
 	 */
-	@Override
 	public Flux<Webshop> readByHandles(String... handles) {
 
 		return Flux
@@ -136,7 +150,6 @@ public class WebshopRepository implements IWebshopRepository {
 	 * @param handle the handle
 	 * @return the flux
 	 */
-	@Override
 	public Flux<Webshop> readByHandleLike(String handle) {
 
 		return Flux
@@ -157,7 +170,6 @@ public class WebshopRepository implements IWebshopRepository {
 	 * @param interestRate the interest rate
 	 * @return the mono
 	 */
-	@Override
 	public Mono<Boolean> update(Long id, String handle, String url, Short interestRate) {
 
 		return Mono.from(operations.withTransaction(
@@ -176,11 +188,10 @@ public class WebshopRepository implements IWebshopRepository {
 	/**
 	 * Delete mono.
 	 *
-	 * @param id the id
+	 * @param handle the handle
 	 * @return the mono
 	 */
-	@Override
-	public Mono<Boolean> delete(Long id) {
+	public Mono<Boolean> delete(String handle) {
 
 		return Mono.from(operations.withTransaction(
 				new DefaultTransactionDefinition(
@@ -189,8 +200,39 @@ public class WebshopRepository implements IWebshopRepository {
 						.from(DSL
 								.using(status.getConnection(), SQLDialect.POSTGRES, dslContext.settings())
 								.delete(Tables.WEBSHOP)
-								.where(Tables.WEBSHOP.WEBSHOPID.eq(id)))
+								.where(Tables.WEBSHOP.HANDLE.eq(handle)))
 						.map(result -> result == QueryResult.SUCCESS.ordinal())
 		));
 	}
+
+
+	/**
+	 * Multi conditional read flux.
+	 *
+	 * @param conditions the conditions
+	 * @return the flux
+	 */
+	public Flux<Webshop> multiConditionalRead(Condition... conditions) {
+
+		return Flux.from(operations.withTransaction(TransactionDefinition.READ_ONLY, status -> DSL
+						.using(status.getConnection(), SQLDialect.POSTGRES, dslContext.settings())
+						.select(Tables.WEBSHOP.asterisk())
+						.from(Tables.WEBSHOP)
+						.where(conditions)))
+				.map(result -> result.into(Webshop.class));
+	}
+
+	/**
+	 * All flux.
+	 *
+	 * @return the flux
+	 */
+	public Flux<Webshop> all() {
+		return Flux.from(operations.withTransaction(TransactionDefinition.READ_ONLY, status -> DSL
+						.using(status.getConnection(), SQLDialect.POSTGRES, dslContext.settings())
+						.select(Tables.WEBSHOP.asterisk())
+						.from(Tables.WEBSHOP)))
+				.map(result -> result.into(Webshop.class));
+	}
+
 }

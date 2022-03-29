@@ -45,10 +45,10 @@ flyway:
       enabled: true
 datasources:
   default:
-    password: ${DATASOURCE_PASSWORD:postgres}
+    password: postgres
     driverClassName: org.postgresql.Driver
-    url: ${DATASOURCE_URL:jdbc:postgresql://localhost:5432/postgres}
-    username: ${DATASOURCE_USERNAME:postgres}
+    url: jdbc:postgresql://localhost:5432/postgres
+    username: postgres
     schema-generate: NONE
     dialect: POSTGRES
     pool-name: hikari-pool
@@ -61,9 +61,10 @@ datasources:
 r2dbc:
   datasources:
     default:
-      password: ${R2DBC_DATASOURCE_PASSWORD:postgres}
-      url: ${R2DBC_DATASOURCE_URL:r2dbc:postgresql://localhost:5432/postgres}
-      username: ${R2DBC_DATASOURCE_USERNAME:postgres}
+      password: postgres
+      driverClassName: io.r2dbc:r2dbc-postgresql
+      url: r2dbc:postgresql://localhost:5432/postgres
+      username: postgres
       schema-generate: NONE
       dialect: POSTGRES
       options:

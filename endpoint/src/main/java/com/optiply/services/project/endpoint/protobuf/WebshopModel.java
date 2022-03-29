@@ -3,8 +3,8 @@
 
 package com.optiply.services.project.endpoint.protobuf;
 
-public final class Webshop {
-  private Webshop() {}
+public final class WebshopModel {
+  private WebshopModel() {}
   public static void registerAllExtensions(
       com.google.protobuf.ExtensionRegistryLite registry) {
   }
@@ -50,11 +50,11 @@ public final class Webshop {
     /**
      * <code>optional .SomeMessage.Emails emails = 4;</code>
      */
-    com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage.Emails getEmails();
+    com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage.Emails getEmails();
     /**
      * <code>optional .SomeMessage.Emails emails = 4;</code>
      */
-    com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage.EmailsOrBuilder getEmailsOrBuilder();
+    com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage.EmailsOrBuilder getEmailsOrBuilder();
 
     /**
      * <code>optional .SomeMessage.Servicelevels serviceLevels = 5;</code>
@@ -63,11 +63,11 @@ public final class Webshop {
     /**
      * <code>optional .SomeMessage.Servicelevels serviceLevels = 5;</code>
      */
-    com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage.Servicelevels getServiceLevels();
+    com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage.Servicelevels getServiceLevels();
     /**
      * <code>optional .SomeMessage.Servicelevels serviceLevels = 5;</code>
      */
-    com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage.ServicelevelsOrBuilder getServiceLevelsOrBuilder();
+    com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage.ServicelevelsOrBuilder getServiceLevelsOrBuilder();
 
     /**
      * <code>optional .SomeMessage.Settings settings = 6;</code>
@@ -76,11 +76,11 @@ public final class Webshop {
     /**
      * <code>optional .SomeMessage.Settings settings = 6;</code>
      */
-    com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage.Settings getSettings();
+    com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage.Settings getSettings();
     /**
      * <code>optional .SomeMessage.Settings settings = 6;</code>
      */
-    com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage.SettingsOrBuilder getSettingsOrBuilder();
+    com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage.SettingsOrBuilder getSettingsOrBuilder();
   }
   /**
    * Protobuf type {@code SomeMessage}
@@ -142,11 +142,11 @@ public final class Webshop {
               break;
             }
             case 34: {
-              com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage.Emails.Builder subBuilder = null;
+              com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage.Emails.Builder subBuilder = null;
               if (emails_ != null) {
                 subBuilder = emails_.toBuilder();
               }
-              emails_ = input.readMessage(com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage.Emails.parser(), extensionRegistry);
+              emails_ = input.readMessage(com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage.Emails.parser(), extensionRegistry);
               if (subBuilder != null) {
                 subBuilder.mergeFrom(emails_);
                 emails_ = subBuilder.buildPartial();
@@ -155,11 +155,11 @@ public final class Webshop {
               break;
             }
             case 42: {
-              com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage.Servicelevels.Builder subBuilder = null;
+              com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage.Servicelevels.Builder subBuilder = null;
               if (serviceLevels_ != null) {
                 subBuilder = serviceLevels_.toBuilder();
               }
-              serviceLevels_ = input.readMessage(com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage.Servicelevels.parser(), extensionRegistry);
+              serviceLevels_ = input.readMessage(com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage.Servicelevels.parser(), extensionRegistry);
               if (subBuilder != null) {
                 subBuilder.mergeFrom(serviceLevels_);
                 serviceLevels_ = subBuilder.buildPartial();
@@ -168,11 +168,11 @@ public final class Webshop {
               break;
             }
             case 50: {
-              com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage.Settings.Builder subBuilder = null;
+              com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage.Settings.Builder subBuilder = null;
               if (settings_ != null) {
                 subBuilder = settings_.toBuilder();
               }
-              settings_ = input.readMessage(com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage.Settings.parser(), extensionRegistry);
+              settings_ = input.readMessage(com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage.Settings.parser(), extensionRegistry);
               if (subBuilder != null) {
                 subBuilder.mergeFrom(settings_);
                 settings_ = subBuilder.buildPartial();
@@ -193,14 +193,14 @@ public final class Webshop {
     }
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return com.optiply.services.project.endpoint.protobuf.Webshop.internal_static_SomeMessage_descriptor;
+      return com.optiply.services.project.endpoint.protobuf.WebshopModel.internal_static_SomeMessage_descriptor;
     }
 
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return com.optiply.services.project.endpoint.protobuf.Webshop.internal_static_SomeMessage_fieldAccessorTable
+      return com.optiply.services.project.endpoint.protobuf.WebshopModel.internal_static_SomeMessage_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
-              com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage.class, com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage.Builder.class);
+              com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage.class, com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage.Builder.class);
     }
 
     public interface EmailsOrBuilder extends
@@ -291,14 +291,14 @@ public final class Webshop {
       }
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
-        return com.optiply.services.project.endpoint.protobuf.Webshop.internal_static_SomeMessage_Emails_descriptor;
+        return com.optiply.services.project.endpoint.protobuf.WebshopModel.internal_static_SomeMessage_Emails_descriptor;
       }
 
       protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
           internalGetFieldAccessorTable() {
-        return com.optiply.services.project.endpoint.protobuf.Webshop.internal_static_SomeMessage_Emails_fieldAccessorTable
+        return com.optiply.services.project.endpoint.protobuf.WebshopModel.internal_static_SomeMessage_Emails_fieldAccessorTable
             .ensureFieldAccessorsInitialized(
-                com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage.Emails.class, com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage.Emails.Builder.class);
+                com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage.Emails.class, com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage.Emails.Builder.class);
       }
 
       public static final int EMAILS_FIELD_NUMBER = 1;
@@ -370,10 +370,10 @@ public final class Webshop {
         if (obj == this) {
          return true;
         }
-        if (!(obj instanceof com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage.Emails)) {
+        if (!(obj instanceof com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage.Emails)) {
           return super.equals(obj);
         }
-        com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage.Emails other = (com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage.Emails) obj;
+        com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage.Emails other = (com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage.Emails) obj;
 
         boolean result = true;
         result = result && getEmailsList()
@@ -397,58 +397,58 @@ public final class Webshop {
         return hash;
       }
 
-      public static com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage.Emails parseFrom(
+      public static com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage.Emails parseFrom(
           com.google.protobuf.ByteString data)
           throws com.google.protobuf.InvalidProtocolBufferException {
         return PARSER.parseFrom(data);
       }
-      public static com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage.Emails parseFrom(
+      public static com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage.Emails parseFrom(
           com.google.protobuf.ByteString data,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws com.google.protobuf.InvalidProtocolBufferException {
         return PARSER.parseFrom(data, extensionRegistry);
       }
-      public static com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage.Emails parseFrom(byte[] data)
+      public static com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage.Emails parseFrom(byte[] data)
           throws com.google.protobuf.InvalidProtocolBufferException {
         return PARSER.parseFrom(data);
       }
-      public static com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage.Emails parseFrom(
+      public static com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage.Emails parseFrom(
           byte[] data,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws com.google.protobuf.InvalidProtocolBufferException {
         return PARSER.parseFrom(data, extensionRegistry);
       }
-      public static com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage.Emails parseFrom(java.io.InputStream input)
+      public static com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage.Emails parseFrom(java.io.InputStream input)
           throws java.io.IOException {
         return com.google.protobuf.GeneratedMessageV3
             .parseWithIOException(PARSER, input);
       }
-      public static com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage.Emails parseFrom(
+      public static com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage.Emails parseFrom(
           java.io.InputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws java.io.IOException {
         return com.google.protobuf.GeneratedMessageV3
             .parseWithIOException(PARSER, input, extensionRegistry);
       }
-      public static com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage.Emails parseDelimitedFrom(java.io.InputStream input)
+      public static com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage.Emails parseDelimitedFrom(java.io.InputStream input)
           throws java.io.IOException {
         return com.google.protobuf.GeneratedMessageV3
             .parseDelimitedWithIOException(PARSER, input);
       }
-      public static com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage.Emails parseDelimitedFrom(
+      public static com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage.Emails parseDelimitedFrom(
           java.io.InputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws java.io.IOException {
         return com.google.protobuf.GeneratedMessageV3
             .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
       }
-      public static com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage.Emails parseFrom(
+      public static com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage.Emails parseFrom(
           com.google.protobuf.CodedInputStream input)
           throws java.io.IOException {
         return com.google.protobuf.GeneratedMessageV3
             .parseWithIOException(PARSER, input);
       }
-      public static com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage.Emails parseFrom(
+      public static com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage.Emails parseFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws java.io.IOException {
@@ -460,7 +460,7 @@ public final class Webshop {
       public static Builder newBuilder() {
         return DEFAULT_INSTANCE.toBuilder();
       }
-      public static Builder newBuilder(com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage.Emails prototype) {
+      public static Builder newBuilder(com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage.Emails prototype) {
         return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
       }
       public Builder toBuilder() {
@@ -480,20 +480,20 @@ public final class Webshop {
       public static final class Builder extends
           com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
           // @@protoc_insertion_point(builder_implements:SomeMessage.Emails)
-          com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage.EmailsOrBuilder {
+          com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage.EmailsOrBuilder {
         public static final com.google.protobuf.Descriptors.Descriptor
             getDescriptor() {
-          return com.optiply.services.project.endpoint.protobuf.Webshop.internal_static_SomeMessage_Emails_descriptor;
+          return com.optiply.services.project.endpoint.protobuf.WebshopModel.internal_static_SomeMessage_Emails_descriptor;
         }
 
         protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
             internalGetFieldAccessorTable() {
-          return com.optiply.services.project.endpoint.protobuf.Webshop.internal_static_SomeMessage_Emails_fieldAccessorTable
+          return com.optiply.services.project.endpoint.protobuf.WebshopModel.internal_static_SomeMessage_Emails_fieldAccessorTable
               .ensureFieldAccessorsInitialized(
-                  com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage.Emails.class, com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage.Emails.Builder.class);
+                  com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage.Emails.class, com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage.Emails.Builder.class);
         }
 
-        // Construct using com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage.Emails.newBuilder()
+        // Construct using com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage.Emails.newBuilder()
         private Builder() {
           maybeForceBuilderInitialization();
         }
@@ -517,23 +517,23 @@ public final class Webshop {
 
         public com.google.protobuf.Descriptors.Descriptor
             getDescriptorForType() {
-          return com.optiply.services.project.endpoint.protobuf.Webshop.internal_static_SomeMessage_Emails_descriptor;
+          return com.optiply.services.project.endpoint.protobuf.WebshopModel.internal_static_SomeMessage_Emails_descriptor;
         }
 
-        public com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage.Emails getDefaultInstanceForType() {
-          return com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage.Emails.getDefaultInstance();
+        public com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage.Emails getDefaultInstanceForType() {
+          return com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage.Emails.getDefaultInstance();
         }
 
-        public com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage.Emails build() {
-          com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage.Emails result = buildPartial();
+        public com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage.Emails build() {
+          com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage.Emails result = buildPartial();
           if (!result.isInitialized()) {
             throw newUninitializedMessageException(result);
           }
           return result;
         }
 
-        public com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage.Emails buildPartial() {
-          com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage.Emails result = new com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage.Emails(this);
+        public com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage.Emails buildPartial() {
+          com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage.Emails result = new com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage.Emails(this);
           int from_bitField0_ = bitField0_;
           if (((bitField0_ & 0x00000001) == 0x00000001)) {
             emails_ = emails_.getUnmodifiableView();
@@ -571,16 +571,16 @@ public final class Webshop {
           return (Builder) super.addRepeatedField(field, value);
         }
         public Builder mergeFrom(com.google.protobuf.Message other) {
-          if (other instanceof com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage.Emails) {
-            return mergeFrom((com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage.Emails)other);
+          if (other instanceof com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage.Emails) {
+            return mergeFrom((com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage.Emails)other);
           } else {
             super.mergeFrom(other);
             return this;
           }
         }
 
-        public Builder mergeFrom(com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage.Emails other) {
-          if (other == com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage.Emails.getDefaultInstance()) return this;
+        public Builder mergeFrom(com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage.Emails other) {
+          if (other == com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage.Emails.getDefaultInstance()) return this;
           if (!other.emails_.isEmpty()) {
             if (emails_.isEmpty()) {
               emails_ = other.emails_;
@@ -603,11 +603,11 @@ public final class Webshop {
             com.google.protobuf.CodedInputStream input,
             com.google.protobuf.ExtensionRegistryLite extensionRegistry)
             throws java.io.IOException {
-          com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage.Emails parsedMessage = null;
+          com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage.Emails parsedMessage = null;
           try {
             parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
           } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-            parsedMessage = (com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage.Emails) e.getUnfinishedMessage();
+            parsedMessage = (com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage.Emails) e.getUnfinishedMessage();
             throw e.unwrapIOException();
           } finally {
             if (parsedMessage != null) {
@@ -726,12 +726,12 @@ public final class Webshop {
       }
 
       // @@protoc_insertion_point(class_scope:SomeMessage.Emails)
-      private static final com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage.Emails DEFAULT_INSTANCE;
+      private static final com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage.Emails DEFAULT_INSTANCE;
       static {
-        DEFAULT_INSTANCE = new com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage.Emails();
+        DEFAULT_INSTANCE = new com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage.Emails();
       }
 
-      public static com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage.Emails getDefaultInstance() {
+      public static com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage.Emails getDefaultInstance() {
         return DEFAULT_INSTANCE;
       }
 
@@ -754,7 +754,7 @@ public final class Webshop {
         return PARSER;
       }
 
-      public com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage.Emails getDefaultInstanceForType() {
+      public com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage.Emails getDefaultInstanceForType() {
         return DEFAULT_INSTANCE;
       }
 
@@ -849,14 +849,14 @@ public final class Webshop {
       }
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
-        return com.optiply.services.project.endpoint.protobuf.Webshop.internal_static_SomeMessage_Servicelevels_descriptor;
+        return com.optiply.services.project.endpoint.protobuf.WebshopModel.internal_static_SomeMessage_Servicelevels_descriptor;
       }
 
       protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
           internalGetFieldAccessorTable() {
-        return com.optiply.services.project.endpoint.protobuf.Webshop.internal_static_SomeMessage_Servicelevels_fieldAccessorTable
+        return com.optiply.services.project.endpoint.protobuf.WebshopModel.internal_static_SomeMessage_Servicelevels_fieldAccessorTable
             .ensureFieldAccessorsInitialized(
-                com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage.Servicelevels.class, com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage.Servicelevels.Builder.class);
+                com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage.Servicelevels.class, com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage.Servicelevels.Builder.class);
       }
 
       public static final int SLCA_FIELD_NUMBER = 1;
@@ -936,10 +936,10 @@ public final class Webshop {
         if (obj == this) {
          return true;
         }
-        if (!(obj instanceof com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage.Servicelevels)) {
+        if (!(obj instanceof com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage.Servicelevels)) {
           return super.equals(obj);
         }
-        com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage.Servicelevels other = (com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage.Servicelevels) obj;
+        com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage.Servicelevels other = (com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage.Servicelevels) obj;
 
         boolean result = true;
         result = result && (
@@ -978,58 +978,58 @@ public final class Webshop {
         return hash;
       }
 
-      public static com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage.Servicelevels parseFrom(
+      public static com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage.Servicelevels parseFrom(
           com.google.protobuf.ByteString data)
           throws com.google.protobuf.InvalidProtocolBufferException {
         return PARSER.parseFrom(data);
       }
-      public static com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage.Servicelevels parseFrom(
+      public static com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage.Servicelevels parseFrom(
           com.google.protobuf.ByteString data,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws com.google.protobuf.InvalidProtocolBufferException {
         return PARSER.parseFrom(data, extensionRegistry);
       }
-      public static com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage.Servicelevels parseFrom(byte[] data)
+      public static com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage.Servicelevels parseFrom(byte[] data)
           throws com.google.protobuf.InvalidProtocolBufferException {
         return PARSER.parseFrom(data);
       }
-      public static com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage.Servicelevels parseFrom(
+      public static com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage.Servicelevels parseFrom(
           byte[] data,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws com.google.protobuf.InvalidProtocolBufferException {
         return PARSER.parseFrom(data, extensionRegistry);
       }
-      public static com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage.Servicelevels parseFrom(java.io.InputStream input)
+      public static com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage.Servicelevels parseFrom(java.io.InputStream input)
           throws java.io.IOException {
         return com.google.protobuf.GeneratedMessageV3
             .parseWithIOException(PARSER, input);
       }
-      public static com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage.Servicelevels parseFrom(
+      public static com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage.Servicelevels parseFrom(
           java.io.InputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws java.io.IOException {
         return com.google.protobuf.GeneratedMessageV3
             .parseWithIOException(PARSER, input, extensionRegistry);
       }
-      public static com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage.Servicelevels parseDelimitedFrom(java.io.InputStream input)
+      public static com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage.Servicelevels parseDelimitedFrom(java.io.InputStream input)
           throws java.io.IOException {
         return com.google.protobuf.GeneratedMessageV3
             .parseDelimitedWithIOException(PARSER, input);
       }
-      public static com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage.Servicelevels parseDelimitedFrom(
+      public static com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage.Servicelevels parseDelimitedFrom(
           java.io.InputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws java.io.IOException {
         return com.google.protobuf.GeneratedMessageV3
             .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
       }
-      public static com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage.Servicelevels parseFrom(
+      public static com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage.Servicelevels parseFrom(
           com.google.protobuf.CodedInputStream input)
           throws java.io.IOException {
         return com.google.protobuf.GeneratedMessageV3
             .parseWithIOException(PARSER, input);
       }
-      public static com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage.Servicelevels parseFrom(
+      public static com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage.Servicelevels parseFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws java.io.IOException {
@@ -1041,7 +1041,7 @@ public final class Webshop {
       public static Builder newBuilder() {
         return DEFAULT_INSTANCE.toBuilder();
       }
-      public static Builder newBuilder(com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage.Servicelevels prototype) {
+      public static Builder newBuilder(com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage.Servicelevels prototype) {
         return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
       }
       public Builder toBuilder() {
@@ -1061,20 +1061,20 @@ public final class Webshop {
       public static final class Builder extends
           com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
           // @@protoc_insertion_point(builder_implements:SomeMessage.Servicelevels)
-          com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage.ServicelevelsOrBuilder {
+          com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage.ServicelevelsOrBuilder {
         public static final com.google.protobuf.Descriptors.Descriptor
             getDescriptor() {
-          return com.optiply.services.project.endpoint.protobuf.Webshop.internal_static_SomeMessage_Servicelevels_descriptor;
+          return com.optiply.services.project.endpoint.protobuf.WebshopModel.internal_static_SomeMessage_Servicelevels_descriptor;
         }
 
         protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
             internalGetFieldAccessorTable() {
-          return com.optiply.services.project.endpoint.protobuf.Webshop.internal_static_SomeMessage_Servicelevels_fieldAccessorTable
+          return com.optiply.services.project.endpoint.protobuf.WebshopModel.internal_static_SomeMessage_Servicelevels_fieldAccessorTable
               .ensureFieldAccessorsInitialized(
-                  com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage.Servicelevels.class, com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage.Servicelevels.Builder.class);
+                  com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage.Servicelevels.class, com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage.Servicelevels.Builder.class);
         }
 
-        // Construct using com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage.Servicelevels.newBuilder()
+        // Construct using com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage.Servicelevels.newBuilder()
         private Builder() {
           maybeForceBuilderInitialization();
         }
@@ -1102,23 +1102,23 @@ public final class Webshop {
 
         public com.google.protobuf.Descriptors.Descriptor
             getDescriptorForType() {
-          return com.optiply.services.project.endpoint.protobuf.Webshop.internal_static_SomeMessage_Servicelevels_descriptor;
+          return com.optiply.services.project.endpoint.protobuf.WebshopModel.internal_static_SomeMessage_Servicelevels_descriptor;
         }
 
-        public com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage.Servicelevels getDefaultInstanceForType() {
-          return com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage.Servicelevels.getDefaultInstance();
+        public com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage.Servicelevels getDefaultInstanceForType() {
+          return com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage.Servicelevels.getDefaultInstance();
         }
 
-        public com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage.Servicelevels build() {
-          com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage.Servicelevels result = buildPartial();
+        public com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage.Servicelevels build() {
+          com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage.Servicelevels result = buildPartial();
           if (!result.isInitialized()) {
             throw newUninitializedMessageException(result);
           }
           return result;
         }
 
-        public com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage.Servicelevels buildPartial() {
-          com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage.Servicelevels result = new com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage.Servicelevels(this);
+        public com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage.Servicelevels buildPartial() {
+          com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage.Servicelevels result = new com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage.Servicelevels(this);
           result.slcA_ = slcA_;
           result.slcB_ = slcB_;
           result.slcC_ = slcC_;
@@ -1153,16 +1153,16 @@ public final class Webshop {
           return (Builder) super.addRepeatedField(field, value);
         }
         public Builder mergeFrom(com.google.protobuf.Message other) {
-          if (other instanceof com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage.Servicelevels) {
-            return mergeFrom((com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage.Servicelevels)other);
+          if (other instanceof com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage.Servicelevels) {
+            return mergeFrom((com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage.Servicelevels)other);
           } else {
             super.mergeFrom(other);
             return this;
           }
         }
 
-        public Builder mergeFrom(com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage.Servicelevels other) {
-          if (other == com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage.Servicelevels.getDefaultInstance()) return this;
+        public Builder mergeFrom(com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage.Servicelevels other) {
+          if (other == com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage.Servicelevels.getDefaultInstance()) return this;
           if (other.getSlcA() != 0D) {
             setSlcA(other.getSlcA());
           }
@@ -1184,11 +1184,11 @@ public final class Webshop {
             com.google.protobuf.CodedInputStream input,
             com.google.protobuf.ExtensionRegistryLite extensionRegistry)
             throws java.io.IOException {
-          com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage.Servicelevels parsedMessage = null;
+          com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage.Servicelevels parsedMessage = null;
           try {
             parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
           } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-            parsedMessage = (com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage.Servicelevels) e.getUnfinishedMessage();
+            parsedMessage = (com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage.Servicelevels) e.getUnfinishedMessage();
             throw e.unwrapIOException();
           } finally {
             if (parsedMessage != null) {
@@ -1290,12 +1290,12 @@ public final class Webshop {
       }
 
       // @@protoc_insertion_point(class_scope:SomeMessage.Servicelevels)
-      private static final com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage.Servicelevels DEFAULT_INSTANCE;
+      private static final com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage.Servicelevels DEFAULT_INSTANCE;
       static {
-        DEFAULT_INSTANCE = new com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage.Servicelevels();
+        DEFAULT_INSTANCE = new com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage.Servicelevels();
       }
 
-      public static com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage.Servicelevels getDefaultInstance() {
+      public static com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage.Servicelevels getDefaultInstance() {
         return DEFAULT_INSTANCE;
       }
 
@@ -1318,7 +1318,7 @@ public final class Webshop {
         return PARSER;
       }
 
-      public com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage.Servicelevels getDefaultInstanceForType() {
+      public com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage.Servicelevels getDefaultInstanceForType() {
         return DEFAULT_INSTANCE;
       }
 
@@ -1419,14 +1419,14 @@ public final class Webshop {
       }
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
-        return com.optiply.services.project.endpoint.protobuf.Webshop.internal_static_SomeMessage_Settings_descriptor;
+        return com.optiply.services.project.endpoint.protobuf.WebshopModel.internal_static_SomeMessage_Settings_descriptor;
       }
 
       protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
           internalGetFieldAccessorTable() {
-        return com.optiply.services.project.endpoint.protobuf.Webshop.internal_static_SomeMessage_Settings_fieldAccessorTable
+        return com.optiply.services.project.endpoint.protobuf.WebshopModel.internal_static_SomeMessage_Settings_fieldAccessorTable
             .ensureFieldAccessorsInitialized(
-                com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage.Settings.class, com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage.Settings.Builder.class);
+                com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage.Settings.class, com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage.Settings.Builder.class);
       }
 
       public static final int CURRENCY_FIELD_NUMBER = 1;
@@ -1530,10 +1530,10 @@ public final class Webshop {
         if (obj == this) {
          return true;
         }
-        if (!(obj instanceof com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage.Settings)) {
+        if (!(obj instanceof com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage.Settings)) {
           return super.equals(obj);
         }
-        com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage.Settings other = (com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage.Settings) obj;
+        com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage.Settings other = (com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage.Settings) obj;
 
         boolean result = true;
         result = result && getCurrency()
@@ -1565,58 +1565,58 @@ public final class Webshop {
         return hash;
       }
 
-      public static com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage.Settings parseFrom(
+      public static com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage.Settings parseFrom(
           com.google.protobuf.ByteString data)
           throws com.google.protobuf.InvalidProtocolBufferException {
         return PARSER.parseFrom(data);
       }
-      public static com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage.Settings parseFrom(
+      public static com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage.Settings parseFrom(
           com.google.protobuf.ByteString data,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws com.google.protobuf.InvalidProtocolBufferException {
         return PARSER.parseFrom(data, extensionRegistry);
       }
-      public static com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage.Settings parseFrom(byte[] data)
+      public static com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage.Settings parseFrom(byte[] data)
           throws com.google.protobuf.InvalidProtocolBufferException {
         return PARSER.parseFrom(data);
       }
-      public static com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage.Settings parseFrom(
+      public static com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage.Settings parseFrom(
           byte[] data,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws com.google.protobuf.InvalidProtocolBufferException {
         return PARSER.parseFrom(data, extensionRegistry);
       }
-      public static com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage.Settings parseFrom(java.io.InputStream input)
+      public static com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage.Settings parseFrom(java.io.InputStream input)
           throws java.io.IOException {
         return com.google.protobuf.GeneratedMessageV3
             .parseWithIOException(PARSER, input);
       }
-      public static com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage.Settings parseFrom(
+      public static com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage.Settings parseFrom(
           java.io.InputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws java.io.IOException {
         return com.google.protobuf.GeneratedMessageV3
             .parseWithIOException(PARSER, input, extensionRegistry);
       }
-      public static com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage.Settings parseDelimitedFrom(java.io.InputStream input)
+      public static com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage.Settings parseDelimitedFrom(java.io.InputStream input)
           throws java.io.IOException {
         return com.google.protobuf.GeneratedMessageV3
             .parseDelimitedWithIOException(PARSER, input);
       }
-      public static com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage.Settings parseDelimitedFrom(
+      public static com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage.Settings parseDelimitedFrom(
           java.io.InputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws java.io.IOException {
         return com.google.protobuf.GeneratedMessageV3
             .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
       }
-      public static com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage.Settings parseFrom(
+      public static com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage.Settings parseFrom(
           com.google.protobuf.CodedInputStream input)
           throws java.io.IOException {
         return com.google.protobuf.GeneratedMessageV3
             .parseWithIOException(PARSER, input);
       }
-      public static com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage.Settings parseFrom(
+      public static com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage.Settings parseFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws java.io.IOException {
@@ -1628,7 +1628,7 @@ public final class Webshop {
       public static Builder newBuilder() {
         return DEFAULT_INSTANCE.toBuilder();
       }
-      public static Builder newBuilder(com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage.Settings prototype) {
+      public static Builder newBuilder(com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage.Settings prototype) {
         return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
       }
       public Builder toBuilder() {
@@ -1648,20 +1648,20 @@ public final class Webshop {
       public static final class Builder extends
           com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
           // @@protoc_insertion_point(builder_implements:SomeMessage.Settings)
-          com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage.SettingsOrBuilder {
+          com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage.SettingsOrBuilder {
         public static final com.google.protobuf.Descriptors.Descriptor
             getDescriptor() {
-          return com.optiply.services.project.endpoint.protobuf.Webshop.internal_static_SomeMessage_Settings_descriptor;
+          return com.optiply.services.project.endpoint.protobuf.WebshopModel.internal_static_SomeMessage_Settings_descriptor;
         }
 
         protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
             internalGetFieldAccessorTable() {
-          return com.optiply.services.project.endpoint.protobuf.Webshop.internal_static_SomeMessage_Settings_fieldAccessorTable
+          return com.optiply.services.project.endpoint.protobuf.WebshopModel.internal_static_SomeMessage_Settings_fieldAccessorTable
               .ensureFieldAccessorsInitialized(
-                  com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage.Settings.class, com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage.Settings.Builder.class);
+                  com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage.Settings.class, com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage.Settings.Builder.class);
         }
 
-        // Construct using com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage.Settings.newBuilder()
+        // Construct using com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage.Settings.newBuilder()
         private Builder() {
           maybeForceBuilderInitialization();
         }
@@ -1689,23 +1689,23 @@ public final class Webshop {
 
         public com.google.protobuf.Descriptors.Descriptor
             getDescriptorForType() {
-          return com.optiply.services.project.endpoint.protobuf.Webshop.internal_static_SomeMessage_Settings_descriptor;
+          return com.optiply.services.project.endpoint.protobuf.WebshopModel.internal_static_SomeMessage_Settings_descriptor;
         }
 
-        public com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage.Settings getDefaultInstanceForType() {
-          return com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage.Settings.getDefaultInstance();
+        public com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage.Settings getDefaultInstanceForType() {
+          return com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage.Settings.getDefaultInstance();
         }
 
-        public com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage.Settings build() {
-          com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage.Settings result = buildPartial();
+        public com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage.Settings build() {
+          com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage.Settings result = buildPartial();
           if (!result.isInitialized()) {
             throw newUninitializedMessageException(result);
           }
           return result;
         }
 
-        public com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage.Settings buildPartial() {
-          com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage.Settings result = new com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage.Settings(this);
+        public com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage.Settings buildPartial() {
+          com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage.Settings result = new com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage.Settings(this);
           result.currency_ = currency_;
           result.runJobs_ = runJobs_;
           result.multiSupplier_ = multiSupplier_;
@@ -1740,16 +1740,16 @@ public final class Webshop {
           return (Builder) super.addRepeatedField(field, value);
         }
         public Builder mergeFrom(com.google.protobuf.Message other) {
-          if (other instanceof com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage.Settings) {
-            return mergeFrom((com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage.Settings)other);
+          if (other instanceof com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage.Settings) {
+            return mergeFrom((com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage.Settings)other);
           } else {
             super.mergeFrom(other);
             return this;
           }
         }
 
-        public Builder mergeFrom(com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage.Settings other) {
-          if (other == com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage.Settings.getDefaultInstance()) return this;
+        public Builder mergeFrom(com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage.Settings other) {
+          if (other == com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage.Settings.getDefaultInstance()) return this;
           if (!other.getCurrency().isEmpty()) {
             currency_ = other.currency_;
             onChanged();
@@ -1772,11 +1772,11 @@ public final class Webshop {
             com.google.protobuf.CodedInputStream input,
             com.google.protobuf.ExtensionRegistryLite extensionRegistry)
             throws java.io.IOException {
-          com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage.Settings parsedMessage = null;
+          com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage.Settings parsedMessage = null;
           try {
             parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
           } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-            parsedMessage = (com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage.Settings) e.getUnfinishedMessage();
+            parsedMessage = (com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage.Settings) e.getUnfinishedMessage();
             throw e.unwrapIOException();
           } finally {
             if (parsedMessage != null) {
@@ -1921,12 +1921,12 @@ public final class Webshop {
       }
 
       // @@protoc_insertion_point(class_scope:SomeMessage.Settings)
-      private static final com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage.Settings DEFAULT_INSTANCE;
+      private static final com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage.Settings DEFAULT_INSTANCE;
       static {
-        DEFAULT_INSTANCE = new com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage.Settings();
+        DEFAULT_INSTANCE = new com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage.Settings();
       }
 
-      public static com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage.Settings getDefaultInstance() {
+      public static com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage.Settings getDefaultInstance() {
         return DEFAULT_INSTANCE;
       }
 
@@ -1949,7 +1949,7 @@ public final class Webshop {
         return PARSER;
       }
 
-      public com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage.Settings getDefaultInstanceForType() {
+      public com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage.Settings getDefaultInstanceForType() {
         return DEFAULT_INSTANCE;
       }
 
@@ -2033,7 +2033,7 @@ public final class Webshop {
     }
 
     public static final int EMAILS_FIELD_NUMBER = 4;
-    private com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage.Emails emails_;
+    private com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage.Emails emails_;
     /**
      * <code>optional .SomeMessage.Emails emails = 4;</code>
      */
@@ -2043,18 +2043,18 @@ public final class Webshop {
     /**
      * <code>optional .SomeMessage.Emails emails = 4;</code>
      */
-    public com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage.Emails getEmails() {
-      return emails_ == null ? com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage.Emails.getDefaultInstance() : emails_;
+    public com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage.Emails getEmails() {
+      return emails_ == null ? com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage.Emails.getDefaultInstance() : emails_;
     }
     /**
      * <code>optional .SomeMessage.Emails emails = 4;</code>
      */
-    public com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage.EmailsOrBuilder getEmailsOrBuilder() {
+    public com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage.EmailsOrBuilder getEmailsOrBuilder() {
       return getEmails();
     }
 
     public static final int SERVICELEVELS_FIELD_NUMBER = 5;
-    private com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage.Servicelevels serviceLevels_;
+    private com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage.Servicelevels serviceLevels_;
     /**
      * <code>optional .SomeMessage.Servicelevels serviceLevels = 5;</code>
      */
@@ -2064,18 +2064,18 @@ public final class Webshop {
     /**
      * <code>optional .SomeMessage.Servicelevels serviceLevels = 5;</code>
      */
-    public com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage.Servicelevels getServiceLevels() {
-      return serviceLevels_ == null ? com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage.Servicelevels.getDefaultInstance() : serviceLevels_;
+    public com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage.Servicelevels getServiceLevels() {
+      return serviceLevels_ == null ? com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage.Servicelevels.getDefaultInstance() : serviceLevels_;
     }
     /**
      * <code>optional .SomeMessage.Servicelevels serviceLevels = 5;</code>
      */
-    public com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage.ServicelevelsOrBuilder getServiceLevelsOrBuilder() {
+    public com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage.ServicelevelsOrBuilder getServiceLevelsOrBuilder() {
       return getServiceLevels();
     }
 
     public static final int SETTINGS_FIELD_NUMBER = 6;
-    private com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage.Settings settings_;
+    private com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage.Settings settings_;
     /**
      * <code>optional .SomeMessage.Settings settings = 6;</code>
      */
@@ -2085,13 +2085,13 @@ public final class Webshop {
     /**
      * <code>optional .SomeMessage.Settings settings = 6;</code>
      */
-    public com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage.Settings getSettings() {
-      return settings_ == null ? com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage.Settings.getDefaultInstance() : settings_;
+    public com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage.Settings getSettings() {
+      return settings_ == null ? com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage.Settings.getDefaultInstance() : settings_;
     }
     /**
      * <code>optional .SomeMessage.Settings settings = 6;</code>
      */
-    public com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage.SettingsOrBuilder getSettingsOrBuilder() {
+    public com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage.SettingsOrBuilder getSettingsOrBuilder() {
       return getSettings();
     }
 
@@ -2164,10 +2164,10 @@ public final class Webshop {
       if (obj == this) {
        return true;
       }
-      if (!(obj instanceof com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage)) {
+      if (!(obj instanceof com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage)) {
         return super.equals(obj);
       }
-      com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage other = (com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage) obj;
+      com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage other = (com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage) obj;
 
       boolean result = true;
       result = result && getHandle()
@@ -2224,58 +2224,58 @@ public final class Webshop {
       return hash;
     }
 
-    public static com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage parseFrom(
+    public static com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage parseFrom(
+    public static com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage parseFrom(
         com.google.protobuf.ByteString data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage parseFrom(byte[] data)
+    public static com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage parseFrom(byte[] data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage parseFrom(
+    public static com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage parseFrom(
         byte[] data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage parseFrom(java.io.InputStream input)
+    public static com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage parseFrom(java.io.InputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseWithIOException(PARSER, input);
     }
-    public static com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage parseFrom(
+    public static com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseWithIOException(PARSER, input, extensionRegistry);
     }
-    public static com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage parseDelimitedFrom(java.io.InputStream input)
+    public static com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseDelimitedWithIOException(PARSER, input);
     }
-    public static com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage parseDelimitedFrom(
+    public static com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
     }
-    public static com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage parseFrom(
+    public static com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseWithIOException(PARSER, input);
     }
-    public static com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage parseFrom(
+    public static com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
@@ -2287,7 +2287,7 @@ public final class Webshop {
     public static Builder newBuilder() {
       return DEFAULT_INSTANCE.toBuilder();
     }
-    public static Builder newBuilder(com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage prototype) {
+    public static Builder newBuilder(com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage prototype) {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
     public Builder toBuilder() {
@@ -2307,20 +2307,20 @@ public final class Webshop {
     public static final class Builder extends
         com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
         // @@protoc_insertion_point(builder_implements:SomeMessage)
-        com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessageOrBuilder {
+        com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessageOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
-        return com.optiply.services.project.endpoint.protobuf.Webshop.internal_static_SomeMessage_descriptor;
+        return com.optiply.services.project.endpoint.protobuf.WebshopModel.internal_static_SomeMessage_descriptor;
       }
 
       protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
           internalGetFieldAccessorTable() {
-        return com.optiply.services.project.endpoint.protobuf.Webshop.internal_static_SomeMessage_fieldAccessorTable
+        return com.optiply.services.project.endpoint.protobuf.WebshopModel.internal_static_SomeMessage_fieldAccessorTable
             .ensureFieldAccessorsInitialized(
-                com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage.class, com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage.Builder.class);
+                com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage.class, com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage.Builder.class);
       }
 
-      // Construct using com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage.newBuilder()
+      // Construct using com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -2366,23 +2366,23 @@ public final class Webshop {
 
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
-        return com.optiply.services.project.endpoint.protobuf.Webshop.internal_static_SomeMessage_descriptor;
+        return com.optiply.services.project.endpoint.protobuf.WebshopModel.internal_static_SomeMessage_descriptor;
       }
 
-      public com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage getDefaultInstanceForType() {
-        return com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage.getDefaultInstance();
+      public com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage getDefaultInstanceForType() {
+        return com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage.getDefaultInstance();
       }
 
-      public com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage build() {
-        com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage result = buildPartial();
+      public com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage build() {
+        com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage result = buildPartial();
         if (!result.isInitialized()) {
           throw newUninitializedMessageException(result);
         }
         return result;
       }
 
-      public com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage buildPartial() {
-        com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage result = new com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage(this);
+      public com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage buildPartial() {
+        com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage result = new com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage(this);
         result.handle_ = handle_;
         result.url_ = url_;
         result.interestRate_ = interestRate_;
@@ -2432,16 +2432,16 @@ public final class Webshop {
         return (Builder) super.addRepeatedField(field, value);
       }
       public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage) {
-          return mergeFrom((com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage)other);
+        if (other instanceof com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage) {
+          return mergeFrom((com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage)other);
         } else {
           super.mergeFrom(other);
           return this;
         }
       }
 
-      public Builder mergeFrom(com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage other) {
-        if (other == com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage.getDefaultInstance()) return this;
+      public Builder mergeFrom(com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage other) {
+        if (other == com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage.getDefaultInstance()) return this;
         if (!other.getHandle().isEmpty()) {
           handle_ = other.handle_;
           onChanged();
@@ -2474,11 +2474,11 @@ public final class Webshop {
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws java.io.IOException {
-        com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage parsedMessage = null;
+        com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage parsedMessage = null;
         try {
           parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-          parsedMessage = (com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage) e.getUnfinishedMessage();
+          parsedMessage = (com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage) e.getUnfinishedMessage();
           throw e.unwrapIOException();
         } finally {
           if (parsedMessage != null) {
@@ -2652,9 +2652,9 @@ public final class Webshop {
         return this;
       }
 
-      private com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage.Emails emails_ = null;
+      private com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage.Emails emails_ = null;
       private com.google.protobuf.SingleFieldBuilderV3<
-          com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage.Emails, com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage.Emails.Builder, com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage.EmailsOrBuilder> emailsBuilder_;
+          com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage.Emails, com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage.Emails.Builder, com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage.EmailsOrBuilder> emailsBuilder_;
       /**
        * <code>optional .SomeMessage.Emails emails = 4;</code>
        */
@@ -2664,9 +2664,9 @@ public final class Webshop {
       /**
        * <code>optional .SomeMessage.Emails emails = 4;</code>
        */
-      public com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage.Emails getEmails() {
+      public com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage.Emails getEmails() {
         if (emailsBuilder_ == null) {
-          return emails_ == null ? com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage.Emails.getDefaultInstance() : emails_;
+          return emails_ == null ? com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage.Emails.getDefaultInstance() : emails_;
         } else {
           return emailsBuilder_.getMessage();
         }
@@ -2674,7 +2674,7 @@ public final class Webshop {
       /**
        * <code>optional .SomeMessage.Emails emails = 4;</code>
        */
-      public Builder setEmails(com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage.Emails value) {
+      public Builder setEmails(com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage.Emails value) {
         if (emailsBuilder_ == null) {
           if (value == null) {
             throw new NullPointerException();
@@ -2691,7 +2691,7 @@ public final class Webshop {
        * <code>optional .SomeMessage.Emails emails = 4;</code>
        */
       public Builder setEmails(
-          com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage.Emails.Builder builderForValue) {
+          com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage.Emails.Builder builderForValue) {
         if (emailsBuilder_ == null) {
           emails_ = builderForValue.build();
           onChanged();
@@ -2704,11 +2704,11 @@ public final class Webshop {
       /**
        * <code>optional .SomeMessage.Emails emails = 4;</code>
        */
-      public Builder mergeEmails(com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage.Emails value) {
+      public Builder mergeEmails(com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage.Emails value) {
         if (emailsBuilder_ == null) {
           if (emails_ != null) {
             emails_ =
-              com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage.Emails.newBuilder(emails_).mergeFrom(value).buildPartial();
+              com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage.Emails.newBuilder(emails_).mergeFrom(value).buildPartial();
           } else {
             emails_ = value;
           }
@@ -2736,7 +2736,7 @@ public final class Webshop {
       /**
        * <code>optional .SomeMessage.Emails emails = 4;</code>
        */
-      public com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage.Emails.Builder getEmailsBuilder() {
+      public com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage.Emails.Builder getEmailsBuilder() {
         
         onChanged();
         return getEmailsFieldBuilder().getBuilder();
@@ -2744,23 +2744,23 @@ public final class Webshop {
       /**
        * <code>optional .SomeMessage.Emails emails = 4;</code>
        */
-      public com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage.EmailsOrBuilder getEmailsOrBuilder() {
+      public com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage.EmailsOrBuilder getEmailsOrBuilder() {
         if (emailsBuilder_ != null) {
           return emailsBuilder_.getMessageOrBuilder();
         } else {
           return emails_ == null ?
-              com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage.Emails.getDefaultInstance() : emails_;
+              com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage.Emails.getDefaultInstance() : emails_;
         }
       }
       /**
        * <code>optional .SomeMessage.Emails emails = 4;</code>
        */
       private com.google.protobuf.SingleFieldBuilderV3<
-          com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage.Emails, com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage.Emails.Builder, com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage.EmailsOrBuilder> 
+          com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage.Emails, com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage.Emails.Builder, com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage.EmailsOrBuilder> 
           getEmailsFieldBuilder() {
         if (emailsBuilder_ == null) {
           emailsBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
-              com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage.Emails, com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage.Emails.Builder, com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage.EmailsOrBuilder>(
+              com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage.Emails, com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage.Emails.Builder, com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage.EmailsOrBuilder>(
                   getEmails(),
                   getParentForChildren(),
                   isClean());
@@ -2769,9 +2769,9 @@ public final class Webshop {
         return emailsBuilder_;
       }
 
-      private com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage.Servicelevels serviceLevels_ = null;
+      private com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage.Servicelevels serviceLevels_ = null;
       private com.google.protobuf.SingleFieldBuilderV3<
-          com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage.Servicelevels, com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage.Servicelevels.Builder, com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage.ServicelevelsOrBuilder> serviceLevelsBuilder_;
+          com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage.Servicelevels, com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage.Servicelevels.Builder, com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage.ServicelevelsOrBuilder> serviceLevelsBuilder_;
       /**
        * <code>optional .SomeMessage.Servicelevels serviceLevels = 5;</code>
        */
@@ -2781,9 +2781,9 @@ public final class Webshop {
       /**
        * <code>optional .SomeMessage.Servicelevels serviceLevels = 5;</code>
        */
-      public com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage.Servicelevels getServiceLevels() {
+      public com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage.Servicelevels getServiceLevels() {
         if (serviceLevelsBuilder_ == null) {
-          return serviceLevels_ == null ? com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage.Servicelevels.getDefaultInstance() : serviceLevels_;
+          return serviceLevels_ == null ? com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage.Servicelevels.getDefaultInstance() : serviceLevels_;
         } else {
           return serviceLevelsBuilder_.getMessage();
         }
@@ -2791,7 +2791,7 @@ public final class Webshop {
       /**
        * <code>optional .SomeMessage.Servicelevels serviceLevels = 5;</code>
        */
-      public Builder setServiceLevels(com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage.Servicelevels value) {
+      public Builder setServiceLevels(com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage.Servicelevels value) {
         if (serviceLevelsBuilder_ == null) {
           if (value == null) {
             throw new NullPointerException();
@@ -2808,7 +2808,7 @@ public final class Webshop {
        * <code>optional .SomeMessage.Servicelevels serviceLevels = 5;</code>
        */
       public Builder setServiceLevels(
-          com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage.Servicelevels.Builder builderForValue) {
+          com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage.Servicelevels.Builder builderForValue) {
         if (serviceLevelsBuilder_ == null) {
           serviceLevels_ = builderForValue.build();
           onChanged();
@@ -2821,11 +2821,11 @@ public final class Webshop {
       /**
        * <code>optional .SomeMessage.Servicelevels serviceLevels = 5;</code>
        */
-      public Builder mergeServiceLevels(com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage.Servicelevels value) {
+      public Builder mergeServiceLevels(com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage.Servicelevels value) {
         if (serviceLevelsBuilder_ == null) {
           if (serviceLevels_ != null) {
             serviceLevels_ =
-              com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage.Servicelevels.newBuilder(serviceLevels_).mergeFrom(value).buildPartial();
+              com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage.Servicelevels.newBuilder(serviceLevels_).mergeFrom(value).buildPartial();
           } else {
             serviceLevels_ = value;
           }
@@ -2853,7 +2853,7 @@ public final class Webshop {
       /**
        * <code>optional .SomeMessage.Servicelevels serviceLevels = 5;</code>
        */
-      public com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage.Servicelevels.Builder getServiceLevelsBuilder() {
+      public com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage.Servicelevels.Builder getServiceLevelsBuilder() {
         
         onChanged();
         return getServiceLevelsFieldBuilder().getBuilder();
@@ -2861,23 +2861,23 @@ public final class Webshop {
       /**
        * <code>optional .SomeMessage.Servicelevels serviceLevels = 5;</code>
        */
-      public com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage.ServicelevelsOrBuilder getServiceLevelsOrBuilder() {
+      public com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage.ServicelevelsOrBuilder getServiceLevelsOrBuilder() {
         if (serviceLevelsBuilder_ != null) {
           return serviceLevelsBuilder_.getMessageOrBuilder();
         } else {
           return serviceLevels_ == null ?
-              com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage.Servicelevels.getDefaultInstance() : serviceLevels_;
+              com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage.Servicelevels.getDefaultInstance() : serviceLevels_;
         }
       }
       /**
        * <code>optional .SomeMessage.Servicelevels serviceLevels = 5;</code>
        */
       private com.google.protobuf.SingleFieldBuilderV3<
-          com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage.Servicelevels, com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage.Servicelevels.Builder, com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage.ServicelevelsOrBuilder> 
+          com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage.Servicelevels, com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage.Servicelevels.Builder, com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage.ServicelevelsOrBuilder> 
           getServiceLevelsFieldBuilder() {
         if (serviceLevelsBuilder_ == null) {
           serviceLevelsBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
-              com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage.Servicelevels, com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage.Servicelevels.Builder, com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage.ServicelevelsOrBuilder>(
+              com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage.Servicelevels, com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage.Servicelevels.Builder, com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage.ServicelevelsOrBuilder>(
                   getServiceLevels(),
                   getParentForChildren(),
                   isClean());
@@ -2886,9 +2886,9 @@ public final class Webshop {
         return serviceLevelsBuilder_;
       }
 
-      private com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage.Settings settings_ = null;
+      private com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage.Settings settings_ = null;
       private com.google.protobuf.SingleFieldBuilderV3<
-          com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage.Settings, com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage.Settings.Builder, com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage.SettingsOrBuilder> settingsBuilder_;
+          com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage.Settings, com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage.Settings.Builder, com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage.SettingsOrBuilder> settingsBuilder_;
       /**
        * <code>optional .SomeMessage.Settings settings = 6;</code>
        */
@@ -2898,9 +2898,9 @@ public final class Webshop {
       /**
        * <code>optional .SomeMessage.Settings settings = 6;</code>
        */
-      public com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage.Settings getSettings() {
+      public com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage.Settings getSettings() {
         if (settingsBuilder_ == null) {
-          return settings_ == null ? com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage.Settings.getDefaultInstance() : settings_;
+          return settings_ == null ? com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage.Settings.getDefaultInstance() : settings_;
         } else {
           return settingsBuilder_.getMessage();
         }
@@ -2908,7 +2908,7 @@ public final class Webshop {
       /**
        * <code>optional .SomeMessage.Settings settings = 6;</code>
        */
-      public Builder setSettings(com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage.Settings value) {
+      public Builder setSettings(com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage.Settings value) {
         if (settingsBuilder_ == null) {
           if (value == null) {
             throw new NullPointerException();
@@ -2925,7 +2925,7 @@ public final class Webshop {
        * <code>optional .SomeMessage.Settings settings = 6;</code>
        */
       public Builder setSettings(
-          com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage.Settings.Builder builderForValue) {
+          com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage.Settings.Builder builderForValue) {
         if (settingsBuilder_ == null) {
           settings_ = builderForValue.build();
           onChanged();
@@ -2938,11 +2938,11 @@ public final class Webshop {
       /**
        * <code>optional .SomeMessage.Settings settings = 6;</code>
        */
-      public Builder mergeSettings(com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage.Settings value) {
+      public Builder mergeSettings(com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage.Settings value) {
         if (settingsBuilder_ == null) {
           if (settings_ != null) {
             settings_ =
-              com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage.Settings.newBuilder(settings_).mergeFrom(value).buildPartial();
+              com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage.Settings.newBuilder(settings_).mergeFrom(value).buildPartial();
           } else {
             settings_ = value;
           }
@@ -2970,7 +2970,7 @@ public final class Webshop {
       /**
        * <code>optional .SomeMessage.Settings settings = 6;</code>
        */
-      public com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage.Settings.Builder getSettingsBuilder() {
+      public com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage.Settings.Builder getSettingsBuilder() {
         
         onChanged();
         return getSettingsFieldBuilder().getBuilder();
@@ -2978,23 +2978,23 @@ public final class Webshop {
       /**
        * <code>optional .SomeMessage.Settings settings = 6;</code>
        */
-      public com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage.SettingsOrBuilder getSettingsOrBuilder() {
+      public com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage.SettingsOrBuilder getSettingsOrBuilder() {
         if (settingsBuilder_ != null) {
           return settingsBuilder_.getMessageOrBuilder();
         } else {
           return settings_ == null ?
-              com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage.Settings.getDefaultInstance() : settings_;
+              com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage.Settings.getDefaultInstance() : settings_;
         }
       }
       /**
        * <code>optional .SomeMessage.Settings settings = 6;</code>
        */
       private com.google.protobuf.SingleFieldBuilderV3<
-          com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage.Settings, com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage.Settings.Builder, com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage.SettingsOrBuilder> 
+          com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage.Settings, com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage.Settings.Builder, com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage.SettingsOrBuilder> 
           getSettingsFieldBuilder() {
         if (settingsBuilder_ == null) {
           settingsBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
-              com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage.Settings, com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage.Settings.Builder, com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage.SettingsOrBuilder>(
+              com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage.Settings, com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage.Settings.Builder, com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage.SettingsOrBuilder>(
                   getSettings(),
                   getParentForChildren(),
                   isClean());
@@ -3017,12 +3017,12 @@ public final class Webshop {
     }
 
     // @@protoc_insertion_point(class_scope:SomeMessage)
-    private static final com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage DEFAULT_INSTANCE;
+    private static final com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage DEFAULT_INSTANCE;
     static {
-      DEFAULT_INSTANCE = new com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage();
+      DEFAULT_INSTANCE = new com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage();
     }
 
-    public static com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage getDefaultInstance() {
+    public static com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage getDefaultInstance() {
       return DEFAULT_INSTANCE;
     }
 
@@ -3045,7 +3045,7 @@ public final class Webshop {
       return PARSER;
     }
 
-    public com.optiply.services.project.endpoint.protobuf.Webshop.SomeMessage getDefaultInstanceForType() {
+    public com.optiply.services.project.endpoint.protobuf.WebshopModel.SomeMessage getDefaultInstanceForType() {
       return DEFAULT_INSTANCE;
     }
 
@@ -3089,8 +3089,8 @@ public final class Webshop {
       "\rServicelevels\022\014\n\004slcA\030\001 \001(\001\022\014\n\004slcB\030\002 \001" +
       "(\001\022\014\n\004slcC\030\003 \001(\001\032D\n\010Settings\022\020\n\010currency" +
       "\030\001 \001(\t\022\017\n\007runJobs\030\002 \001(\010\022\025\n\rmultiSupplier" +
-      "\030\003 \001(\010B9\n.com.optiply.services.project.e",
-      "ndpoint.protobufB\007Webshopb\006proto3"
+      "\030\003 \001(\010B>\n.com.optiply.services.project.e",
+      "ndpoint.protobufB\014WebshopModelb\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {

@@ -2,7 +2,6 @@ package com.optiply.infrastructure.data.repositories;
 
 import com.optiply.infrastructure.data.models.Tables;
 import com.optiply.infrastructure.data.models.tables.pojos.Webshopservicelevels;
-import com.optiply.infrastructure.data.repositories.interfaces.IWebshopservicelevelsRepository;
 import com.optiply.infrastructure.data.support.sql.QueryResult;
 import io.micronaut.data.r2dbc.operations.R2dbcOperations;
 import io.micronaut.transaction.TransactionDefinition;
@@ -19,7 +18,7 @@ import reactor.core.publisher.Mono;
  * The type Webshopservicelevels repository.
  */
 @Singleton
-public class WebshopservicelevelsRepository implements IWebshopservicelevelsRepository {
+public class WebshopservicelevelsRepository {
 
 	/**
 	 * The Dsl context.
@@ -52,7 +51,7 @@ public class WebshopservicelevelsRepository implements IWebshopservicelevelsRepo
 	 * @param slcC      the slc c
 	 * @return the mono
 	 */
-	@Override
+
 	public Mono<Boolean> create(Long webshopId, Double slcA, Double slcB, Double slcC) {
 		return Mono.from(operations.withTransaction(
 				new DefaultTransactionDefinition(
@@ -77,7 +76,7 @@ public class WebshopservicelevelsRepository implements IWebshopservicelevelsRepo
 	 * @param webshopId the webshop id
 	 * @return the mono
 	 */
-	@Override
+
 	public Mono<Webshopservicelevels> read(Long webshopId) {
 		return Mono
 				.from(operations.withTransaction(TransactionDefinition.READ_ONLY, status -> Mono
@@ -97,7 +96,7 @@ public class WebshopservicelevelsRepository implements IWebshopservicelevelsRepo
 	 * @param slcC      the slc c
 	 * @return the mono
 	 */
-	@Override
+
 	public Mono<Boolean> update(Long webshopId, Double slcA, Double slcB, Double slcC) {
 		return Mono.from(operations.withTransaction(
 				new DefaultTransactionDefinition(
@@ -119,7 +118,7 @@ public class WebshopservicelevelsRepository implements IWebshopservicelevelsRepo
 	 * @param webshopId the webshop id
 	 * @return the mono
 	 */
-	@Override
+
 	public Mono<Boolean> delete(Long webshopId) {
 		return Mono.from(operations.withTransaction(
 				new DefaultTransactionDefinition(

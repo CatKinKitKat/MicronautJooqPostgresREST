@@ -29,6 +29,7 @@ r2dbc:
   datasources:
     default:
       password: postgres
+      driverClassName: io.r2dbc:r2dbc-postgresql
       url: r2dbc:postgresql://localhost:5432/postgres
       username: postgres
       schema-generate: CREATE
