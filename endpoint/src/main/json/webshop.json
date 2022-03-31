@@ -1,0 +1,15 @@
+{
+	"handle": "optiply",
+	"url": "https://optiply.nl",
+	"interestRate": 20,
+	"A": 33.3,
+	"B": 33.3,
+	"C": 33.4,
+	"currency": "EUR",
+	"runJobs": true,
+	"multiSupplier": false,
+	"emails": [
+		"management@optiply.nl",
+		"social@optiply.nl"
+	]
+}

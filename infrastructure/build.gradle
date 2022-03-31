@@ -16,6 +16,20 @@ plugins {
 group 'com.optiply.infrastructure.data'
 version '0.0.1-ALPHA'
 
+sourceSets {
+	main {
+		java {
+			srcDir("${projectDir}/build/generated/")
+		}
+	}
+
+	test {
+		java {
+			srcDir("${projectDir}/build/generated/")
+		}
+	}
+}
+
 dependencies {
 	annotationProcessor("org.projectlombok:lombok")
 	annotationProcessor("io.micronaut.data:micronaut-data-processor")
@@ -55,14 +69,14 @@ task generateJooqSources {
 											.withValue("semantic")))
 					.withGenerate(new Generate()
 							.withPojos(true)
-							.withDaos(true)
-							.withInterfaces(true)
+							.withDaos(false)
+							.withInterfaces(false)
 							.withFluentSetters(true)
 							.withRelations(true)
 							.withPojosEqualsAndHashCode(true))
 					.withTarget(new Target()
 							.withPackageName('com.optiply.infrastructure.data.models')
-							.withDirectory("${projectDir}/src/main/java/")))
+							.withDirectory("${projectDir}/build/generated/")))
 
 	doLast {
 		GenerationTool.generate(mainDB)

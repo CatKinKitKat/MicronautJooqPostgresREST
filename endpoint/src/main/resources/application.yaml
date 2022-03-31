@@ -39,7 +39,7 @@ jooq:
     default:
       sql-dialect: POSTGRES
 flyway:
-  enabled: false
+  enabled: true
   datasources:
     default:
       enabled: true

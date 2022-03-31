@@ -1,19 +1,13 @@
 package com.optiply.infrastructure.data.repositories;
 
+
 import com.optiply.infrastructure.data.models.Tables;
-import com.optiply.infrastructure.data.models.tables.pojos.Webshopemails;
-import com.optiply.infrastructure.data.support.sql.QueryResult;
-import io.micronaut.data.r2dbc.operations.R2dbcOperations;
-import io.micronaut.transaction.TransactionDefinition;
-import io.micronaut.transaction.support.DefaultTransactionDefinition;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
 import jakarta.inject.Singleton;
 import org.jooq.DSLContext;
-import org.jooq.SQLDialect;
-import org.jooq.impl.DSL;
-import reactor.core.publisher.Flux;
-import reactor.core.publisher.Mono;
+
+import java.util.List;
 
 /**
  * The type Webshopemails repository.
@@ -25,96 +19,121 @@ public class WebshopemailsRepository {
 	 * The Dsl context.
 	 */
 	private final DSLContext dslContext;
-	/**
-	 * The Operations.
-	 */
-	private final R2dbcOperations operations;
 
 
 	/**
 	 * Instantiates a new Webshopemails repository.
 	 *
 	 * @param dslContext the dsl context
-	 * @param operations the operations
 	 */
 	@Inject
-	public WebshopemailsRepository(@Named("dsl") DSLContext dslContext, @Named("r2dbc") R2dbcOperations operations) {
+	public WebshopemailsRepository(@Named("dsl") DSLContext dslContext) {
+
 		this.dslContext = dslContext;
-		this.operations = operations;
 	}
 
 	/**
-	 * Create mono.
+	 * Create boolean.
 	 *
 	 * @param webshopId the webshop id
 	 * @param email     the email
-	 * @return the mono
+	 * @return the boolean
 	 */
-
-	public Mono<Boolean> create(Long webshopId, String email) {
-		return Mono.from(operations.withTransaction(
-				new DefaultTransactionDefinition(
-						TransactionDefinition.Propagation.MANDATORY
-				), status -> Mono.from(DSL
-								.using(status.getConnection(), SQLDialect.POSTGRES, dslContext.settings())
-								.insertInto(Tables.WEBSHOPEMAILS)
-								.columns(Tables.WEBSHOPEMAILS.WEBSHOPID, Tables.WEBSHOPEMAILS.ADDRESS)
-								.values(webshopId, email))
-						.map(result -> result == QueryResult.SUCCESS.ordinal())));
+	public Boolean create(Long webshopId, String email) {
+		return dslContext.insertInto(Tables.WEBSHOPEMAILS)
+				.columns(Tables.WEBSHOPEMAILS.WEBSHOPID, Tables.WEBSHOPEMAILS.ADDRESS)
+				.values(webshopId, email)
+				.execute() == 0;
 	}
 
 	/**
-	 * Read by webshop id flux.
+	 * Create boolean.
+	 *
+	 * @param handle the handle
+	 * @param email  the email
+	 * @return the boolean
+	 */
+	public Boolean create(String handle, String email) {
+		Long webshopId = dslContext.select(Tables.WEBSHOP.WEBSHOPID)
+				.from(Tables.WEBSHOP)
+				.where(Tables.WEBSHOP.HANDLE.equalIgnoreCase(handle))
+				.fetchOne(Tables.WEBSHOP.WEBSHOPID);
+
+		return dslContext.insertInto(Tables.WEBSHOPEMAILS)
+				.columns(Tables.WEBSHOPEMAILS.WEBSHOPID, Tables.WEBSHOPEMAILS.ADDRESS)
+				.values(webshopId, email)
+				.execute() == 0;
+	}
+
+	/**
+	 * Gets emails.
 	 *
 	 * @param webshopId the webshop id
-	 * @return the flux
+	 * @return the emails
 	 */
-
-	public Flux<Webshopemails> readByWebshopId(Long webshopId) {
-		return Flux
-				.from(operations.withTransaction(TransactionDefinition.READ_ONLY, status -> Mono.from(DSL
-								.using(status.getConnection(), SQLDialect.POSTGRES, dslContext.settings())
-								.select(Tables.WEBSHOPEMAILS.asterisk())
-								.from(Tables.WEBSHOPEMAILS)
-								.where(Tables.WEBSHOPEMAILS.WEBSHOPID.eq(webshopId)))
-						.map(result -> result.into(Webshopemails.class))));
+	public List<String> getEmails(Long webshopId) {
+		return dslContext.select(Tables.WEBSHOPEMAILS.ADDRESS)
+				.from(Tables.WEBSHOPEMAILS)
+				.where(Tables.WEBSHOPEMAILS.WEBSHOPID.eq(webshopId))
+				.fetch(Tables.WEBSHOPEMAILS.ADDRESS);
 	}
 
 	/**
-	 * Update mono.
+	 * Gets emails.
 	 *
-	 * @param id    the id
-	 * @param email the email
-	 * @return the mono
+	 * @param handle the handle
+	 * @return the emails
 	 */
-
-	public Mono<Boolean> update(Long id, String email) {
-		return Mono.from(operations.withTransaction(
-				new DefaultTransactionDefinition(
-						TransactionDefinition.Propagation.MANDATORY
-				), status -> Mono.from(DSL
-								.using(status.getConnection(), SQLDialect.POSTGRES, dslContext.settings())
-								.update(Tables.WEBSHOPEMAILS)
-								.set(Tables.WEBSHOPEMAILS.ADDRESS, email)
-								.where(Tables.WEBSHOPEMAILS.WEBSHOPID.eq(id)))
-						.map(result -> result == QueryResult.SUCCESS.ordinal())));
+	public List<String> getEmails(String handle) {
+		return dslContext.select(Tables.WEBSHOPEMAILS.ADDRESS)
+				.from(Tables.WEBSHOPEMAILS)
+				.where(Tables.WEBSHOP.HANDLE.equalIgnoreCase(handle))
+				.fetch(Tables.WEBSHOPEMAILS.ADDRESS);
 	}
 
 	/**
-	 * Delete mono.
+	 * Delete all boolean.
 	 *
-	 * @param id the id
-	 * @return the mono
+	 * @param webshopId the webshop id
+	 * @return the boolean
 	 */
-
-	public Mono<Boolean> delete(Long id) {
-		return Mono.from(operations.withTransaction(
-				new DefaultTransactionDefinition(
-						TransactionDefinition.Propagation.MANDATORY
-				), status -> Mono.from(DSL
-								.using(status.getConnection(), SQLDialect.POSTGRES, dslContext.settings())
-								.delete(Tables.WEBSHOPEMAILS)
-								.where(Tables.WEBSHOPEMAILS.WEBSHOPID.eq(id)))
-						.map(result -> result == QueryResult.SUCCESS.ordinal())));
+	public Boolean deleteAll(Long webshopId) {
+		return dslContext.delete(Tables.WEBSHOPEMAILS)
+				.where(Tables.WEBSHOPEMAILS.WEBSHOPID.eq(webshopId))
+				.execute() == 0;
 	}
+
+	/**
+	 * Delete one boolean.
+	 *
+	 * @param webshopId the webshop id
+	 * @param email     the email
+	 * @return the boolean
+	 */
+	public Boolean deleteOne(Long webshopId, String email) {
+		return dslContext.delete(Tables.WEBSHOPEMAILS)
+				.where(Tables.WEBSHOPEMAILS.WEBSHOPID.eq(webshopId))
+				.and(Tables.WEBSHOPEMAILS.ADDRESS.eq(email))
+				.execute() == 0;
+	}
+
+	/**
+	 * Delete one boolean.
+	 *
+	 * @param handle the handle
+	 * @param email  the email
+	 * @return the boolean
+	 */
+	public Boolean deleteOne(String handle, String email) {
+		Long webshopId = dslContext.select(Tables.WEBSHOP.WEBSHOPID)
+				.from(Tables.WEBSHOP)
+				.where(Tables.WEBSHOP.HANDLE.equalIgnoreCase(handle))
+				.fetchOne(Tables.WEBSHOP.WEBSHOPID);
+
+		return dslContext.delete(Tables.WEBSHOPEMAILS)
+				.where(Tables.WEBSHOPEMAILS.WEBSHOPID.eq(webshopId))
+				.and(Tables.WEBSHOPEMAILS.ADDRESS.eq(email))
+				.execute() == 0;
+	}
+
 }
