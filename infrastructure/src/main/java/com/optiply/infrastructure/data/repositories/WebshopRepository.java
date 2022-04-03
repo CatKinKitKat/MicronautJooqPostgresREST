@@ -7,6 +7,7 @@ import jakarta.inject.Named;
 import jakarta.inject.Singleton;
 import org.jooq.Condition;
 import org.jooq.DSLContext;
+import org.jooq.SortField;
 
 import java.util.List;
 
@@ -109,11 +110,13 @@ public class WebshopRepository {
 	 * Gets webshops.
 	 *
 	 * @param conditions the conditions
+	 * @param sort       the sort
 	 * @return the webshops
 	 */
-	public List<Webshop> getWebshops(List<Condition> conditions) {
+	public List<Webshop> getWebshops(List<Condition> conditions, SortField<?> sort) {
 		return dslContext.selectFrom(Tables.WEBSHOP)
 				.where(conditions)
+				.orderBy(sort)
 				.fetchInto(Webshop.class);
 	}
 

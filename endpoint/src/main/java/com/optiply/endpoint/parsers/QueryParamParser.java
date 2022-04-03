@@ -1,6 +1,8 @@
 package com.optiply.endpoint.parsers;
 
+import com.optiply.infrastructure.data.models.Tables;
 import org.jooq.Condition;
+import org.jooq.SortField;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,25 +40,6 @@ public class QueryParamParser {
 	private final char LESS = '<';
 
 	/**
-	 * Parse query string [ ].
-	 *
-	 * @param query the query
-	 * @return the string [ ]
-	 */
-	public String[] parseQuery(String query) {
-
-		if (query == null || query.isEmpty()) {
-			return null;
-		}
-
-		if (query.charAt(0) == AND || query.charAt(0) == QUERYSIGN) {
-			query = query.substring(1);
-		}
-
-		return query.split(String.valueOf(AND));
-	}
-
-	/**
 	 * Parse params list.
 	 *
 	 * @param params the params
@@ -65,7 +48,7 @@ public class QueryParamParser {
 	public List<Condition> parseParams(String... params) {
 
 		if (params == null || params.length == 0) {
-			return null;
+			return new ArrayList<>();
 		}
 
 		List<Condition> filterList = new ArrayList<>();
@@ -126,4 +109,107 @@ public class QueryParamParser {
 
 		return filterList;
 	}
+
+	/**
+	 * Sort parser webshop sort field.
+	 *
+	 * @param sort  the sort
+	 * @param order the order
+	 * @return the sort field
+	 */
+	public SortField<?> sortParserWebshop(String sort, String order) {
+
+		if (sort == null || sort.isEmpty()) {
+			sort = "handle";
+		}
+
+		if (order == null || order.isEmpty()) {
+			order = "asc";
+		}
+
+		sort = sort.toLowerCase();
+		order = order.toLowerCase();
+
+		switch (sort) {
+			case "handle" -> {
+				if (order.equals("asc")) {
+					return Tables.WEBSHOP.HANDLE.asc();
+				}
+				return Tables.WEBSHOP.HANDLE.desc();
+			}
+			case "url" -> {
+				if (order.equals("asc")) {
+					return Tables.WEBSHOP.URL.asc();
+				}
+				return Tables.WEBSHOP.URL.desc();
+			}
+			case "currency" -> {
+				if (order.equals("asc")) {
+					return Tables.WEBSHOP.CURRENCY.asc();
+				}
+				return Tables.WEBSHOP.CURRENCY.desc();
+			}
+			case "a" -> {
+				if (order.equals("asc")) {
+					return Tables.WEBSHOP.A.asc();
+				}
+				return Tables.WEBSHOP.A.desc();
+			}
+			case "b" -> {
+				if (order.equals("asc")) {
+					return Tables.WEBSHOP.B.asc();
+				}
+				return Tables.WEBSHOP.B.desc();
+			}
+			case "c" -> {
+				if (order.equals("asc")) {
+					return Tables.WEBSHOP.C.asc();
+				}
+				return Tables.WEBSHOP.C.desc();
+			}
+			case "interestrate" -> {
+				if (order.equals("asc")) {
+					return Tables.WEBSHOP.INTERESTRATE.asc();
+				}
+				return Tables.WEBSHOP.INTERESTRATE.desc();
+			}
+		}
+
+
+		return Tables.WEBSHOP.HANDLE.asc();
+	}
+
+	/**
+	 * Sort parser emails sort field.
+	 *
+	 * @param sort  the sort
+	 * @param order the order
+	 * @return the sort field
+	 */
+	public SortField<?> sortParserEmails(String sort, String order) {
+
+
+		if (sort == null || sort.isEmpty()) {
+			sort = "handle";
+		}
+
+		if (order == null || order.isEmpty()) {
+			order = "asc";
+		}
+
+		sort = sort.toLowerCase();
+		order = order.toLowerCase();
+
+		if ("address".equals(sort)) {
+			if (order.equals("asc")) {
+				return Tables.WEBSHOPEMAILS.ADDRESS.asc();
+			}
+			return Tables.WEBSHOPEMAILS.ADDRESS.desc();
+		}
+
+		return Tables.WEBSHOPEMAILS.ADDRESS.asc();
+	}
+
+
 }
+

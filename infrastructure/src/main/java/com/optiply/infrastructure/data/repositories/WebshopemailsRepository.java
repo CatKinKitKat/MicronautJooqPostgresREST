@@ -6,6 +6,7 @@ import jakarta.inject.Inject;
 import jakarta.inject.Named;
 import jakarta.inject.Singleton;
 import org.jooq.DSLContext;
+import org.jooq.SortField;
 
 import java.util.List;
 
@@ -71,10 +72,11 @@ public class WebshopemailsRepository {
 	 * @param webshopId the webshop id
 	 * @return the emails
 	 */
-	public List<String> getEmails(Long webshopId) {
+	public List<String> getEmails(Long webshopId, SortField<?> sort) {
 		return dslContext.select(Tables.WEBSHOPEMAILS.ADDRESS)
 				.from(Tables.WEBSHOPEMAILS)
 				.where(Tables.WEBSHOPEMAILS.WEBSHOPID.eq(webshopId))
+				.orderBy(sort)
 				.fetch(Tables.WEBSHOPEMAILS.ADDRESS);
 	}
 
@@ -84,10 +86,11 @@ public class WebshopemailsRepository {
 	 * @param handle the handle
 	 * @return the emails
 	 */
-	public List<String> getEmails(String handle) {
+	public List<String> getEmails(String handle, SortField<?> sort) {
 		return dslContext.select(Tables.WEBSHOPEMAILS.ADDRESS)
 				.from(Tables.WEBSHOPEMAILS)
 				.where(Tables.WEBSHOP.HANDLE.equalIgnoreCase(handle))
+				.orderBy(sort)
 				.fetch(Tables.WEBSHOPEMAILS.ADDRESS);
 	}
 

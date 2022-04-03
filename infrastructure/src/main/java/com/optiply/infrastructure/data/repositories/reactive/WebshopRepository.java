@@ -12,9 +12,12 @@ import jakarta.inject.Singleton;
 import org.jooq.Condition;
 import org.jooq.DSLContext;
 import org.jooq.SQLDialect;
+import org.jooq.SortField;
 import org.jooq.impl.DSL;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+
+import java.util.List;
 
 /**
  * The type Webshop repository.
@@ -129,13 +132,14 @@ public class WebshopRepository {
 	 * @param conditions the conditions
 	 * @return the flux
 	 */
-	public Flux<Webshop> findVarious(Condition... conditions) {
+	public Flux<Webshop> findVarious(List<Condition> conditions, SortField<?> sort) {
 
 		return Flux.from(operations.withTransaction(TransactionDefinition.READ_ONLY, status -> DSL
 						.using(status.getConnection(), SQLDialect.POSTGRES, dslContext.settings())
 						.select(Tables.WEBSHOP.asterisk())
 						.from(Tables.WEBSHOP)
-						.where(conditions)))
+						.where(conditions)
+						.orderBy(sort)))
 				.map(result -> result.into(Webshop.class));
 	}
 
