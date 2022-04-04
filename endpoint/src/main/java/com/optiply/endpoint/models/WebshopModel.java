@@ -44,43 +44,43 @@ public class WebshopModel {
 	 * The Interest rate.
 	 */
 	@JsonProperty("interestRate")
-	public long interestRate;
+	public Short interestRate = 20;
 
 	/**
 	 * The A.
 	 */
 	@JsonProperty("A")
-	public double A;
+	public double A = 0.0;
 
 	/**
 	 * The B.
 	 */
 	@JsonProperty("B")
-	public double B;
+	public double B = 0.0;
 
 	/**
 	 * The C.
 	 */
 	@JsonProperty("C")
-	public double C;
+	public double C = 0.0;
 
 	/**
 	 * The Currency.
 	 */
 	@JsonProperty("currency")
-	public String currency;
+	public String currency = "EUR";
 
 	/**
 	 * The Run jobs.
 	 */
 	@JsonProperty("runJobs")
-	public boolean runJobs;
+	public boolean runJobs = true;
 
 	/**
 	 * The Multi supplier.
 	 */
 	@JsonProperty("multiSupplier")
-	public boolean multiSupplier;
+	public boolean multiSupplier = false;
 
 	/**
 	 * The Emails.

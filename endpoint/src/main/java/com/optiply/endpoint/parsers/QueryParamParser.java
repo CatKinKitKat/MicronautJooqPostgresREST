@@ -190,7 +190,7 @@ public class QueryParamParser {
 
 
 		if (sort == null || sort.isEmpty()) {
-			sort = "handle";
+			sort = "address";
 		}
 
 		if (order == null || order.isEmpty()) {

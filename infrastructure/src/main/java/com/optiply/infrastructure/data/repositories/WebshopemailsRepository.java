@@ -70,6 +70,7 @@ public class WebshopemailsRepository {
 	 * Gets emails.
 	 *
 	 * @param webshopId the webshop id
+	 * @param sort      the sort
 	 * @return the emails
 	 */
 	public List<String> getEmails(Long webshopId, SortField<?> sort) {
@@ -84,6 +85,7 @@ public class WebshopemailsRepository {
 	 * Gets emails.
 	 *
 	 * @param handle the handle
+	 * @param sort   the sort
 	 * @return the emails
 	 */
 	public List<String> getEmails(String handle, SortField<?> sort) {
@@ -139,4 +141,70 @@ public class WebshopemailsRepository {
 				.execute() == 0;
 	}
 
+	/**
+	 * Create boolean.
+	 *
+	 * @param handle the handle
+	 * @param emails the emails
+	 * @return the boolean
+	 */
+	public Boolean create(String handle, List<String> emails) {
+		Long webshopId = dslContext.select(Tables.WEBSHOP.WEBSHOPID)
+				.from(Tables.WEBSHOP)
+				.where(Tables.WEBSHOP.HANDLE.equalIgnoreCase(handle))
+				.fetchOne(Tables.WEBSHOP.WEBSHOPID);
+
+		int error = 0;
+
+		for (String email : emails) {
+
+			error += dslContext.insertInto(Tables.WEBSHOPEMAILS)
+					.columns(Tables.WEBSHOPEMAILS.WEBSHOPID, Tables.WEBSHOPEMAILS.ADDRESS)
+					.values(webshopId, email)
+					.execute();
+
+		}
+
+		return error == 0;
+	}
+
+	/**
+	 * Create boolean.
+	 *
+	 * @param webshopId the webshop id
+	 * @param emails    the emails
+	 * @return the boolean
+	 */
+	public Boolean create(Long webshopId, List<String> emails) {
+
+		int error = 0;
+
+		for (String email : emails) {
+
+			error += dslContext.insertInto(Tables.WEBSHOPEMAILS)
+					.columns(Tables.WEBSHOPEMAILS.WEBSHOPID, Tables.WEBSHOPEMAILS.ADDRESS)
+					.values(webshopId, email)
+					.execute();
+
+		}
+
+		return error == 0;
+	}
+
+	/**
+	 * Delete all boolean.
+	 *
+	 * @param handle the handle
+	 * @return the boolean
+	 */
+	public Boolean deleteAll(String handle) {
+		Long webshopId = dslContext.select(Tables.WEBSHOP.WEBSHOPID)
+				.from(Tables.WEBSHOP)
+				.where(Tables.WEBSHOP.HANDLE.equalIgnoreCase(handle))
+				.fetchOne(Tables.WEBSHOP.WEBSHOPID);
+
+		return dslContext.delete(Tables.WEBSHOPEMAILS)
+				.where(Tables.WEBSHOPEMAILS.WEBSHOPID.eq(webshopId))
+				.execute() == 0;
+	}
 }
