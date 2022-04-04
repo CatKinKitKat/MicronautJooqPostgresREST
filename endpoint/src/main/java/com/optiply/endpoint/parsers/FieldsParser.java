@@ -21,4 +21,8 @@ public class FieldsParser {
 		Currency currencyObj = Currency.getInstance(currency);
 		return currencyObj != null;
 	}
+
+	public Boolean isValidServiceSum(Double A, Double B, Double C) {
+		return A + B + C == 100;
+	}
 }

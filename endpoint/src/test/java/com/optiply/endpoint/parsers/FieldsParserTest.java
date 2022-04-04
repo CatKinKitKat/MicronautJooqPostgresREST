@@ -1,26 +1,29 @@
 package com.optiply.endpoint.parsers;
 
-import org.jooq.Condition;
-import org.jooq.SortField;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
-import java.util.List;
-
-import static org.jooq.impl.DSL.condition;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
 
 
+/**
+ * The type Fields parser test.
+ */
 public class FieldsParserTest {
 
 	private FieldsParser parser;
 
+	/**
+	 * Sets up.
+	 */
 	@BeforeEach
 	public void setUp() {
 		parser = new FieldsParser();
 	}
 
+	/**
+	 * Email tests.
+	 */
 	@Test
 	public void emailTests() {
 
@@ -31,6 +34,9 @@ public class FieldsParserTest {
 
 	}
 
+	/**
+	 * Url tests.
+	 */
 	@Test
 	public void urlTests() {
 
@@ -38,6 +44,27 @@ public class FieldsParserTest {
 		assertEquals(true, parser.isValidUrl("https://www.google.com"));
 		assertEquals(false, parser.isValidUrl("google.com"));
 		assertEquals(false, parser.isValidUrl("www.google.com"));
+
+	}
+
+	/**
+	 * Currency tests.
+	 */
+	@Test
+	public void currencyTests() {
+
+		assertEquals(true, parser.isValidCurrency("EUR"));
+		assertEquals(true, parser.isValidCurrency("USD"));
+		assertEquals(false, parser.isValidCurrency("EURO"));
+		assertEquals(false, parser.isValidCurrency("DOLLAR"));
+
+	}
+
+	@Test
+	public void serviceLevelSumTest() {
+
+		assertEquals(true, parser.isValidServiceSum(33.3, 33.3, 33.4));
+		assertEquals(false, parser.isValidServiceSum(33.3, 33.3, 33.3));
 
 	}
 
