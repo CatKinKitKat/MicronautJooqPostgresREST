@@ -62,7 +62,7 @@ public class WebshopModelParserTest {
 
 		model2.setHandle("optiply");
 		model2.setUrl("https://optiply.nl");
-		model2.setInterestRate(20);
+		model2.setInterestRate((short) 20);
 		model2.setA(33.3);
 		model2.setB(33.3);
 		model2.setC(33.4);
@@ -99,7 +99,7 @@ public class WebshopModelParserTest {
 
 		model1.setHandle("optiply");
 		model1.setUrl("https://optiply.nl");
-		model1.setInterestRate(20);
+		model1.setInterestRate((short) 20);
 		model1.setA(33.3);
 		model1.setB(33.3);
 		model1.setC(33.4);
@@ -115,7 +115,7 @@ public class WebshopModelParserTest {
 
 		model2.setHandle("optiply");
 		model2.setUrl("optiply.nl");
-		model2.setInterestRate(20);
+		model2.setInterestRate((short) 20);
 		model2.setA(33.3);
 		model2.setB(33.3);
 		model2.setC(33.3);

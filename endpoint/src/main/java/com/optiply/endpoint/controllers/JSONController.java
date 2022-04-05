@@ -64,7 +64,7 @@ public class JSONController {
 	 */
 	@Get(value = "/find", produces = "application/json", consumes = "application/json")
 	public HttpResponse<WebshopModel[]> getWebshops(@QueryValue String queryParams, @Nullable String sort, @Nullable String order) {
-		List<Condition> conditions = queryParamParser.parseParams(queryParams);
+		List<Condition> conditions = queryParamParser.parseParamsWebshop(queryParams);
 		SortField<?> sortBy = queryParamParser.sortParserWebshop(sort, order);
 		List<Webshop> webshops;
 
