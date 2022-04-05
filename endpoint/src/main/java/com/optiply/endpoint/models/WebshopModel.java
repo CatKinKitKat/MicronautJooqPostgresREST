@@ -4,6 +4,7 @@ package com.optiply.endpoint.models;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.optiply.infrastructure.data.models.tables.pojos.Webshop;
 import lombok.Data;
 
 import javax.validation.Valid;
@@ -89,4 +90,16 @@ public class WebshopModel {
 	@Valid
 	public List<String> emails = null;
 
+    public WebshopModel(Webshop webshop, List<String> webshopemails) {
+		this.handle = webshop.getHandle();
+		this.url = webshop.getUrl();
+		this.interestRate = webshop.getInterestrate();
+		this.A = webshop.getA();
+		this.B = webshop.getB();
+		this.C = webshop.getC();
+		this.currency = webshop.getCurrency();
+		this.runJobs = webshop.getRunjobs();
+		this.multiSupplier = webshop.getMultisupply();
+		this.emails = webshopemails;
+    }
 }
