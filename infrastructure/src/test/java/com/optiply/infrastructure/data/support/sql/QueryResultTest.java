@@ -14,8 +14,8 @@ public class QueryResultTest {
 	 */
 	@Test
 	public void testOrdinal() {
-		Integer result_success = 0;
-		Integer result_failed = 1;
+		Integer result_success = 1;
+		Integer result_failed = 0;
 
 		assertEquals(result_success, QueryResult.SUCCESS.ordinal());
 		assertEquals(result_failed, QueryResult.FAILED.ordinal());

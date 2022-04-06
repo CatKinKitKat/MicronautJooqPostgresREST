@@ -4,11 +4,17 @@ package com.optiply.endpoint.models;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.optiply.infrastructure.data.models.tables.pojos.Webshop;
 import lombok.Data;
+import org.apache.commons.validator.routines.EmailValidator;
+import org.apache.commons.validator.routines.UrlValidator;
 
 import javax.validation.Valid;
+import java.util.Currency;
 import java.util.List;
+import java.util.Set;
 
 /**
  * The type Webshop model.
@@ -27,79 +33,113 @@ import java.util.List;
 		"emails"
 })
 @JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonSerialize
+@JsonDeserialize
 public class WebshopModel {
 
-	/**
-	 * The Handle.
-	 */
 	@JsonProperty("handle")
-	public String handle;
-
-	/**
-	 * The Url.
-	 */
+	private String handle;
 	@JsonProperty("url")
-	public String url;
-
-	/**
-	 * The Interest rate.
-	 */
+	private String url;
 	@JsonProperty("interestRate")
-	public Short interestRate = 20;
-
-	/**
-	 * The A.
-	 */
+	private Short interestRate;
 	@JsonProperty("A")
-	public double A = 0.0;
-
-	/**
-	 * The B.
-	 */
+	private Double a;
 	@JsonProperty("B")
-	public double B = 0.0;
-
-	/**
-	 * The C.
-	 */
+	private Double b;
 	@JsonProperty("C")
-	public double C = 0.0;
-
-	/**
-	 * The Currency.
-	 */
+	private Double c;
 	@JsonProperty("currency")
-	public String currency = "EUR";
-
-	/**
-	 * The Run jobs.
-	 */
+	private String currency;
 	@JsonProperty("runJobs")
-	public boolean runJobs = true;
-
-	/**
-	 * The Multi supplier.
-	 */
+	private Boolean runJobs;
 	@JsonProperty("multiSupplier")
-	public boolean multiSupplier = false;
-
-	/**
-	 * The Emails.
-	 */
+	private Boolean multiSupplier;
 	@JsonProperty("emails")
 	@Valid
-	public List<String> emails = null;
+	private List<String> emails = null;
 
-    public WebshopModel(Webshop webshop, List<String> webshopemails) {
+	/**
+	 * Instantiates a new Webshop model.
+	 */
+	public WebshopModel() {
+	}
+
+	/**
+	 * Instantiates a new Webshop model.
+	 *
+	 * @param webshop the webshop
+	 * @param emails  the emails
+	 */
+	public WebshopModel(Webshop webshop, List<String> emails) {
 		this.handle = webshop.getHandle();
 		this.url = webshop.getUrl();
 		this.interestRate = webshop.getInterestrate();
-		this.A = webshop.getA();
-		this.B = webshop.getB();
-		this.C = webshop.getC();
+		this.a = webshop.getA();
+		this.b = webshop.getB();
+		this.c = webshop.getC();
 		this.currency = webshop.getCurrency();
 		this.runJobs = webshop.getRunjobs();
 		this.multiSupplier = webshop.getMultisupply();
-		this.emails = webshopemails;
-    }
+		this.emails = emails;
+	}
+
+	public Boolean isValid() {
+
+		return this.isValidUrl(this.url) &&
+				this.isValidCurrency(this.currency) &&
+				this.isValidServiceSum(this.a, this.b, this.c) &&
+				this.isValidEmailAddress(this.emails.get(0));
+	}
+
+
+	/**
+	 * Is valid url boolean.
+	 *
+	 * @param url the url
+	 * @return the boolean
+	 */
+	private Boolean isValidUrl(String url) {
+		String[] schemes = {"http", "https"};
+		UrlValidator urlValidator = new UrlValidator(schemes);
+		return urlValidator.isValid(url);
+	}
+
+	/**
+	 * Is valid currency boolean.
+	 *
+	 * @param currency the currency
+	 * @return the boolean
+	 */
+	private Boolean isValidCurrency(String currency) {
+		Set<Currency> currencies = Currency.getAvailableCurrencies();
+		for (Currency c : currencies) {
+			if (c.getCurrencyCode().equals(currency)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	/**
+	 * Is valid service sum boolean.
+	 *
+	 * @param A the a
+	 * @param B the b
+	 * @param C the c
+	 * @return the boolean
+	 */
+	private Boolean isValidServiceSum(Double A, Double B, Double C) {
+		return A + B + C == 100;
+	}
+
+	/**
+	 * Is valid email address boolean.
+	 *
+	 * @param email the email
+	 * @return the boolean
+	 */
+	private Boolean isValidEmailAddress(String email) {
+		return EmailValidator.getInstance().isValid(email);
+	}
 }
