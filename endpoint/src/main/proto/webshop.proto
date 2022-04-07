@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-option java_outer_classname = "WebshopModel";
+option java_outer_classname = "WebshopBodyModel";
 option java_package = "com.optiply.endpoint.protobuf";
 
 message SomeMessage {

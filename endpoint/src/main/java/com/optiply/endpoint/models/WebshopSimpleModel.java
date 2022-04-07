@@ -11,13 +11,8 @@ import lombok.Data;
 import org.apache.commons.validator.routines.EmailValidator;
 import org.apache.commons.validator.routines.UrlValidator;
 
-import javax.validation.Valid;
-import java.util.Currency;
-import java.util.List;
-import java.util.Set;
-
 /**
- * The type Webshop model.
+ * The type Webshop simple model.
  */
 @Data
 @JsonPropertyOrder({
@@ -26,16 +21,12 @@ import java.util.Set;
 		"interestRate",
 		"A",
 		"B",
-		"C",
-		"currency",
-		"runJobs",
-		"multiSupplier",
-		"emails"
+		"C"
 })
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonSerialize
 @JsonDeserialize
-public class WebshopModel {
+public class WebshopSimpleModel {
 
 	@JsonProperty("handle")
 	private String handle;
@@ -49,47 +40,29 @@ public class WebshopModel {
 	private Double b;
 	@JsonProperty("C")
 	private Double c;
-	@JsonProperty("currency")
-	private String currency;
-	@JsonProperty("runJobs")
-	private Boolean runJobs;
-	@JsonProperty("multiSupplier")
-	private Boolean multiSupplier;
-	@JsonProperty("emails")
-	@Valid
-	private List<String> emails = null;
 
 	/**
-	 * Instantiates a new Webshop model.
-	 */
-	public WebshopModel() {
-	}
-
-	/**
-	 * Instantiates a new Webshop model.
+	 * Instantiates a new Webshop simple model.
 	 *
 	 * @param webshop the webshop
-	 * @param emails  the emails
 	 */
-	public WebshopModel(Webshop webshop, List<String> emails) {
+	public WebshopSimpleModel(Webshop webshop) {
 		this.handle = webshop.getHandle();
 		this.url = webshop.getUrl();
 		this.interestRate = webshop.getInterestrate();
 		this.a = webshop.getA();
 		this.b = webshop.getB();
 		this.c = webshop.getC();
-		this.currency = webshop.getCurrency();
-		this.runJobs = webshop.getRunjobs();
-		this.multiSupplier = webshop.getMultisupply();
-		this.emails = emails;
 	}
 
+	/**
+	 * Is valid boolean.
+	 *
+	 * @return the boolean
+	 */
 	public Boolean isValid() {
-
 		return this.isValidUrl(this.url) &&
-				this.isValidCurrency(this.currency) &&
-				this.isValidServiceSum(this.a, this.b, this.c) &&
-				this.isValidEmailAddress(this.emails.get(0));
+				this.isValidServiceSum(this.a, this.b, this.c);
 	}
 
 
@@ -105,21 +78,6 @@ public class WebshopModel {
 		return urlValidator.isValid(url);
 	}
 
-	/**
-	 * Is valid currency boolean.
-	 *
-	 * @param currency the currency
-	 * @return the boolean
-	 */
-	private Boolean isValidCurrency(String currency) {
-		Set<Currency> currencies = Currency.getAvailableCurrencies();
-		for (Currency c : currencies) {
-			if (c.getCurrencyCode().equals(currency)) {
-				return true;
-			}
-		}
-		return false;
-	}
 
 	/**
 	 * Is valid service sum boolean.
