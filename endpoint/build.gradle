@@ -83,7 +83,7 @@ dependencies {
 	testImplementation("org.junit.jupiter:junit-jupiter-api")
 	testImplementation("io.micronaut.test:micronaut-test-junit5")
 	testImplementation("org.mockito:mockito-core")
-	testImplementation('io.projectreactor:reactor-test:3.4.15')
+	testImplementation('io.projectreactor:reactor-test:3.4.16')
 	//testImplementation('com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.13.2')
 	//testImplementation("org.testcontainers:junit-jupiter")
 	//testImplementation("org.testcontainers:r2dbc")

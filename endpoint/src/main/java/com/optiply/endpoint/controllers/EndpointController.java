@@ -70,7 +70,7 @@ public class EndpointController {
     public Mono<HttpResponse<WebshopSimpleModel>> getWebshop(String handle) {
 
         return webshopRepository.find(handle).flatMap(webshop -> {
-            log.info("webshop: " + webshop + " found\n" + "id: " + webshop.getWebshopid());
+            log.info("webshop: " + webshop + " found\n" + "id: " + webshop.getWebshopId());
             return Mono.just(new WebshopSimpleModel(webshop));
         }).flatMap(webshopModel -> Mono.just(HttpResponse.ok(webshopModel)));
 
@@ -85,14 +85,10 @@ public class EndpointController {
     @Get(value = "/get/{handle}/emails", produces = "application/json", consumes = "application/json")
     public Mono<HttpResponse<WebshopEmailsModel>> getWebshopEmails(String handle) {
 
-        return webshopRepository.find(handle).flatMapMany(webshop -> {
-            log.info("webshop: " + webshop + " found\n" + "id: " + webshop.getWebshopid());
-            return webshopemailsRepository.find(webshop.getWebshopid());
-        }).collectList().flatMap(webshopemails -> {
-            log.info("webshopemails: " + webshopemails + " found\n" + "id: " + webshopemails.get(0).getWebshopid());
-            return Mono.just(new WebshopEmailsModel(handle, webshopemails.stream().map(Webshopemails::getAddress).toList()));
+        return Mono.from(webshopemailsRepository.findEmails(handle).collectList()).flatMap(emails -> {
+            log.info("webshop" + handle + " found\n" + "emails: " + emails);
+            return Mono.just(new WebshopEmailsModel(handle, emails));
         }).flatMap(webshopEmailsModel -> Mono.just(HttpResponse.ok(webshopEmailsModel)));
-
     }
 
     /**
@@ -105,7 +101,7 @@ public class EndpointController {
     public Mono<HttpResponse<WebshopSettingsModel>> getWebshopSettings(String handle) {
 
         return webshopRepository.find(handle).flatMap(webshop -> {
-            log.info("webshop: " + webshop + " found\n" + "id: " + webshop.getWebshopid());
+            log.info("webshop: " + webshop + " found\n" + "id: " + webshop.getWebshopId());
             return Mono.just(new WebshopSettingsModel(webshop));
         }).flatMap(webshopSettingsModel -> Mono.just(HttpResponse.ok(webshopSettingsModel)));
 
@@ -315,9 +311,9 @@ public class EndpointController {
             }
             case "interestrate" -> {
                 if (order.equals("asc")) {
-                    return Tables.WEBSHOP.INTERESTRATE.asc();
+                    return Tables.WEBSHOP.INTEREST_RATE.asc();
                 }
-                return Tables.WEBSHOP.INTERESTRATE.desc();
+                return Tables.WEBSHOP.INTEREST_RATE.desc();
             }
         }
 

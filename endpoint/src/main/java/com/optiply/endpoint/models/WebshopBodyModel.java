@@ -69,13 +69,13 @@ public class WebshopBodyModel {
 	public WebshopBodyModel(Webshop webshop, List<String> emails) {
 		this.handle = webshop.getHandle();
 		this.url = webshop.getUrl();
-		this.interestRate = webshop.getInterestrate();
+		this.interestRate = webshop.getInterestRate();
 		this.a = webshop.getA();
 		this.b = webshop.getB();
 		this.c = webshop.getC();
 		this.currency = webshop.getCurrency();
-		this.runJobs = webshop.getRunjobs();
-		this.multiSupplier = webshop.getMultisupply();
+		this.runJobs = webshop.getRunJobs();
+		this.multiSupplier = webshop.getMultiSupply();
 		this.emails = emails;
 	}
 

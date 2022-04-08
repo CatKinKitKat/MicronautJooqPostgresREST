@@ -45,3 +45,6 @@ r2dbc:
         maxAcquireTime: PT6S
         poolName: r2dbc-default
         registerJmx: false
+  logger:
+    levels:
+      org.jooq.tools.LoggerListener: DEBUG

@@ -49,7 +49,7 @@ public class WebshopSimpleModel {
 	public WebshopSimpleModel(Webshop webshop) {
 		this.handle = webshop.getHandle();
 		this.url = webshop.getUrl();
-		this.interestRate = webshop.getInterestrate();
+		this.interestRate = webshop.getInterestRate();
 		this.a = webshop.getA();
 		this.b = webshop.getB();
 		this.c = webshop.getC();

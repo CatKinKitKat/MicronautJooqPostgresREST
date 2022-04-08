@@ -45,8 +45,8 @@ public class WebshopSettingsModel {
 	public WebshopSettingsModel(Webshop webshop) {
 		this.handle = webshop.getHandle();
 		this.currency = webshop.getCurrency();
-		this.runJobs = webshop.getRunjobs();
-		this.multiSupplier = webshop.getMultisupply();
+		this.runJobs = webshop.getRunJobs();
+		this.multiSupplier = webshop.getMultiSupply();
 	}
 
 	/**

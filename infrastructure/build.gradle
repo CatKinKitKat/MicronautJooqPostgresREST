@@ -42,7 +42,11 @@ dependencies {
 	implementation("io.micronaut.data:micronaut-data-jdbc")
 	compileOnly("org.projectlombok:lombok")
 	testImplementation 'org.junit.jupiter:junit-jupiter-api'
-	testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
+	testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine")
+	testImplementation("org.junit.jupiter:junit-jupiter-api")
+	testImplementation("io.micronaut.test:micronaut-test-junit5")
+	testImplementation("org.mockito:mockito-core")
+	testImplementation('io.projectreactor:reactor-test:3.4.16')
 }
 
 test {
@@ -51,8 +55,8 @@ test {
 
 task generateJooqSources {
 	outputs.upToDateWhen { false }
-	def mainDB = new org.jooq.meta.jaxb.Configuration()
-			.withLogging(org.jooq.meta.jaxb.Logging.DEBUG)
+	def mainDB = new Configuration()
+			.withLogging(Logging.DEBUG)
 			.withGenerator(new Generator()
 					.withName("org.jooq.codegen.JavaGenerator")
 					.withStrategy(new Strategy()
@@ -61,10 +65,10 @@ task generateJooqSources {
 							.withName('org.jooq.meta.extensions.ddl.DDLDatabase')
 							.withRecordTimestampFields(".*.*\\.UPDATED_AT")
 							.withProperties(
-									new org.jooq.meta.jaxb.Property()
+									new Property()
 											.withKey("scripts")
 											.withValue("${projectDir}/build/resources/main/jooq_schema.sql"),
-									new org.jooq.meta.jaxb.Property()
+									new Property()
 											.withKey("sort")
 											.withValue("semantic")))
 					.withGenerate(new Generate()
