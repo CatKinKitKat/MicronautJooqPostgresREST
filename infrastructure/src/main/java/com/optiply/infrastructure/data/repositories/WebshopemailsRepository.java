@@ -60,7 +60,7 @@ public class WebshopemailsRepository {
         log.info("Creating email: " + email);
         return Mono.from(operations.withTransaction(
                 new DefaultTransactionDefinition(
-                        TransactionDefinition.Propagation.MANDATORY
+                        TransactionDefinition.Propagation.REQUIRES_NEW
                 ), status -> Mono
                         .from(DSL
                                 .using(status.getConnection(), SQLDialect.POSTGRES, dslContext.settings())
@@ -136,7 +136,7 @@ public class WebshopemailsRepository {
         log.info("Deleting emails for id: " + id);
         return Mono.from(operations.withTransaction(
                 new DefaultTransactionDefinition(
-                        TransactionDefinition.Propagation.MANDATORY
+                        TransactionDefinition.Propagation.REQUIRES_NEW
                 ), status -> Mono
                         .from(DSL
                                 .using(status.getConnection(), SQLDialect.POSTGRES, dslContext.settings())

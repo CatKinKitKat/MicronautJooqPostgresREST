@@ -9,12 +9,9 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.apache.commons.validator.routines.EmailValidator;
 import org.apache.commons.validator.routines.UrlValidator;
 
-import javax.validation.Valid;
 import java.util.Currency;
-import java.util.List;
 import java.util.Set;
 
 /**
@@ -58,9 +55,6 @@ public class WebshopBodyModel {
     private Boolean runJobs = true;
     @JsonProperty("multiSupplier")
     private Boolean multiSupplier = false;
-    @JsonProperty("emails")
-    @Valid
-    private List<String> emails = null;
 
     /**
      * Is valid boolean.
@@ -68,22 +62,10 @@ public class WebshopBodyModel {
      * @return the boolean
      */
     public Boolean isValid() {
-        Boolean valid = true;
 
-        Boolean valids = this.isValidUrl(this.url) &&
+        return this.isValidUrl(this.url) &&
                 this.isValidCurrency(this.currency) &&
                 this.isValidServiceSum(this.a, this.b, this.c);
-
-        if (!valids) {
-            valid = false;
-        }
-
-        for (String email : emails) {
-            if (!this.isValidEmailAddress(email)) {
-                valid = false;
-            }
-        }
-        return valid;
     }
 
 
@@ -125,15 +107,5 @@ public class WebshopBodyModel {
      */
     private Boolean isValidServiceSum(Double A, Double B, Double C) {
         return A + B + C == 100;
-    }
-
-    /**
-     * Is valid email address boolean.
-     *
-     * @param email the email
-     * @return the boolean
-     */
-    private Boolean isValidEmailAddress(String email) {
-        return EmailValidator.getInstance().isValid(email);
     }
 }

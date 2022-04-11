@@ -2,10 +2,7 @@ package com.optiply.endpoint.controllers;
 
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.optiply.endpoint.models.WebshopBodyModel;
-import com.optiply.endpoint.models.WebshopEmailsModel;
-import com.optiply.endpoint.models.WebshopSettingsModel;
-import com.optiply.endpoint.models.WebshopSimpleModel;
+import com.optiply.endpoint.models.*;
 import com.optiply.infrastructure.data.models.Tables;
 import com.optiply.infrastructure.data.repositories.WebshopRepository;
 import com.optiply.infrastructure.data.repositories.WebshopemailsRepository;
@@ -148,15 +145,15 @@ public class EndpointController {
     /**
      * Create webshop simple mono.
      *
-     * @param webshopBodyModel the webshop body model
+     * @param webshopModel the webshop body model
      * @return the mono
      */
     @Post(value = "/create/simple", produces = "application/json", consumes = "application/json")
-    public Mono<MutableHttpResponse<String>> createWebshopSimple(@Body WebshopBodyModel webshopBodyModel) {
+    public Mono<MutableHttpResponse<String>> createWebshopSimple(@Body WebshopBodyModel webshopModel) {
 
         return webshopRepository.create(
-                        webshopBodyModel.getHandle(), webshopBodyModel.getUrl(),
-                        webshopBodyModel.getA(), webshopBodyModel.getB(), webshopBodyModel.getC()
+                        webshopModel.getHandle(), webshopModel.getUrl(),
+                        webshopModel.getA(), webshopModel.getB(), webshopModel.getC()
                 ).flatMap(webshop -> {
                     if (webshop) {
                         log.info("webshop created");
@@ -171,17 +168,17 @@ public class EndpointController {
     /**
      * Create webshop mono.
      *
-     * @param webshopBodyModel the webshop body model
+     * @param webshopModel the webshop body model
      * @return the mono
      */
     @Post(value = "/create", produces = "application/json", consumes = "application/json")
-    public Mono<MutableHttpResponse<String>> createWebshop(@Body WebshopBodyModel webshopBodyModel) {
+    public Mono<MutableHttpResponse<String>> createWebshop(@Body WebshopBodyModel webshopModel) {
 
         return webshopRepository.create(
-                        webshopBodyModel.getHandle(), webshopBodyModel.getUrl(),
-                        webshopBodyModel.getA(), webshopBodyModel.getB(), webshopBodyModel.getC(),
-                        webshopBodyModel.getInterestRate(), webshopBodyModel.getCurrency(),
-                        webshopBodyModel.getRunJobs(), webshopBodyModel.getMultiSupplier()
+                        webshopModel.getHandle(), webshopModel.getUrl(),
+                        webshopModel.getA(), webshopModel.getB(), webshopModel.getC(),
+                        webshopModel.getInterestRate(), webshopModel.getCurrency(),
+                        webshopModel.getRunJobs(), webshopModel.getMultiSupplier()
                 ).flatMap(webshop -> {
                     if (webshop) {
                         log.info("webshop created");
@@ -190,7 +187,7 @@ public class EndpointController {
                     log.info("webshop not created");
                     return Mono.empty();
                 })
-                .switchIfEmpty(Mono.just(HttpResponse.badRequest()));
+                .switchIfEmpty(Mono.just(HttpResponse.badRequest())).onErrorReturn(HttpResponse.serverError());
     }
 
     /**
@@ -209,24 +206,24 @@ public class EndpointController {
                     log.info("webshop not deleted");
                     return Mono.empty();
                 })
-                .switchIfEmpty(Mono.just(HttpResponse.badRequest())).onErrorReturn(HttpResponse.serverError());
+                .switchIfEmpty(Mono.just(HttpResponse.badRequest()));
     }
 
 
     /**
      * Update webshop mono.
      *
-     * @param webshopBodyModel the webshop body model
+     * @param webshopModel the webshop body model
      * @return the mono
      */
     @Put(value = "/update", produces = "application/json", consumes = "application/json")
-    public Mono<MutableHttpResponse<String>> updateWebshop(@Body WebshopBodyModel webshopBodyModel) {
+    public Mono<MutableHttpResponse<String>> updateWebshop(@Body WebshopBodyModel webshopModel) {
 
         return webshopRepository.updateWebshop(
-                        webshopBodyModel.getHandle(), webshopBodyModel.getUrl(),
-                        webshopBodyModel.getA(), webshopBodyModel.getB(), webshopBodyModel.getC(),
-                        webshopBodyModel.getInterestRate(), webshopBodyModel.getCurrency(),
-                        webshopBodyModel.getRunJobs(), webshopBodyModel.getMultiSupplier()
+                        webshopModel.getHandle(), webshopModel.getUrl(),
+                        webshopModel.getA(), webshopModel.getB(), webshopModel.getC(),
+                        webshopModel.getInterestRate(), webshopModel.getCurrency(),
+                        webshopModel.getRunJobs(), webshopModel.getMultiSupplier()
                 ).flatMap(webshop -> {
                     if (webshop) {
                         log.info("webshop updated");

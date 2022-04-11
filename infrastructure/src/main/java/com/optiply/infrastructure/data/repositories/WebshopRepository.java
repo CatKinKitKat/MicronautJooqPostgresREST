@@ -66,7 +66,7 @@ public class WebshopRepository {
         log.info("Creating webshop: " + handle);
         return Mono.from(operations.withTransaction(
                 new DefaultTransactionDefinition(
-                        TransactionDefinition.Propagation.MANDATORY
+                        TransactionDefinition.Propagation.REQUIRES_NEW
                 ), status -> Mono
                         .from(DSL
                                 .using(status.getConnection(), SQLDialect.POSTGRES, dslContext.settings())
@@ -201,7 +201,7 @@ public class WebshopRepository {
         log.info("Updating webshop: " + handle);
         return Mono.from(operations.withTransaction(
                 new DefaultTransactionDefinition(
-                        TransactionDefinition.Propagation.MANDATORY
+                        TransactionDefinition.Propagation.REQUIRES_NEW
                 ), status -> Mono
                         .from(DSL
                                 .using(status.getConnection(), SQLDialect.POSTGRES, dslContext.settings())
@@ -242,7 +242,7 @@ public class WebshopRepository {
         log.info("Updating webshop: " + handle);
         return Mono.from(operations.withTransaction(
                 new DefaultTransactionDefinition(
-                        TransactionDefinition.Propagation.MANDATORY
+                        TransactionDefinition.Propagation.REQUIRES_NEW
                 ), status -> Mono
                         .from(DSL
                                 .using(status.getConnection(), SQLDialect.POSTGRES, dslContext.settings())
@@ -271,7 +271,7 @@ public class WebshopRepository {
         log.info("Deleting webshop: " + id);
         return Mono.from(operations.withTransaction(
                 new DefaultTransactionDefinition(
-                        TransactionDefinition.Propagation.MANDATORY
+                        TransactionDefinition.Propagation.REQUIRES_NEW
                 ), status -> Mono
                         .from(DSL
                                 .using(status.getConnection(), SQLDialect.POSTGRES, dslContext.settings())
@@ -290,7 +290,7 @@ public class WebshopRepository {
         log.info("Deleting webshop: " + handle);
         return Mono.from(operations.withTransaction(
                 new DefaultTransactionDefinition(
-                        TransactionDefinition.Propagation.MANDATORY
+                        TransactionDefinition.Propagation.REQUIRES_NEW
                 ), status -> Mono
                         .from(DSL
                                 .using(status.getConnection(), SQLDialect.POSTGRES, dslContext.settings())
