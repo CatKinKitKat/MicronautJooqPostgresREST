@@ -86,26 +86,26 @@ public class WebshopRepository {
      * @param A             the a
      * @param B             the b
      * @param C             the c
-     * @param INTEREST_RATE  the interest rate
+     * @param interestRate  the interest rate
      * @param currency      the currency
-     * @param RUN_JOBS       the run jobs
+     * @param runJobs       the run jobs
      * @param multiSupplier the multi supplier
      * @return the mono
      */
     public Mono<Boolean> create(String handle, String url,
                                 Double A, Double B, Double C,
-                                Short INTEREST_RATE, String currency,
-                                Boolean RUN_JOBS, Boolean multiSupplier) {
+                                Short interestRate, String currency,
+                                Boolean runJobs, Boolean multiSupplier) {
         log.info("Creating webshop: " + handle);
         return Mono.from(operations.withTransaction(
                 new DefaultTransactionDefinition(
-                        TransactionDefinition.Propagation.MANDATORY
+                        TransactionDefinition.Propagation.REQUIRES_NEW
                 ), status -> Mono
                         .from(DSL
                                 .using(status.getConnection(), SQLDialect.POSTGRES, dslContext.settings())
                                 .insertInto(Tables.WEBSHOP)
                                 .columns(Tables.WEBSHOP.HANDLE, Tables.WEBSHOP.URL, Tables.WEBSHOP.A, Tables.WEBSHOP.B, Tables.WEBSHOP.C, Tables.WEBSHOP.INTEREST_RATE, Tables.WEBSHOP.CURRENCY, Tables.WEBSHOP.RUN_JOBS, Tables.WEBSHOP.MULTI_SUPPLY)
-                                .values(handle, url, A, B, C, INTEREST_RATE, currency, RUN_JOBS, multiSupplier))
+                                .values(handle, url, A, B, C, interestRate, currency, runJobs, multiSupplier))
                         .map(result -> result == QueryResult.SUCCESS.ordinal())
                         .onErrorReturn(false)));
     }
@@ -188,9 +188,9 @@ public class WebshopRepository {
      * @param A             the a
      * @param B             the b
      * @param C             the c
-     * @param INTEREST_RATE  the interest rate
+     * @param INTEREST_RATE the interest rate
      * @param currency      the currency
-     * @param RUN_JOBS       the run jobs
+     * @param RUN_JOBS      the run jobs
      * @param multiSupplier the multi supplier
      * @return the mono
      */
@@ -229,9 +229,9 @@ public class WebshopRepository {
      * @param A             the a
      * @param B             the b
      * @param C             the c
-     * @param INTEREST_RATE  the interest rate
+     * @param INTEREST_RATE the interest rate
      * @param currency      the currency
-     * @param RUN_JOBS       the run jobs
+     * @param RUN_JOBS      the run jobs
      * @param multiSupplier the multi supplier
      * @return the mono
      */

@@ -7,7 +7,9 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.optiply.infrastructure.data.models.tables.pojos.Webshop;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.Currency;
 import java.util.Set;
@@ -26,16 +28,18 @@ import java.util.Set;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonSerialize
 @JsonDeserialize
+@AllArgsConstructor
+@NoArgsConstructor
 public class WebshopSettingsModel {
 
 	@JsonProperty("handle")
 	private String handle;
 	@JsonProperty("currency")
-	private String currency;
+	private String currency = "EUR";
 	@JsonProperty("runJobs")
-	private Boolean runJobs;
+	private Boolean runJobs = true;
 	@JsonProperty("multiSupplier")
-	private Boolean multiSupplier;
+	private Boolean multiSupplier = false;
 
 	/**
 	 * Instantiates a new Webshop settings model.

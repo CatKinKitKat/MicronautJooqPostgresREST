@@ -7,16 +7,18 @@ import com.optiply.endpoint.models.WebshopEmailsModel;
 import com.optiply.endpoint.models.WebshopSettingsModel;
 import com.optiply.endpoint.models.WebshopSimpleModel;
 import com.optiply.infrastructure.data.models.Tables;
-import com.optiply.infrastructure.data.models.tables.pojos.Webshopemails;
 import com.optiply.infrastructure.data.repositories.WebshopRepository;
 import com.optiply.infrastructure.data.repositories.WebshopemailsRepository;
+import io.micronaut.core.annotation.Nullable;
 import io.micronaut.http.HttpResponse;
+import io.micronaut.http.MutableHttpResponse;
 import io.micronaut.http.annotation.*;
 import io.micronaut.validation.Validated;
 import jakarta.inject.Inject;
 import lombok.extern.java.Log;
 import org.jooq.Condition;
 import org.jooq.SortField;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.util.ArrayList;
@@ -61,18 +63,48 @@ public class EndpointController {
     }
 
     /**
+     * Gets webshops.
+     *
+     * @param q the q
+     * @param s the s
+     * @param o the o
+     * @return the webshops
+     */
+    @Get(value = "/get", produces = "application/json", consumes = "application/json")
+    public Flux<HttpResponse<WebshopSimpleModel>> getWebshops(@QueryValue String q, @Nullable @QueryValue String s, @Nullable @QueryValue String o) {
+
+        if (s == null || s.isEmpty()) {
+            s = "handle";
+        }
+
+        if (o == null || o.isEmpty()) {
+            o = "asc";
+        }
+
+        SortField<?> sortField = sortParserWebshop(s, o);
+        List<Condition> conditionList = parseParamsWebshop(q);
+
+        return webshopRepository.findVarious(conditionList, sortField).flatMap(webshops -> {
+            log.info("webshop found");
+            return Mono.just(new WebshopSimpleModel(webshops));
+        }).concatMap(webshopModel -> Flux.just(HttpResponse.ok(webshopModel)));
+
+    }
+
+    /**
      * Gets webshop.
      *
      * @param handle the handle
      * @return the webshop
      */
     @Get(value = "/get/{handle}", produces = "application/json", consumes = "application/json")
-    public Mono<HttpResponse<WebshopSimpleModel>> getWebshop(String handle) {
+    public Mono<MutableHttpResponse<WebshopSimpleModel>> getWebshop(String handle) {
 
         return webshopRepository.find(handle).flatMap(webshop -> {
-            log.info("webshop: " + webshop + " found\n" + "id: " + webshop.getWebshopId());
-            return Mono.just(new WebshopSimpleModel(webshop));
-        }).flatMap(webshopModel -> Mono.just(HttpResponse.ok(webshopModel)));
+                    log.info("webshop found");
+                    return Mono.just(new WebshopSimpleModel(webshop));
+                }).flatMap(webshopModel -> Mono.just(HttpResponse.ok(webshopModel)))
+                .switchIfEmpty(Mono.just(HttpResponse.notFound())).onErrorReturn(HttpResponse.serverError());
 
     }
 
@@ -83,12 +115,17 @@ public class EndpointController {
      * @return the webshop emails
      */
     @Get(value = "/get/{handle}/emails", produces = "application/json", consumes = "application/json")
-    public Mono<HttpResponse<WebshopEmailsModel>> getWebshopEmails(String handle) {
+    public Mono<MutableHttpResponse<WebshopEmailsModel>> getWebshopEmails(String handle) {
 
         return Mono.from(webshopemailsRepository.findEmails(handle).collectList()).flatMap(emails -> {
-            log.info("webshop" + handle + " found\n" + "emails: " + emails);
-            return Mono.just(new WebshopEmailsModel(handle, emails));
-        }).flatMap(webshopEmailsModel -> Mono.just(HttpResponse.ok(webshopEmailsModel)));
+                    if (emails.isEmpty()) {
+                        log.info("emails for webshop" + handle + " not found");
+                        return Mono.empty();
+                    }
+                    log.info("emails for webshop" + handle + " found\n" + "emails: " + emails);
+                    return Mono.just(new WebshopEmailsModel(handle, emails));
+                }).flatMap(webshopEmailsModel -> Mono.just(HttpResponse.ok(webshopEmailsModel)))
+                .switchIfEmpty(Mono.just(HttpResponse.notFound())).onErrorReturn(HttpResponse.serverError());
     }
 
     /**
@@ -98,12 +135,13 @@ public class EndpointController {
      * @return the webshop settings
      */
     @Get(value = "/get/{handle}/settings", produces = "application/json", consumes = "application/json")
-    public Mono<HttpResponse<WebshopSettingsModel>> getWebshopSettings(String handle) {
+    public Mono<MutableHttpResponse<WebshopSettingsModel>> getWebshopSettings(String handle) {
 
         return webshopRepository.find(handle).flatMap(webshop -> {
-            log.info("webshop: " + webshop + " found\n" + "id: " + webshop.getWebshopId());
-            return Mono.just(new WebshopSettingsModel(webshop));
-        }).flatMap(webshopSettingsModel -> Mono.just(HttpResponse.ok(webshopSettingsModel)));
+                    log.info("webshop found");
+                    return Mono.just(new WebshopSettingsModel(webshop));
+                }).flatMap(webshopSettingsModel -> Mono.just(HttpResponse.ok(webshopSettingsModel)))
+                .switchIfEmpty(Mono.just(HttpResponse.notFound())).onErrorReturn(HttpResponse.serverError());
 
     }
 
@@ -114,15 +152,20 @@ public class EndpointController {
      * @return the mono
      */
     @Post(value = "/create/simple", produces = "application/json", consumes = "application/json")
-    public Mono<HttpResponse<?>> createWebshopSimple(@Body WebshopBodyModel webshopBodyModel) {
+    public Mono<MutableHttpResponse<String>> createWebshopSimple(@Body WebshopBodyModel webshopBodyModel) {
 
         return webshopRepository.create(
-                webshopBodyModel.getHandle(), webshopBodyModel.getUrl(),
-                webshopBodyModel.getA(), webshopBodyModel.getB(), webshopBodyModel.getC()
-        ).flatMap(webshop -> {
-            log.info("webshop: " + webshop + " created\n" + "id: " + webshop.toString());
-            return Mono.just(HttpResponse.created(webshop));
-        });
+                        webshopBodyModel.getHandle(), webshopBodyModel.getUrl(),
+                        webshopBodyModel.getA(), webshopBodyModel.getB(), webshopBodyModel.getC()
+                ).flatMap(webshop -> {
+                    if (webshop) {
+                        log.info("webshop created");
+                        return Mono.just(HttpResponse.created("Webshop created."));
+                    }
+                    log.info("webshop not created");
+                    return Mono.empty();
+                })
+                .switchIfEmpty(Mono.just(HttpResponse.badRequest())).onErrorReturn(HttpResponse.serverError());
     }
 
     /**
@@ -132,17 +175,22 @@ public class EndpointController {
      * @return the mono
      */
     @Post(value = "/create", produces = "application/json", consumes = "application/json")
-    public Mono<HttpResponse<?>> createWebshop(@Body WebshopBodyModel webshopBodyModel) {
+    public Mono<MutableHttpResponse<String>> createWebshop(@Body WebshopBodyModel webshopBodyModel) {
 
         return webshopRepository.create(
-                webshopBodyModel.getHandle(), webshopBodyModel.getUrl(),
-                webshopBodyModel.getA(), webshopBodyModel.getB(), webshopBodyModel.getC(),
-                webshopBodyModel.getInterestRate(), webshopBodyModel.getCurrency(),
-                webshopBodyModel.getRunJobs(), webshopBodyModel.getMultiSupplier()
-        ).flatMap(webshop -> {
-            log.info("webshop: " + webshop + " created\n" + "id: " + webshop.toString());
-            return Mono.just(HttpResponse.created(webshop));
-        });
+                        webshopBodyModel.getHandle(), webshopBodyModel.getUrl(),
+                        webshopBodyModel.getA(), webshopBodyModel.getB(), webshopBodyModel.getC(),
+                        webshopBodyModel.getInterestRate(), webshopBodyModel.getCurrency(),
+                        webshopBodyModel.getRunJobs(), webshopBodyModel.getMultiSupplier()
+                ).flatMap(webshop -> {
+                    if (webshop) {
+                        log.info("webshop created");
+                        return Mono.just(HttpResponse.created("Webshop created."));
+                    }
+                    log.info("webshop not created");
+                    return Mono.empty();
+                })
+                .switchIfEmpty(Mono.just(HttpResponse.badRequest()));
     }
 
     /**
@@ -152,11 +200,16 @@ public class EndpointController {
      * @return the mono
      */
     @Delete(value = "/delete/{handle}", produces = "application/json", consumes = "application/json")
-    public Mono<HttpResponse<?>> deleteWebshop(String handle) {
+    public Mono<MutableHttpResponse<Object>> deleteWebshop(String handle) {
         return webshopRepository.deleteWebshop(handle).flatMap(webshop -> {
-            log.info("webshop: " + webshop + " deleted\n" + "id: " + webshop.toString());
-            return Mono.just(HttpResponse.noContent());
-        });
+                    if (webshop) {
+                        log.info("webshop deleted");
+                        return Mono.just(HttpResponse.noContent());
+                    }
+                    log.info("webshop not deleted");
+                    return Mono.empty();
+                })
+                .switchIfEmpty(Mono.just(HttpResponse.badRequest())).onErrorReturn(HttpResponse.serverError());
     }
 
 
@@ -167,17 +220,22 @@ public class EndpointController {
      * @return the mono
      */
     @Put(value = "/update", produces = "application/json", consumes = "application/json")
-    public Mono<HttpResponse<?>> updateWebshop(@Body WebshopBodyModel webshopBodyModel) {
+    public Mono<MutableHttpResponse<String>> updateWebshop(@Body WebshopBodyModel webshopBodyModel) {
 
         return webshopRepository.updateWebshop(
-                webshopBodyModel.getHandle(), webshopBodyModel.getUrl(),
-                webshopBodyModel.getA(), webshopBodyModel.getB(), webshopBodyModel.getC(),
-                webshopBodyModel.getInterestRate(), webshopBodyModel.getCurrency(),
-                webshopBodyModel.getRunJobs(), webshopBodyModel.getMultiSupplier()
-        ).flatMap(webshop -> {
-            log.info("webshop: " + webshop + " updated\n" + "id: " + webshop.toString());
-            return Mono.just(HttpResponse.ok(webshop));
-        });
+                        webshopBodyModel.getHandle(), webshopBodyModel.getUrl(),
+                        webshopBodyModel.getA(), webshopBodyModel.getB(), webshopBodyModel.getC(),
+                        webshopBodyModel.getInterestRate(), webshopBodyModel.getCurrency(),
+                        webshopBodyModel.getRunJobs(), webshopBodyModel.getMultiSupplier()
+                ).flatMap(webshop -> {
+                    if (webshop) {
+                        log.info("webshop updated");
+                        return Mono.just(HttpResponse.ok("Webshop updated."));
+                    }
+                    log.info("webshop not updated");
+                    return Mono.empty();
+                })
+                .switchIfEmpty(Mono.just(HttpResponse.notFound())).onErrorReturn(HttpResponse.serverError());
     }
 
 

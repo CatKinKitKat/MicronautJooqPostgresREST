@@ -7,7 +7,9 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.optiply.infrastructure.data.models.tables.pojos.Webshop;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.apache.commons.validator.routines.EmailValidator;
 import org.apache.commons.validator.routines.UrlValidator;
 
@@ -26,6 +28,8 @@ import org.apache.commons.validator.routines.UrlValidator;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonSerialize
 @JsonDeserialize
+@AllArgsConstructor
+@NoArgsConstructor
 public class WebshopSimpleModel {
 
 	@JsonProperty("handle")
@@ -33,7 +37,7 @@ public class WebshopSimpleModel {
 	@JsonProperty("url")
 	private String url;
 	@JsonProperty("interestRate")
-	private Short interestRate;
+	private Short interestRate = 20;
 	@JsonProperty("A")
 	private Double a;
 	@JsonProperty("B")
