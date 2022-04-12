@@ -180,6 +180,10 @@ public class EndpointController {
     @Post(value = "/create/simple", produces = "application/json", consumes = "application/json")
     public Mono<MutableHttpResponse<String>> createWebshopSimple(@Body WebshopBodyModel webshopModel) {
 
+        if (!webshopModel.isValid()) {
+            return Mono.just(HttpResponse.badRequest());
+        }
+
         return webshopRepository.create(
                         webshopModel.getHandle(), webshopModel.getUrl(),
                         webshopModel.getA(), webshopModel.getB(), webshopModel.getC()
@@ -202,6 +206,10 @@ public class EndpointController {
      */
     @Post(value = "/create", produces = "application/json", consumes = "application/json")
     public Mono<MutableHttpResponse<String>> createWebshop(@Body WebshopBodyModel webshopModel) {
+
+        if (!webshopModel.isValid()) {
+            return Mono.just(HttpResponse.badRequest());
+        }
 
         return webshopRepository.create(
                         webshopModel.getHandle(), webshopModel.getUrl(),
