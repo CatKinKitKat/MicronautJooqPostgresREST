@@ -3,10 +3,10 @@ jooq:
     default:
       sql-dialect: POSTGRES
 flyway:
-  enabled: false
+  enabled: true
   datasources:
     default:
-      enabled: false
+      enabled: true
 micronaut:
   application:
     name: webshop
