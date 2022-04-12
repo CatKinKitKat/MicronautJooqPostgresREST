@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.optiply.infrastructure.data.models.tables.pojos.Webshop;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -37,24 +38,68 @@ import java.util.Set;
 @NoArgsConstructor
 public class WebshopBodyModel {
 
+    /**
+     * The Handle.
+     */
     @JsonProperty("handle")
     private String handle;
+    /**
+     * The Url.
+     */
     @JsonProperty("url")
     private String url;
+    /**
+     * The Interest rate.
+     */
     @JsonProperty("interestRate")
     private Short interestRate = 20;
+    /**
+     * The A.
+     */
     @JsonProperty("A")
     private Double a;
+    /**
+     * The B.
+     */
     @JsonProperty("B")
     private Double b;
+    /**
+     * The C.
+     */
     @JsonProperty("C")
     private Double c;
+    /**
+     * The Currency.
+     */
     @JsonProperty("currency")
     private String currency = "EUR";
+    /**
+     * The Run jobs.
+     */
     @JsonProperty("runJobs")
     private Boolean runJobs = true;
+    /**
+     * The Multi supplier.
+     */
     @JsonProperty("multiSupplier")
     private Boolean multiSupplier = false;
+
+    /**
+     * Instantiates a new Webshop body model.
+     *
+     * @param webshop the webshop
+     */
+    public WebshopBodyModel(Webshop webshop) {
+        this.handle = webshop.getHandle();
+        this.url = webshop.getUrl();
+        this.interestRate = webshop.getInterestRate();
+        this.a = webshop.getA();
+        this.b = webshop.getB();
+        this.c = webshop.getC();
+        this.currency = webshop.getCurrency();
+        this.runJobs = webshop.getRunJobs();
+        this.multiSupplier = webshop.getMultiSupply();
+    }
 
     /**
      * Is valid boolean.

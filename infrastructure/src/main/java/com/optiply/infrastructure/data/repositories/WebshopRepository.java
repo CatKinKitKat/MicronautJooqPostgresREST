@@ -18,8 +18,6 @@ import org.jooq.impl.DSL;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-import java.util.List;
-
 /**
  * The type Webshop repository.
  */
@@ -131,8 +129,8 @@ public class WebshopRepository {
     /**
      * Find various flux.
      *
-     * @param conditions the conditions
-     * @param sort       the sort
+     * @param condition the condition
+     * @param sort      the sort
      * @return the flux
      */
     public Flux<Webshop> findVarious(Condition condition, SortField<?> sort) {
@@ -144,6 +142,21 @@ public class WebshopRepository {
                         .from(Tables.WEBSHOP)
                         .where(condition)
                         .orderBy(sort)
+                ))
+                .map(result -> result.into(Webshop.class));
+    }
+
+    /**
+     * Find all flux.
+     *
+     * @return the flux
+     */
+    public Flux<Webshop> findAll() {
+        log.info("Finding all webshops");
+        return Flux.from(operations.withTransaction(TransactionDefinition.READ_ONLY, status -> DSL
+                        .using(status.getConnection(), SQLDialect.POSTGRES, dslContext.settings())
+                        .select(Tables.WEBSHOP.asterisk())
+                        .from(Tables.WEBSHOP)
                 ))
                 .map(result -> result.into(Webshop.class));
     }

@@ -7,6 +7,7 @@ import com.optiply.endpoint.models.WebshopEmailsModel;
 import com.optiply.endpoint.models.WebshopSettingsModel;
 import com.optiply.endpoint.models.WebshopSimpleModel;
 import com.optiply.infrastructure.data.models.Tables;
+import com.optiply.infrastructure.data.models.tables.pojos.Webshop;
 import com.optiply.infrastructure.data.repositories.WebshopRepository;
 import com.optiply.infrastructure.data.repositories.WebshopemailsRepository;
 import io.micronaut.core.annotation.Nullable;
@@ -18,7 +19,6 @@ import jakarta.inject.Inject;
 import lombok.extern.java.Log;
 import org.jooq.Condition;
 import org.jooq.SortField;
-import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.util.ArrayList;
@@ -73,7 +73,7 @@ public class EndpointController {
      * @return the webshops
      */
     @Get(value = "/get", produces = "application/json", consumes = "application/json")
-    public Flux<HttpResponse<WebshopSimpleModel>> getWebshops(@QueryValue String q, @Nullable @QueryValue String s, @Nullable @QueryValue String o) {
+    public Mono<MutableHttpResponse<WebshopBodyModel[]>> getWebshops(@QueryValue String[] q, @Nullable @QueryValue String s, @Nullable @QueryValue String o) {
 
         if (s == null || s.isEmpty()) {
             s = "handle";
@@ -87,10 +87,33 @@ public class EndpointController {
         Condition condition = parseParamsWebshop(q);
 
 
-        return webshopRepository.findVarious(condition, sortField).flatMap(webshops -> {
+        return webshopRepository.findVarious(condition, sortField).collectList().flatMap(webshops -> {
             log.info("webshop found");
-            return Mono.just(new WebshopSimpleModel(webshops));
-        }).concatMap(webshopModel -> Flux.just(HttpResponse.ok(webshopModel)));
+            WebshopBodyModel[] webshopBodyModels = new WebshopBodyModel[webshops.size()];
+            for (Webshop webshop : webshops) {
+                webshopBodyModels[webshops.indexOf(webshop)] = new WebshopBodyModel(webshop);
+            }
+            return Mono.just(webshopBodyModels);
+        }).flatMap(webshopBodyModels -> Mono.just(HttpResponse.ok(webshopBodyModels)));
+
+    }
+
+    /**
+     * Gets all webshops.
+     *
+     * @return the all webshops
+     */
+    @Get(value = "/get/all", produces = "application/json", consumes = "application/json")
+    public Mono<MutableHttpResponse<WebshopBodyModel[]>> getAllWebshops() {
+
+        return webshopRepository.findAll().collectList().flatMap(webshops -> {
+            log.info("webshop found");
+            WebshopBodyModel[] webshopBodyModels = new WebshopBodyModel[webshops.size()];
+            for (Webshop webshop : webshops) {
+                webshopBodyModels[webshops.indexOf(webshop)] = new WebshopBodyModel(webshop);
+            }
+            return Mono.just(webshopBodyModels);
+        }).flatMap(webshopBodyModels -> Mono.just(HttpResponse.ok(webshopBodyModels)));
 
     }
 
@@ -197,6 +220,49 @@ public class EndpointController {
     }
 
     /**
+     * Add emails mono.
+     *
+     * @param handle the handle
+     * @param email  the email
+     * @return the mono
+     */
+    @Post(value = "/add/email/{handle}/{email}", produces = "application/json", consumes = "application/json")
+    public Mono<MutableHttpResponse<String>> addEmails(String handle, String email) {
+
+        return webshopemailsRepository.create(handle, email).flatMap(webshop -> {
+                    if (webshop) {
+                        log.info("emails added");
+                        return Mono.just(HttpResponse.created("Emails added."));
+                    }
+                    log.info("emails not added");
+                    return Mono.empty();
+                })
+                .switchIfEmpty(Mono.just(HttpResponse.badRequest())).onErrorReturn(HttpResponse.serverError());
+    }
+
+    /**
+     * Remove emails mono.
+     *
+     * @param handle the handle
+     * @param email  the email
+     * @return the mono
+     */
+    @Delete(value = "/remove/email/{handle}/{email}", produces = "application/json", consumes = "application/json")
+    public Mono<MutableHttpResponse<String>> removeEmails(String handle, String email) {
+
+        return webshopemailsRepository.delete(handle, email).flatMap(webshop -> {
+                    if (webshop) {
+                        log.info("emails removed");
+                        return Mono.just(HttpResponse.created("Emails removed."));
+                    }
+                    log.info("emails not removed");
+                    return Mono.empty();
+                })
+                .switchIfEmpty(Mono.just(HttpResponse.badRequest())).onErrorReturn(HttpResponse.serverError());
+    }
+
+
+    /**
      * Delete webshop mono.
      *
      * @param handle the handle
@@ -266,36 +332,33 @@ public class EndpointController {
                     case '%' -> operation = "%";
                     case '<' -> operation = "<";
                     case '>' -> operation = ">";
-                    default -> operation = "";
                 }
 
             if (operation.isEmpty()) return null;
 
             String[] split = param.split(operation);
             switch (split[0]) {
-                case "handle":
+                case "handle" -> {
                     if (operation.equals(":")) {
                         filterList.add(Tables.WEBSHOP.HANDLE.equalIgnoreCase(split[1]));
                     } else if (operation.equals("%")) {
                         filterList.add(Tables.WEBSHOP.HANDLE.likeIgnoreCase(split[1]));
                     }
-                    break;
-                case "url":
+                }
+                case "url" -> {
                     if (operation.equals(":")) {
                         filterList.add(Tables.WEBSHOP.URL.equalIgnoreCase(split[1]));
                     } else if (operation.equals("%")) {
                         filterList.add(Tables.WEBSHOP.URL.likeIgnoreCase(split[1]));
                     }
-                    break;
-                case "interestRate":
+                }
+                case "interestRate" -> {
                     if (operation.equals(">")) {
                         filterList.add(Tables.WEBSHOP.INTEREST_RATE.greaterThan(Short.parseShort(split[1])));
                     } else if (operation.equals("<")) {
                         filterList.add(Tables.WEBSHOP.INTEREST_RATE.lessThan(Short.parseShort(split[1])));
                     }
-                    break;
-                default:
-                    break;
+                }
                 // To add more later
             }
         }

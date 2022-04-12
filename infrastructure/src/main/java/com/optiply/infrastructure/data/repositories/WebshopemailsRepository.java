@@ -12,7 +12,6 @@ import jakarta.inject.Named;
 import jakarta.inject.Singleton;
 import lombok.extern.java.Log;
 import org.jooq.DSLContext;
-import org.jooq.Record1;
 import org.jooq.SQLDialect;
 import org.jooq.impl.DSL;
 import reactor.core.publisher.Flux;
@@ -68,6 +67,37 @@ public class WebshopemailsRepository {
                                 .columns(Tables.WEBSHOPEMAILS.WEBSHOP_ID, Tables.WEBSHOPEMAILS.ADDRESS)
                                 .values(id, email))
                         .map(result -> result == QueryResult.SUCCESS.ordinal())));
+    }
+
+    /**
+     * Create mono.
+     *
+     * @param handle the handle
+     * @param email  the email
+     * @return the mono
+     */
+    public Mono<Boolean> create(String handle, String email) {
+        log.info("Creating email: " + email);
+        return Mono.from(operations.withTransaction(
+                new DefaultTransactionDefinition(
+                        TransactionDefinition.Propagation.REQUIRES_NEW
+                ), status -> Mono
+                        .from(DSL
+                                .using(status.getConnection(), SQLDialect.POSTGRES, dslContext.settings())
+                                .insertInto(Tables.WEBSHOPEMAILS)
+                                .columns(Tables.WEBSHOPEMAILS.WEBSHOP_ID, Tables.WEBSHOPEMAILS.ADDRESS)
+                                .values(webshopId(handle), email))
+                        .map(result -> result == QueryResult.SUCCESS.ordinal())));
+    }
+
+    /**
+     * Webshop id long.
+     *
+     * @param handle the handle
+     * @return the long
+     */
+    private Long webshopId(String handle) {
+        return dslContext.select(Tables.WEBSHOP.WEBSHOP_ID).from(Tables.WEBSHOP).where(Tables.WEBSHOP.HANDLE.eq(handle)).fetchOne(Tables.WEBSHOP.WEBSHOP_ID);
     }
 
     /**
@@ -146,4 +176,29 @@ public class WebshopemailsRepository {
     }
 
 
+    /**
+     * Delete mono.
+     *
+     * @param handle the handle
+     * @param email  the email
+     * @return the mono
+     */
+    public Mono<Boolean> delete(String handle, String email) {
+        log.info("Deleting " + email + " for handle: " + handle);
+        return Mono.from(operations.withTransaction(
+                new DefaultTransactionDefinition(
+                        TransactionDefinition.Propagation.REQUIRES_NEW
+                ), status -> Mono
+                        .from(DSL
+                                .using(status.getConnection(), SQLDialect.POSTGRES, dslContext.settings())
+                                .deleteFrom(Tables.WEBSHOPEMAILS)
+                                .where(Tables.WEBSHOPEMAILS.ADDRESS.equalIgnoreCase(email))
+                                .and(Tables.WEBSHOPEMAILS.WEBSHOP_ID.eq(
+                                        dslContext.select(Tables.WEBSHOP.WEBSHOP_ID)
+                                                .from(Tables.WEBSHOP)
+                                                .where(Tables.WEBSHOP.HANDLE
+                                                        .equalIgnoreCase(handle)))))
+                        .map(result -> result == QueryResult.SUCCESS.ordinal())));
+
+    }
 }
