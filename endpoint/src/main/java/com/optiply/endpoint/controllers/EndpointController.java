@@ -2,7 +2,10 @@ package com.optiply.endpoint.controllers;
 
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.optiply.endpoint.models.*;
+import com.optiply.endpoint.models.WebshopBodyModel;
+import com.optiply.endpoint.models.WebshopEmailsModel;
+import com.optiply.endpoint.models.WebshopSettingsModel;
+import com.optiply.endpoint.models.WebshopSimpleModel;
 import com.optiply.infrastructure.data.models.Tables;
 import com.optiply.infrastructure.data.repositories.WebshopRepository;
 import com.optiply.infrastructure.data.repositories.WebshopemailsRepository;
@@ -20,6 +23,8 @@ import reactor.core.publisher.Mono;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import static org.jooq.impl.DSL.condition;
 
@@ -79,9 +84,10 @@ public class EndpointController {
         }
 
         SortField<?> sortField = sortParserWebshop(s, o);
-        List<Condition> conditionList = parseParamsWebshop(q);
+        Condition condition = parseParamsWebshop(q);
 
-        return webshopRepository.findVarious(conditionList, sortField).flatMap(webshops -> {
+
+        return webshopRepository.findVarious(condition, sortField).flatMap(webshops -> {
             log.info("webshop found");
             return Mono.just(new WebshopSimpleModel(webshops));
         }).concatMap(webshopModel -> Flux.just(HttpResponse.ok(webshopModel)));
@@ -145,7 +151,7 @@ public class EndpointController {
     /**
      * Create webshop simple mono.
      *
-     * @param webshopModel the webshop body model
+     * @param webshopModel the webshop model
      * @return the mono
      */
     @Post(value = "/create/simple", produces = "application/json", consumes = "application/json")
@@ -168,7 +174,7 @@ public class EndpointController {
     /**
      * Create webshop mono.
      *
-     * @param webshopModel the webshop body model
+     * @param webshopModel the webshop model
      * @return the mono
      */
     @Post(value = "/create", produces = "application/json", consumes = "application/json")
@@ -213,7 +219,7 @@ public class EndpointController {
     /**
      * Update webshop mono.
      *
-     * @param webshopModel the webshop body model
+     * @param webshopModel the webshop model
      * @return the mono
      */
     @Put(value = "/update", produces = "application/json", consumes = "application/json")
@@ -237,46 +243,71 @@ public class EndpointController {
 
 
     /**
-     * Parse params webshop list.
+     * Parse params webshop condition.
      *
      * @param params the params
-     * @return the list
+     * @return the condition
      */
-    private List<Condition> parseParamsWebshop(String... params) {
+    private Condition parseParamsWebshop(String... params) {
 
         if (params == null || params.length == 0) {
-            return new ArrayList<>();
+            return null;
         }
 
         List<Condition> filterList = new ArrayList<>();
 
         for (String param : params) {
-            if (param.contains("handle") || param.contains("url") || param.contains("currency")) {
-                if (param.contains(String.valueOf(':'))) {
-                    filterList.add(condition(param.substring(0, param.indexOf(':')), param.substring(param.indexOf(':') + 1)));
-                } else if (param.contains(String.valueOf('%'))) {
-                    filterList.add(condition(param.substring(0, param.indexOf('%')), param.substring(param.indexOf('%') + 1)));
-                }
-            } else if (param.contains("A") || param.contains("B") || param.contains("C") || param.contains("interestRate")) {
-                if (param.contains(String.valueOf('>'))) {
-                    filterList.add(condition(param.substring(0, param.indexOf('>')), param.substring(param.indexOf('>') + 1)));
-                } else if (param.contains(String.valueOf('<'))) {
-                    filterList.add(condition(param.substring(0, param.indexOf('<')), param.substring(param.indexOf('<') + 1)));
-                } else if (param.contains(String.valueOf(':'))) {
-                    filterList.add(condition(param.substring(0, param.indexOf(':')), param.substring(param.indexOf(':') + 1)));
+
+            String operation = "";
+            final Matcher m = Pattern.compile("[:%<>]").matcher(param);
+            if (m.find())
+                switch (m.group().charAt(0)) {
+                    case ':' -> operation = ":";
+                    case '%' -> operation = "%";
+                    case '<' -> operation = "<";
+                    case '>' -> operation = ">";
+                    default -> operation = "";
                 }
 
-            } else if (param.contains("runJobs") || param.contains("multiSupply") || param.contains("multiSupplier")) {
-                if (param.contains(String.valueOf(':'))) {
-                    filterList.add(condition(param.substring(0, param.indexOf(':')), param.substring(param.indexOf(':') + 1)));
-                }
+            if (operation.isEmpty()) return null;
 
+            String[] split = param.split(operation);
+            switch (split[0]) {
+                case "handle":
+                    if (operation.equals(":")) {
+                        filterList.add(Tables.WEBSHOP.HANDLE.equalIgnoreCase(split[1]));
+                    } else if (operation.equals("%")) {
+                        filterList.add(Tables.WEBSHOP.HANDLE.likeIgnoreCase(split[1]));
+                    }
+                    break;
+                case "url":
+                    if (operation.equals(":")) {
+                        filterList.add(Tables.WEBSHOP.URL.equalIgnoreCase(split[1]));
+                    } else if (operation.equals("%")) {
+                        filterList.add(Tables.WEBSHOP.URL.likeIgnoreCase(split[1]));
+                    }
+                    break;
+                case "interestRate":
+                    if (operation.equals(">")) {
+                        filterList.add(Tables.WEBSHOP.INTEREST_RATE.greaterThan(Short.parseShort(split[1])));
+                    } else if (operation.equals("<")) {
+                        filterList.add(Tables.WEBSHOP.INTEREST_RATE.lessThan(Short.parseShort(split[1])));
+                    }
+                    break;
+                default:
+                    break;
+                // To add more later
             }
-
-            // To add more later
         }
 
-        return filterList;
+
+        Condition condition = filterList.get(0);
+        filterList.remove(0);
+        for (Condition c : filterList) {
+            condition = condition.and(c);
+        }
+
+        return condition;
     }
 
 

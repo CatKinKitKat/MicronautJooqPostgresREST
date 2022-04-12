@@ -135,14 +135,16 @@ public class WebshopRepository {
      * @param sort       the sort
      * @return the flux
      */
-    public Flux<Webshop> findVarious(List<Condition> conditions, SortField<?> sort) {
+    public Flux<Webshop> findVarious(Condition condition, SortField<?> sort) {
         log.info("Finding webshops with variable conditions sorted by specific field");
+
         return Flux.from(operations.withTransaction(TransactionDefinition.READ_ONLY, status -> DSL
                         .using(status.getConnection(), SQLDialect.POSTGRES, dslContext.settings())
                         .select(Tables.WEBSHOP.asterisk())
                         .from(Tables.WEBSHOP)
-                        .where(conditions)
-                        .orderBy(sort)))
+                        .where(condition)
+                        .orderBy(sort)
+                ))
                 .map(result -> result.into(Webshop.class));
     }
 
