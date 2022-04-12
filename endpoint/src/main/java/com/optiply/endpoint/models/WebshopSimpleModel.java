@@ -32,16 +32,34 @@ import org.apache.commons.validator.routines.UrlValidator;
 @NoArgsConstructor
 public class WebshopSimpleModel {
 
+	/**
+	 * The Handle.
+	 */
 	@JsonProperty("handle")
 	private String handle;
+	/**
+	 * The Url.
+	 */
 	@JsonProperty("url")
 	private String url;
+	/**
+	 * The Interest rate.
+	 */
 	@JsonProperty("interestRate")
 	private Short interestRate = 20;
+	/**
+	 * The A.
+	 */
 	@JsonProperty("A")
 	private Double a;
+	/**
+	 * The B.
+	 */
 	@JsonProperty("B")
 	private Double b;
+	/**
+	 * The C.
+	 */
 	@JsonProperty("C")
 	private Double c;
 
@@ -69,7 +87,6 @@ public class WebshopSimpleModel {
 				this.isValidServiceSum(this.a, this.b, this.c);
 	}
 
-
 	/**
 	 * Is valid url boolean.
 	 *
@@ -81,7 +98,6 @@ public class WebshopSimpleModel {
 		UrlValidator urlValidator = new UrlValidator(schemes);
 		return urlValidator.isValid(url);
 	}
-
 
 	/**
 	 * Is valid service sum boolean.

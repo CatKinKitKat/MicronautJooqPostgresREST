@@ -3,6 +3,7 @@ package com.optiply.infrastructure.data.repositories;
 
 import com.optiply.infrastructure.data.models.Tables;
 import com.optiply.infrastructure.data.models.tables.pojos.Webshopemails;
+import com.optiply.infrastructure.data.repositories.interfaces.IWebshopemailsRepository;
 import com.optiply.infrastructure.data.support.sql.QueryResult;
 import io.micronaut.data.r2dbc.operations.R2dbcOperations;
 import io.micronaut.transaction.TransactionDefinition;
@@ -22,17 +23,16 @@ import reactor.core.publisher.Mono;
  */
 @Log
 @Singleton
-public class WebshopemailsRepository {
+public class WebshopemailsRepository implements IWebshopemailsRepository {
 
     /**
-     * The Dsl context.
+     * The DSL context, used to generate SQL queries or get its dialect and other properties.
      */
     private final DSLContext dslContext;
     /**
-     * The Operations.
+     * The R2DBC driver, used to execute SQL queries in a reactive fashion, needs DSLContext properties.
      */
     private final R2dbcOperations operations;
-
 
     /**
      * Instantiates a new Webshopemails repository.
@@ -55,6 +55,7 @@ public class WebshopemailsRepository {
      * @param email the email
      * @return the mono
      */
+    @Override
     public Mono<Boolean> create(Long id, String email) {
         log.info("Creating email: " + email);
         return Mono.from(operations.withTransaction(
@@ -76,6 +77,7 @@ public class WebshopemailsRepository {
      * @param email  the email
      * @return the mono
      */
+    @Override
     public Mono<Boolean> create(String handle, String email) {
         log.info("Creating email: " + email);
         return Mono.from(operations.withTransaction(
@@ -106,6 +108,7 @@ public class WebshopemailsRepository {
      * @param email the email
      * @return the mono
      */
+    @Override
     public Mono<Webshopemails> find(String email) {
         log.info("Finding email: " + email);
         return Mono.from(operations.withTransaction(TransactionDefinition.READ_ONLY, status -> Mono
@@ -123,6 +126,7 @@ public class WebshopemailsRepository {
      * @param handle the handle
      * @return the flux
      */
+    @Override
     public Flux<String> findEmails(String handle) {
         log.info("Finding emails for handle: " + handle);
         return Flux.from(operations.withTransaction(TransactionDefinition.READ_ONLY, status -> Mono
@@ -145,6 +149,7 @@ public class WebshopemailsRepository {
      * @param id the id
      * @return the flux
      */
+    @Override
     public Flux<Webshopemails> find(Long id) {
         log.info("Finding emails for id: " + id);
         return Flux.from(operations.withTransaction(TransactionDefinition.READ_ONLY, status -> Mono
@@ -162,6 +167,7 @@ public class WebshopemailsRepository {
      * @param id the id
      * @return the mono
      */
+    @Override
     public Mono<Boolean> delete(Long id) {
         log.info("Deleting emails for id: " + id);
         return Mono.from(operations.withTransaction(
@@ -175,7 +181,6 @@ public class WebshopemailsRepository {
                         .map(result -> result == QueryResult.SUCCESS.ordinal())));
     }
 
-
     /**
      * Delete mono.
      *
@@ -183,6 +188,7 @@ public class WebshopemailsRepository {
      * @param email  the email
      * @return the mono
      */
+    @Override
     public Mono<Boolean> delete(String handle, String email) {
         log.info("Deleting " + email + " for handle: " + handle);
         return Mono.from(operations.withTransaction(

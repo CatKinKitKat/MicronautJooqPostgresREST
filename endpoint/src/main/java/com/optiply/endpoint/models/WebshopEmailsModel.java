@@ -29,8 +29,14 @@ import java.util.List;
 @NoArgsConstructor
 public class WebshopEmailsModel {
 
+    /**
+     * The Handle.
+     */
     @JsonProperty("handle")
     private String handle;
+    /**
+     * The Emails.
+     */
     @JsonProperty("emails")
     @Valid
     private List<String> emails = null;

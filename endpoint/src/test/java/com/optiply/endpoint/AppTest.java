@@ -7,16 +7,25 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-@MicronautTest(application=EndpointApplication.class)
+/**
+ * The type App test.
+ */
+@MicronautTest(application = EndpointApplication.class)
 public class AppTest {
 
+	/**
+	 * The Application.
+	 */
 	@Inject
-	EmbeddedApplication<?> application;
+    EmbeddedApplication<?> application;
 
+	/**
+	 * Test it works.
+	 */
 	@Test
-	void testItWorks() {
-		assertTrue(application.isRunning());
-	}
+    void testItWorks() {
+        assertTrue(application.isRunning());
+    }
 
 
 }

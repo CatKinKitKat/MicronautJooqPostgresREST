@@ -113,7 +113,6 @@ public class WebshopBodyModel {
                 this.isValidServiceSum(this.a, this.b, this.c);
     }
 
-
     /**
      * Is valid url boolean.
      *

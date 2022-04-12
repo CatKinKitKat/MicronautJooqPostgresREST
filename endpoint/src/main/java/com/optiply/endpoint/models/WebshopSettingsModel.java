@@ -32,12 +32,24 @@ import java.util.Set;
 @NoArgsConstructor
 public class WebshopSettingsModel {
 
+	/**
+	 * The Handle.
+	 */
 	@JsonProperty("handle")
 	private String handle;
+	/**
+	 * The Currency.
+	 */
 	@JsonProperty("currency")
 	private String currency = "EUR";
+	/**
+	 * The Run jobs.
+	 */
 	@JsonProperty("runJobs")
 	private Boolean runJobs = true;
+	/**
+	 * The Multi supplier.
+	 */
 	@JsonProperty("multiSupplier")
 	private Boolean multiSupplier = false;
 

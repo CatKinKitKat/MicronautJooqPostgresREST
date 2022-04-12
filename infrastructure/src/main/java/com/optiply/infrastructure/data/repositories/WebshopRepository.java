@@ -2,6 +2,7 @@ package com.optiply.infrastructure.data.repositories;
 
 import com.optiply.infrastructure.data.models.Tables;
 import com.optiply.infrastructure.data.models.tables.pojos.Webshop;
+import com.optiply.infrastructure.data.repositories.interfaces.IWebshopRepository;
 import com.optiply.infrastructure.data.support.sql.QueryResult;
 import io.micronaut.data.r2dbc.operations.R2dbcOperations;
 import io.micronaut.transaction.TransactionDefinition;
@@ -23,7 +24,7 @@ import reactor.core.publisher.Mono;
  */
 @Log
 @Singleton
-public class WebshopRepository {
+public class WebshopRepository implements IWebshopRepository {
 
     /**
      * The Dsl context.
@@ -33,7 +34,6 @@ public class WebshopRepository {
      * The Operations.
      */
     private final R2dbcOperations operations;
-
 
     /**
      * Instantiates a new Webshop repository.
@@ -59,6 +59,7 @@ public class WebshopRepository {
      * @param C      the c
      * @return the mono
      */
+    @Override
     public Mono<Boolean> create(String handle, String url,
                                 Double A, Double B, Double C) {
         log.info("Creating webshop: " + handle);
@@ -75,7 +76,6 @@ public class WebshopRepository {
                         .onErrorReturn(false)));
     }
 
-
     /**
      * Create mono.
      *
@@ -90,6 +90,7 @@ public class WebshopRepository {
      * @param multiSupplier the multi supplier
      * @return the mono
      */
+    @Override
     public Mono<Boolean> create(String handle, String url,
                                 Double A, Double B, Double C,
                                 Short interestRate, String currency,
@@ -108,13 +109,13 @@ public class WebshopRepository {
                         .onErrorReturn(false)));
     }
 
-
     /**
      * Gets webshop id.
      *
      * @param handle the handle
      * @return the webshop id
      */
+    @Override
     public Mono<Long> getWebshopId(String handle) {
         log.info("Getting webshop id: " + handle);
         return Mono
@@ -133,6 +134,7 @@ public class WebshopRepository {
      * @param sort      the sort
      * @return the flux
      */
+    @Override
     public Flux<Webshop> findVarious(Condition condition, SortField<?> sort) {
         log.info("Finding webshops with variable conditions sorted by specific field");
 
@@ -151,6 +153,7 @@ public class WebshopRepository {
      *
      * @return the flux
      */
+    @Override
     public Flux<Webshop> findAll() {
         log.info("Finding all webshops");
         return Flux.from(operations.withTransaction(TransactionDefinition.READ_ONLY, status -> DSL
@@ -167,6 +170,7 @@ public class WebshopRepository {
      * @param handle the handle
      * @return the mono
      */
+    @Override
     public Mono<Webshop> find(String handle) {
         log.info("Finding webshop: " + handle);
         return Mono
@@ -184,6 +188,7 @@ public class WebshopRepository {
      * @param id the id
      * @return the mono
      */
+    @Override
     public Mono<Webshop> find(Long id) {
         log.info("Finding webshop: " + id);
         return Mono
@@ -209,6 +214,7 @@ public class WebshopRepository {
      * @param multiSupplier the multi supplier
      * @return the mono
      */
+    @Override
     public Mono<Boolean> updateWebshop(String handle, String url,
                                        Double A, Double B, Double C,
                                        Short INTEREST_RATE, String currency,
@@ -250,6 +256,7 @@ public class WebshopRepository {
      * @param multiSupplier the multi supplier
      * @return the mono
      */
+    @Override
     public Mono<Boolean> updateWebshop(Long id, String handle, String url,
                                        Double A, Double B, Double C,
                                        Short INTEREST_RATE, String currency,
@@ -282,6 +289,7 @@ public class WebshopRepository {
      * @param id the id
      * @return the mono
      */
+    @Override
     public Mono<Boolean> deleteWebshop(Long id) {
         log.info("Deleting webshop: " + id);
         return Mono.from(operations.withTransaction(
@@ -301,6 +309,7 @@ public class WebshopRepository {
      * @param handle the handle
      * @return the mono
      */
+    @Override
     public Mono<Boolean> deleteWebshop(String handle) {
         log.info("Deleting webshop: " + handle);
         return Mono.from(operations.withTransaction(
