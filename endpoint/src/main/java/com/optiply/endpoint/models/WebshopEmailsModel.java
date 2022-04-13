@@ -19,8 +19,8 @@ import java.util.List;
  */
 @Data
 @JsonPropertyOrder({
-        "handle",
-        "emails"
+		"handle",
+		"emails"
 })
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonSerialize
@@ -29,40 +29,40 @@ import java.util.List;
 @NoArgsConstructor
 public class WebshopEmailsModel {
 
-    /**
-     * The Handle.
-     */
-    @JsonProperty("handle")
-    private String handle;
-    /**
-     * The Emails.
-     */
-    @JsonProperty("emails")
-    @Valid
-    private List<String> emails = null;
+	/**
+	 * The Handle.
+	 */
+	@JsonProperty("handle")
+	private String handle;
+	/**
+	 * The Emails.
+	 */
+	@JsonProperty("emails")
+	@Valid
+	private List<String> emails = null;
 
-    /**
-     * Is valid boolean.
-     *
-     * @return the boolean
-     */
-    public Boolean isValid() {
-        Boolean valid = true;
-        for (String email : emails) {
-            if (!this.isValidEmailAddress(email)) {
-                valid = false;
-            }
-        }
-        return valid;
-    }
+	/**
+	 * Is valid boolean.
+	 *
+	 * @return the boolean
+	 */
+	public Boolean isValid() {
+		Boolean valid = true;
+		for (String email : emails) {
+			if (!this.isValidEmailAddress(email)) {
+				valid = false;
+			}
+		}
+		return valid;
+	}
 
-    /**
-     * Is valid email address boolean.
-     *
-     * @param email the email
-     * @return the boolean
-     */
-    private Boolean isValidEmailAddress(String email) {
-        return EmailValidator.getInstance().isValid(email);
-    }
+	/**
+	 * Is valid email address boolean.
+	 *
+	 * @param email the email
+	 * @return the boolean
+	 */
+	private Boolean isValidEmailAddress(String email) {
+		return EmailValidator.getInstance().isValid(email);
+	}
 }

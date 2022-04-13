@@ -3,14 +3,14 @@ package com.optiply.endpoint;
 import io.micronaut.runtime.Micronaut;
 
 /**
- * The type Endpoint application.
+ * Main Class for the application.
  */
 public class EndpointApplication {
 
 	/**
 	 * The entry point of application.
 	 *
-	 * @param args the input arguments
+	 * @param args the input arguments (not used)
 	 */
 	public static void main(String[] args) {
 		Micronaut.run(EndpointApplication.class, args);

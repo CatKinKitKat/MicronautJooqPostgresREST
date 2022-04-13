@@ -15,7 +15,10 @@ import java.util.Currency;
 import java.util.Set;
 
 /**
- * The type Webshop settings model.
+ * The JSON representation of a certain Webshop's settings.
+ * Should represent the settings of a certain Webshop without it's own data.
+ *
+ * @author G. Amaro
  */
 @Data
 @JsonPropertyOrder({
@@ -38,17 +41,17 @@ public class WebshopSettingsModel {
 	@JsonProperty("handle")
 	private String handle;
 	/**
-	 * The Currency.
+	 * The Currency in ISO 4217 format.
 	 */
 	@JsonProperty("currency")
 	private String currency = "EUR";
 	/**
-	 * The Run jobs.
+	 * The ability to run jobs.
 	 */
 	@JsonProperty("runJobs")
 	private Boolean runJobs = true;
 	/**
-	 * The Multi supplier.
+	 * Does it have multiple suppliers?
 	 */
 	@JsonProperty("multiSupplier")
 	private Boolean multiSupplier = false;
@@ -66,19 +69,19 @@ public class WebshopSettingsModel {
 	}
 
 	/**
-	 * Is valid boolean.
+	 * Run validation checks..
 	 *
-	 * @return the boolean
+	 * @return is valid?
 	 */
 	public Boolean isValid() {
 		return this.isValidCurrency(this.currency);
 	}
 
 	/**
-	 * Is valid currency boolean.
+	 * Is the currency format valid?
 	 *
-	 * @param currency the currency
-	 * @return the boolean
+	 * @param currency the currency in ISO 4217 format (hopefully)
+	 * @return is valid?
 	 */
 	private Boolean isValidCurrency(String currency) {
 		Set<Currency> currencies = Currency.getAvailableCurrencies();

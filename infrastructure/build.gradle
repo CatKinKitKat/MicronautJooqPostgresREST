@@ -3,8 +3,8 @@ import org.jooq.meta.jaxb.*
 
 buildscript {
 	dependencies {
-		classpath("org.jooq:jooq-codegen:$jooqVersion")
-		classpath("org.jooq:jooq-meta-extensions:$jooqVersion")
+		classpath(group: 'org.jooq', name: 'jooq-codegen', version: '3.16.4')
+		classpath(group: 'org.jooq', name: 'jooq-meta-extensions', version: '3.16.4')
 	}
 }
 
@@ -31,22 +31,23 @@ sourceSets {
 }
 
 dependencies {
-	annotationProcessor("org.projectlombok:lombok")
-	annotationProcessor("io.micronaut.data:micronaut-data-processor")
-	annotationProcessor("org.mapstruct:mapstruct-processor:1.4.2.Final")
-	implementation("org.jooq:jooq-meta:${jooqVersion}")
-	implementation("org.jooq:jooq-codegen:${jooqVersion}")
-	implementation("org.mapstruct:mapstruct:1.4.2.Final")
-	implementation('com.google.code.findbugs:jsr305:3.0.2')
-	implementation("io.micronaut.data:micronaut-data-r2dbc")
-	implementation("io.micronaut.data:micronaut-data-jdbc")
-	compileOnly("org.projectlombok:lombok")
-	testImplementation 'org.junit.jupiter:junit-jupiter-api'
-	testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine")
-	testImplementation("org.junit.jupiter:junit-jupiter-api")
-	testImplementation("io.micronaut.test:micronaut-test-junit5")
-	testImplementation("org.mockito:mockito-core")
-	testImplementation('io.projectreactor:reactor-test:3.4.16')
+	annotationProcessor(group: 'org.projectlombok', name: 'lombok')
+	annotationProcessor(group: 'io.micronaut.data', name: 'micronaut-data-processor')
+	annotationProcessor(group: 'org.mapstruct', name: 'mapstruct-processor', version: '1.4.2.Final')
+	implementation(group: 'org.jooq', name: 'jooq-meta', version: '3.16.4')
+	implementation(group: 'org.jooq', name: 'jooq-codegen', version: '3.16.5')
+	implementation(group: 'org.mapstruct', name: 'mapstruct', version: '1.4.2.Final')
+	implementation(group: 'com.google.code.findbugs', name: 'jsr305', version: '3.0.2')
+	implementation(group: 'io.micronaut.data', name: 'micronaut-data-r2dbc')
+	implementation(group: 'io.micronaut.data', name: 'micronaut-data-jdbc')
+	compileOnly(group: 'org.projectlombok', name: 'lombok')
+	testImplementation(group: 'io.projectreactor', name: 'reactor-test', version: '3.4.16')
+	runtimeOnly(group: 'io.micronaut.test', name: 'micronaut-test-spock', version: '3.1.1')
+	//testImplementation(group: 'org.junit.jupiter', name: 'junit-jupiter-api')
+	//testRuntimeOnly(group: 'org.junit.jupiter', name: 'junit-jupiter-engine')
+	//testImplementation(group: 'org.junit.jupiter', name: 'junit-jupiter-api')
+	//testImplementation(group: 'io.micronaut.test', name: 'micronaut-test-junit5')
+	//testImplementation(group: 'org.mockito', name: 'mockito-core')
 }
 
 test {

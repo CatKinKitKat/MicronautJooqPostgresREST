@@ -1,27 +1,24 @@
 buildscript {
-	ext {
-		jooqVersion = "3.16.4"
-	}
 	dependencies {
 		//classpath 'com.google.protobuf:protobuf-gradle-plugin:0.8.18'
 	}
 }
 
 plugins {
-	id "java"
-	id "jacoco"
+	id("java")
+	id("jacoco")
 	id("com.github.johnrengelman.shadow") version "7.1.1"
 	id("io.micronaut.application") version "3.2.2"
-	//id("com.google.protobuf") version "0.8.18"
 	id("org.flywaydb.flyway") version "8.3.0"
 	id("io.micronaut.aot") version "3.2.2"
+	//id("com.google.protobuf") version "0.8.18"
 }
 
 group = "com.optiply.endpoint"
 
 micronaut {
 	runtime("netty")
-	testRuntime("junit5")
+	testRuntime("spock2")
 	processing {
 		incremental(true)
 		annotations("com.optiply.endpoint.*")
@@ -42,54 +39,55 @@ repositories {
 
 dependencies {
 	implementation project(":infrastructure")
-	annotationProcessor('org.projectlombok:lombok')
-	annotationProcessor("org.mapstruct:mapstruct-processor:1.4.2.Final")
-	annotationProcessor("io.micronaut:micronaut-http-validation")
-	annotationProcessor("io.micronaut.data:micronaut-data-processor")
-	annotationProcessor("io.micronaut:micronaut-validation")
-	//annotationProcessor("io.micronaut.security:micronaut-security-annotations")
-	compileOnly("org.projectlombok:lombok")
-	implementation('commons-validator:commons-validator:1.4.1')
-	implementation("com.google.code.gson:gson:2.9.0")
-	implementation("org.jooq:jooq-meta:${jooqVersion}")
-	implementation("org.mapstruct:mapstruct:1.4.2.Final")
-	implementation("io.micronaut:micronaut-http-client")
-	implementation("io.micronaut:micronaut-management")
-	implementation("io.micronaut:micronaut-runtime")
-	implementation("io.micronaut.tracing:micronaut-tracing-jaeger")
-	implementation("io.micronaut.flyway:micronaut-flyway")
-	implementation("io.micronaut.kubernetes:micronaut-kubernetes-discovery-client")
-	implementation("io.micronaut.r2dbc:micronaut-r2dbc-core")
-	implementation("io.micronaut.reactor:micronaut-reactor")
-	implementation("io.micronaut.reactor:micronaut-reactor-http-client")
-	implementation("io.micronaut.data:micronaut-data-r2dbc")
-	implementation("io.micronaut.data:micronaut-data-jdbc")
-	implementation("io.micronaut.sql:micronaut-jdbc-hikari")
-	implementation("io.micronaut.sql:micronaut-jooq")
-	implementation("io.micronaut:micronaut-validation")
-	//implementation("io.micronaut.grpc:micronaut-grpc-runtime");
-	//implementation("io.micronaut.security:micronaut-security-annotations")
-	//implementation("io.micronaut.security:micronaut-security-jwt")
-	//implementation("io.micronaut.kafka:micronaut-kafka")
-	//implementation ("io.confluent:kafka-protobuf-serializer:6.2.1")
-	//implementation("io.micronaut.micrometer:micronaut-micrometer-core")
-	//implementation("io.micronaut.micrometer:micronaut-micrometer-registry-prometheus")
-	//implementation("javax.annotation:javax.annotation-api")
-	runtimeOnly("ch.qos.logback:logback-classic")
-	runtimeOnly("io.r2dbc:r2dbc-postgresql")
-	runtimeOnly("org.postgresql:postgresql")
-	runtimeOnly('io.r2dbc:r2dbc-pool:0.9.0.RELEASE')
-	testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine")
-	testImplementation("org.junit.jupiter:junit-jupiter-api")
-	testImplementation("io.micronaut.test:micronaut-test-junit5")
-	testImplementation("org.mockito:mockito-core")
-	testImplementation('io.projectreactor:reactor-test:3.4.16')
-	//testImplementation('com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.13.2')
-	//testImplementation("org.testcontainers:junit-jupiter")
-	//testImplementation("org.testcontainers:r2dbc")
-	//testImplementation("org.testcontainers:postgresql")
-	//testImplementation("org.testcontainers:testcontainers")
-	//testImplementation("org.testcontainers:kafka:1.16.3")
+	annotationProcessor(group: 'org.projectlombok', name: 'lombok')
+	annotationProcessor(group: 'org.mapstruct', name: 'mapstruct-processor', version: '1.4.2.Final')
+	annotationProcessor(group: 'io.micronaut', name: 'micronaut-http-validation')
+	annotationProcessor(group: 'io.micronaut.data', name: 'micronaut-data-processor')
+	annotationProcessor(group: 'io.micronaut', name: 'micronaut-validation')
+	//annotationProcessor(group: 'io.micronaut.security', name: 'micronaut-security-annotations')
+	compileOnly(group: 'org.projectlombok', name: 'lombok')
+	implementation(group: 'commons-validator', name: 'commons-validator', version: '1.7')
+	implementation(group: 'com.google.code.gson', name: 'gson', version: '2.9.0')
+	implementation(group: 'org.jooq', name: 'jooq-meta', version: "3.16.4")
+	implementation(group: 'org.mapstruct', name: 'mapstruct', version: '1.4.2.Final')
+	implementation(group: 'io.micronaut', name: 'micronaut-http-client')
+	implementation(group: 'io.micronaut', name: 'micronaut-management')
+	implementation(group: 'io.micronaut', name: 'micronaut-runtime')
+	implementation(group: 'io.micronaut.tracing', name: 'micronaut-tracing-jaeger')
+	implementation(group: 'io.micronaut.flyway', name: 'micronaut-flyway')
+	implementation(group: 'io.micronaut.kubernetes', name: 'micronaut-kubernetes-discovery-client')
+	implementation(group: 'io.micronaut.r2dbc', name: 'micronaut-r2dbc-core')
+	implementation(group: 'io.micronaut.reactor', name: 'micronaut-reactor')
+	implementation(group: 'io.micronaut.reactor', name: 'micronaut-reactor-http-client')
+	implementation(group: 'io.micronaut.data', name: 'micronaut-data-r2dbc')
+	implementation(group: 'io.micronaut.data', name: 'micronaut-data-jdbc')
+	implementation(group: 'io.micronaut.sql', name: 'micronaut-jdbc-hikari')
+	implementation(group: 'io.micronaut.sql', name: 'micronaut-jooq')
+	implementation(group: 'io.micronaut', name: 'micronaut-validation')
+	//implementation(group: 'io.micronaut.grpc', name: 'micronaut-grpc-runtime');
+	//implementation(group: 'io.micronaut.security', name: 'micronaut-security-annotations')
+	//implementation(group: 'io.micronaut.security', name: 'micronaut-security-jwt')
+	//implementation(group: 'io.micronaut.kafka', name: 'micronaut-kafka')
+	//implementation(group: 'io.confluent', name: 'kafka-protobuf-serializer', version: '6.2.1')
+	//implementation(group: 'io.micronaut.micrometer', name: 'micronaut-micrometer-core')
+	//implementation(group: 'io.micronaut.micrometer', name: 'micronaut-micrometer-registry-prometheus')
+	//implementation(group: 'javax.annotation', name: 'javax.annotation-api')
+	runtimeOnly(group: 'ch.qos.logback', name: 'logback-classic')
+	runtimeOnly(group: 'io.r2dbc', name: 'r2dbc-postgresql')
+	runtimeOnly(group: 'org.postgresql', name: 'postgresql')
+	runtimeOnly(group: 'io.r2dbc', name: 'r2dbc-pool', version: '0.9.0.RELEASE')
+	runtimeOnly(group: 'io.micronaut.test', name: 'micronaut-test-spock', version: '3.1.1')
+	testImplementation(group: 'io.projectreactor', name: 'reactor-test', version: '3.4.16')
+	//testRuntimeOnly(group: 'org.junit.jupiter', name: 'junit-jupiter-engine')
+	//testImplementation(group: 'org.junit.jupiter', name: 'junit-jupiter-api')
+	//testImplementation(group: 'io.micronaut.test', name: 'micronaut-test-junit5')
+	//testImplementation(group: 'org.mockito', name: 'mockito-core')
+	//testImplementation(group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-jsr310', version: '2.13.2')
+	//testImplementation(group: 'org.testcontainers', name: 'junit-jupiter')
+	//testImplementation(group: 'org.testcontainers', name: 'r2dbc')
+	//testImplementation(group: 'org.testcontainers', name: 'postgresql')
+	//testImplementation(group: 'org.testcontainers', name: 'testcontainers')
+	//testImplementation(group: 'org.testcontainers', name: 'kafka', version: '1.16.3')
 }
 
 test {
