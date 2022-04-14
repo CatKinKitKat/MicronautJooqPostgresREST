@@ -381,34 +381,6 @@ public class EndpointController {
 		return condition;
 	}
 
-
-	/**
-	 * Parse params emails list.
-	 *
-	 * @param params the params
-	 * @return the list
-	 */
-	private List<Condition> parseParamsEmails(String... params) {
-
-		if (params == null || params.length == 0) {
-			return new ArrayList<>();
-		}
-
-		List<Condition> filterList = new ArrayList<>();
-
-		for (String param : params) {
-			if (param.contains("address")) {
-
-				if (param.contains(String.valueOf('%'))) {
-					filterList.add(condition(param.substring(0, param.indexOf('%')), param.substring(param.indexOf('%') + 1)));
-				}
-			}
-			// To add more later
-		}
-		return filterList;
-	}
-
-
 	/**
 	 * Sort parser webshop sort field.
 	 *
@@ -476,37 +448,6 @@ public class EndpointController {
 
 
 		return Tables.WEBSHOP.HANDLE.asc();
-	}
-
-	/**
-	 * Sort parser emails sort field.
-	 *
-	 * @param sort  the sort
-	 * @param order the order
-	 * @return the sort field
-	 */
-	private SortField<?> sortParserEmails(String sort, String order) {
-
-
-		if (sort == null || sort.isEmpty()) {
-			sort = "address";
-		}
-
-		if (order == null || order.isEmpty()) {
-			order = "asc";
-		}
-
-		sort = sort.toLowerCase();
-		order = order.toLowerCase();
-
-		if ("address".equals(sort)) {
-			if (order.equals("asc")) {
-				return Tables.WEBSHOPEMAILS.ADDRESS.asc();
-			}
-			return Tables.WEBSHOPEMAILS.ADDRESS.desc();
-		}
-
-		return Tables.WEBSHOPEMAILS.ADDRESS.asc();
 	}
 
 }
