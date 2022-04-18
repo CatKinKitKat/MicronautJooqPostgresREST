@@ -1,0 +1,24 @@
+flyway:
+  enabled: true
+  datasources:
+    default:
+      enabled: true
+datasources:
+  default:
+    password: postgres
+    driverClassName: org.testcontainers.jdbc.ContainerDatabaseDriver
+    url: jdbc:tc:postgresql:14.2-alpine://localhost/test
+    username: postgres
+    dialect: postgres
+r2dbc:
+  datasources:
+    default:
+      password: postgres
+      driverClassName: org.testcontainers.r2dbc.ContainerDatabaseDriver
+      url: r2dbc:tc:postgresql:14.2-alpine://localhost/test
+      username: postgres
+      dialect: postgres
+      options:
+        autoCommit: true
+        driver: pool
+        protocol: postgres

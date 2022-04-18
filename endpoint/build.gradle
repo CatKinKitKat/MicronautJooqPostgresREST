@@ -82,12 +82,13 @@ dependencies {
 	testImplementation(group: 'org.junit.jupiter', name: 'junit-jupiter-api')
 	testImplementation(group: 'io.micronaut.test', name: 'micronaut-test-junit5')
 	testImplementation(group: 'org.mockito', name: 'mockito-core')
-	testImplementation(group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-jsr310', version: '2.13.2')
 	testImplementation(group: 'org.testcontainers', name: 'junit-jupiter')
 	testImplementation(group: 'org.testcontainers', name: 'r2dbc')
 	testImplementation(group: 'org.testcontainers', name: 'postgresql')
 	testImplementation(group: 'org.testcontainers', name: 'testcontainers')
+	testImplementation(group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-jsr310', version: '2.13.2')
 	//testImplementation(group: 'org.testcontainers', name: 'kafka', version: '1.16.3')
+	//testImplementation(group: 'com.opentable.components', name: 'otj-pg-embedded', version: '0.13.3')
 }
 
 test {
@@ -98,13 +99,19 @@ application {
 	mainClass.set("com.optiply.endpoint.EndpointApplication")
 }
 
-//sourceSets {
-//    main {
-//        java {
-//            srcDirs("build/generated/source/proto/main/java")
-//        }
-//    }
+sourceSets {
+//main {
+//   java {
+//     srcDirs("build/generated/source/proto/main/java")
+//   }
 //}
+	test {
+		java {
+			srcDirs = ["src/test/java/integration", "src/test/java/unit"]
+		}
+	}
+}
+
 
 jacocoTestReport {
 	reports {

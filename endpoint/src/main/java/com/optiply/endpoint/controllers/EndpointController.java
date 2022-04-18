@@ -256,14 +256,14 @@ public class EndpointController {
 	 * @return the mono
 	 */
 	@Delete(value = "/remove/email/{handle}/{email}", produces = "application/json", consumes = "application/json")
-	public Mono<MutableHttpResponse<String>> removeEmails(String handle, String email) {
+	public Mono<MutableHttpResponse<String>> removeEmail(String handle, String email) {
 
 		return webshopemailsRepository.delete(handle, email).flatMap(webshop -> {
 					if (webshop) {
-						log.info("emails removed");
-						return Mono.just(HttpResponse.created("Emails removed."));
+						log.info("email removed");
+						return Mono.just(HttpResponse.created("Email removed."));
 					}
-					log.info("emails not removed");
+					log.info("email not removed");
 					return Mono.empty();
 				})
 				.switchIfEmpty(Mono.just(HttpResponse.badRequest())).onErrorReturn(HttpResponse.serverError());

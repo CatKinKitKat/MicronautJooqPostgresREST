@@ -7,9 +7,5 @@
 	"C": 33.4,
 	"currency": "EUR",
 	"runJobs": true,
-	"multiSupplier": false,
-	"emails": [
-		"management@optiply.nl",
-		"social@optiply.nl"
-	]
+	"multiSupplier": false
 }

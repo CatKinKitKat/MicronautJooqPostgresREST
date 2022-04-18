@@ -28,8 +28,7 @@ import java.util.Set;
 		"C",
 		"currency",
 		"runJobs",
-		"multiSupplier",
-		"emails"
+		"multiSupplier"
 })
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonSerialize
