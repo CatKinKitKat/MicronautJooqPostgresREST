@@ -235,14 +235,14 @@ public class EndpointController {
 	 * @return the mono
 	 */
 	@Post(value = "/add/email/{handle}/{email}", produces = "application/json", consumes = "application/json")
-	public Mono<MutableHttpResponse<String>> addEmails(String handle, String email) {
+	public Mono<MutableHttpResponse<String>> addEmail(String handle, String email) {
 
 		return webshopemailsRepository.create(handle, email).flatMap(webshop -> {
 					if (webshop) {
-						log.info("emails added");
-						return Mono.just(HttpResponse.created("Emails added."));
+						log.info("email added");
+						return Mono.just(HttpResponse.created("Email added."));
 					}
-					log.info("emails not added");
+					log.info("email not added");
 					return Mono.empty();
 				})
 				.switchIfEmpty(Mono.just(HttpResponse.badRequest())).onErrorReturn(HttpResponse.serverError());

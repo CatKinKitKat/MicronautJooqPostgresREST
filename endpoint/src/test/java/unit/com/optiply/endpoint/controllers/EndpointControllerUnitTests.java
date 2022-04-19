@@ -290,7 +290,7 @@ public class EndpointControllerUnitTests {
 
 		Optional<String> response =
 				Objects.requireNonNull(endpointController
-						.addEmails("sumthin", "redneck@sumthin.com").block()
+						.addEmail("sumthin", "redneck@sumthin.com").block()
 				).getBody();
 
 		Assertions.assertTrue(response.isPresent());

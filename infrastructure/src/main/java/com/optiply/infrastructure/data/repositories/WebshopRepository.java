@@ -222,8 +222,19 @@ public class WebshopRepository implements com.optiply.infrastructure.data.reposi
 				), status -> Mono
 						.from(DSL
 								.using(status.getConnection(), SQLDialect.POSTGRES, dslContext.settings())
-								.delete(Tables.WEBSHOP)
+								.select(Tables.WEBSHOP.WEBSHOP_ID)
+								.from(Tables.WEBSHOP)
 								.where(Tables.WEBSHOP.HANDLE.equalIgnoreCase(handle)))
-						.map(result -> result == QueryResult.SUCCESS.ordinal())));
+						.flatMap(result -> Mono
+								.from(DSL
+										.using(status.getConnection(), SQLDialect.POSTGRES, dslContext.settings())
+										.delete(Tables.WEBSHOPEMAILS)
+										.where(Tables.WEBSHOPEMAILS.WEBSHOP_ID.equal(result.value1()))))
+						.flatMap(result2 -> Mono
+								.from(DSL
+										.using(status.getConnection(), SQLDialect.POSTGRES, dslContext.settings())
+										.delete(Tables.WEBSHOP)
+										.where(Tables.WEBSHOP.HANDLE.equalIgnoreCase(handle))))
+						.map(result3 -> result3 == QueryResult.SUCCESS.ordinal())));
 	}
 }

@@ -1,6 +1,6 @@
 applicationType: default
 defaultPackage: com.optiply.services.project
-testFramework: spock
+testFramework: junit
 sourceLanguage: java
 buildTool: gradle
-features: [ annotation-api, app-name, asciidoctor, config-kubernetes, gradle, h2, http-client, java, java-application, jdbc-hikari, jib, jooq, kafka, kubernetes, logback, lombok, management, micronaut-build, netty-server, openrewrite, properties, r2dbc, reactor, reactor-http-client, readme, shade, spock, testcontainers, tracing-jaeger ]
+features: [annotation-api, app-name, asciidoctor, config-kubernetes, discovery-kubernetes, flyway, graalvm, gradle, http-client, jackson-databind, java, java-application, jdbc-hikari, jib, jooq, junit, kafka, kafka-streams, knative, kubernetes, kubernetes-informer, kubernetes-reactor-client, logback, lombok, management, micronaut-aot, micronaut-build, mockito, netty-server, openrewrite, postgres, problem-json, properties, r2dbc, reactor, reactor-http-client, readme, security, security-annotations, security-jwt, security-ldap, security-oauth2, security-session, shade, testcontainers, tracing-jaeger]

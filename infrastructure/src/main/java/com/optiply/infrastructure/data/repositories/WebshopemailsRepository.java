@@ -17,6 +17,7 @@ import org.jooq.impl.DSL;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+
 /**
  * The Webshopemails table Repository.
  * Used to access the Webshopemails table with JOOQ type safe operations via the R2DBC driver in a reactive fashion.
@@ -48,16 +49,6 @@ public class WebshopemailsRepository implements com.optiply.infrastructure.data.
 
 		this.dslContext = dslContext;
 		this.operations = operations;
-	}
-
-	/**
-	 * Gets the webshop_id for a given webshop via its handle.
-	 *
-	 * @param handle the webshop handle
-	 * @return Mono with the webshop_id
-	 */
-	private Long webshopId(String handle) {
-		return dslContext.select(Tables.WEBSHOP.WEBSHOP_ID).from(Tables.WEBSHOP).where(Tables.WEBSHOP.HANDLE.eq(handle)).fetchOne(Tables.WEBSHOP.WEBSHOP_ID);
 	}
 
 	/**
@@ -98,10 +89,16 @@ public class WebshopemailsRepository implements com.optiply.infrastructure.data.
 				), status -> Mono
 						.from(DSL
 								.using(status.getConnection(), SQLDialect.POSTGRES, dslContext.settings())
-								.insertInto(Tables.WEBSHOPEMAILS)
-								.columns(Tables.WEBSHOPEMAILS.WEBSHOP_ID, Tables.WEBSHOPEMAILS.ADDRESS)
-								.values(webshopId(handle), email))
-						.map(result -> result == QueryResult.SUCCESS.ordinal())));
+								.select(Tables.WEBSHOP.WEBSHOP_ID)
+								.from(Tables.WEBSHOP)
+								.where(Tables.WEBSHOP.HANDLE.eq(handle)))
+						.flatMap(id -> Mono
+								.from(DSL
+										.using(status.getConnection(), SQLDialect.POSTGRES, dslContext.settings())
+										.insertInto(Tables.WEBSHOPEMAILS)
+										.columns(Tables.WEBSHOPEMAILS.WEBSHOP_ID, Tables.WEBSHOPEMAILS.ADDRESS)
+										.values(id.value1(), email))
+								.map(result -> result == QueryResult.SUCCESS.ordinal()))));
 	}
 
 	/**
