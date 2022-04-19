@@ -1,5 +1,6 @@
 package com.optiply.endpoint.controllers;
 
+import com.optiply.endpoint.environment.TestEnvironment;
 import com.optiply.endpoint.models.WebshopBodyModel;
 import com.optiply.endpoint.models.WebshopEmailsModel;
 import com.optiply.endpoint.models.WebshopSettingsModel;
@@ -25,7 +26,7 @@ import java.util.Optional;
 import static org.mockito.Mockito.when;
 
 @MicronautTest
-public class EndpointControllerUnitTests {
+public class EndpointControllerUnitTests extends TestEnvironment {
 
 	@InjectMocks
 	private EndpointController endpointController;
@@ -278,7 +279,7 @@ public class EndpointControllerUnitTests {
 	@Test
 	void testAddEmails() {
 
-		final String OK_STR = "Emails added.";
+		final String OK_STR = "Email added.";
 
 		when(
 				webshopemailsRepository.create(

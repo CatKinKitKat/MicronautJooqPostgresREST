@@ -2,6 +2,7 @@ package com.optiply.endpoint.controllers;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.optiply.endpoint.environment.TestEnvironment;
 import com.optiply.endpoint.models.WebshopBodyModel;
 import com.optiply.endpoint.models.WebshopEmailsModel;
 import com.optiply.endpoint.models.WebshopSettingsModel;
@@ -18,7 +19,7 @@ import java.util.List;
 
 @MicronautTest
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-public class EndpointControllerIntegrationTests {
+public class EndpointControllerIntegrationTests extends TestEnvironment {
 
 	@Inject
 	@Client("/")

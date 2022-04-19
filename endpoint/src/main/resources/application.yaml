@@ -76,7 +76,7 @@ r2dbc:
         maxLifeTime: PT280S
         maxIdleTime: PT60S
         maxAcquireTime: PT6S
-        poolName: r2dbc-default
+        poolName: r2dbc-pool
         registerJmx: true
 tracing:
   jaeger:
