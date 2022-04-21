@@ -1,3 +1,5 @@
+import org.gradle.nativeplatform.platform.internal.DefaultNativePlatform
+
 buildscript {
 	dependencies {
 		//classpath 'com.google.protobuf:protobuf-gradle-plugin:0.8.18'
@@ -83,16 +85,22 @@ dependencies {
 	testImplementation(group: 'org.junit.jupiter', name: 'junit-jupiter-api')
 	testImplementation(group: 'io.micronaut.test', name: 'micronaut-test-junit5')
 	testImplementation(group: 'org.mockito', name: 'mockito-core')
-	testImplementation(group: 'org.testcontainers', name: 'junit-jupiter')
-	testImplementation(group: 'org.testcontainers', name: 'r2dbc')
-	testImplementation(group: 'org.testcontainers', name: 'postgresql')
-	testImplementation(group: 'org.testcontainers', name: 'testcontainers')
-	//testImplementation(group: 'org.testcontainers', name: 'kafka', version: '1.16.3')
+	testImplementation(group: 'org.testcontainers', name: 'junit-jupiter', version: '1.17.1')
+	testImplementation(group: 'org.testcontainers', name: 'r2dbc', version: '1.17.1')
+	testImplementation(group: 'org.testcontainers', name: 'postgresql', version: '1.17.1')
+	testImplementation(group: 'org.testcontainers', name: 'testcontainers', version: '1.17.1')
+	//testImplementation(group: 'org.testcontainers', name: 'kafka', version: '1.17.1')
 	//testImplementation(group: 'com.opentable.components', name: 'otj-pg-embedded', version: '0.13.3')
 }
 
 test {
 	useJUnitPlatform()
+	OperatingSystem os = DefaultNativePlatform.currentOperatingSystem;
+	if (os.isLinux()) {
+		def uid = ["id", "-u"].execute().text.trim()
+		environment "DOCKER_HOST", "unix:///run/user/$uid/podman/podman.sock"
+		environment "TESTCONTAINERS_RYUK_DISABLED", "true"
+	}
 }
 
 application {
