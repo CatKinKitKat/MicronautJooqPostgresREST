@@ -176,7 +176,7 @@ public class WebshopRepository implements com.optiply.infrastructure.data.reposi
 	 * @param C             the service level C percentage
 	 * @param INTEREST_RATE the interest rate
 	 * @param currency      the currency in ISO 4217 format
-	 * @param RUN_JOBS      the ability to run jobs
+	 * @param runJobs       the ability to run jobs
 	 * @param multiSupplier if it has multiple suppliers
 	 * @return Mono with boolean indicating success
 	 */
@@ -184,7 +184,7 @@ public class WebshopRepository implements com.optiply.infrastructure.data.reposi
 	public Mono<Boolean> updateWebshop(String handle, String url,
 	                                   Double A, Double B, Double C,
 	                                   Short INTEREST_RATE, String currency,
-	                                   Boolean RUN_JOBS, Boolean multiSupplier) {
+	                                   Boolean runJobs, Boolean multiSupplier) {
 		log.info("Updating webshop: " + handle);
 		return Mono.from(operations.withTransaction(
 				new DefaultTransactionDefinition(
@@ -200,7 +200,7 @@ public class WebshopRepository implements com.optiply.infrastructure.data.reposi
 								.set(Tables.WEBSHOP.C, C)
 								.set(Tables.WEBSHOP.INTEREST_RATE, INTEREST_RATE)
 								.set(Tables.WEBSHOP.CURRENCY, currency)
-								.set(Tables.WEBSHOP.RUN_JOBS, RUN_JOBS)
+								.set(Tables.WEBSHOP.RUN_JOBS, runJobs)
 								.set(Tables.WEBSHOP.MULTI_SUPPLY, multiSupplier)
 								.where(Tables.WEBSHOP.HANDLE.equalIgnoreCase(handle)))
 						.map(result -> result == QueryResult.SUCCESS.ordinal())));

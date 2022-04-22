@@ -17,20 +17,37 @@ import org.junit.jupiter.api.*;
 
 import java.util.List;
 
+/**
+ * The type Endpoint controller integration tests.
+ */
 @MicronautTest
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class EndpointControllerIntegrationTests extends TestEnvironment {
 
+	/**
+	 * The Client.
+	 */
 	@Inject
 	@Client("/")
 	HttpClient client;
 
+	/**
+	 * The Object mapper.
+	 */
 	@Inject
 	ObjectMapper objectMapper;
 
+	/**
+	 * The Endpoint controller.
+	 */
 	@Inject
 	EndpointController endpointController;
 
+	/**
+	 * Test create test webshop simple.
+	 *
+	 * @throws JsonProcessingException the json processing exception
+	 */
 	@Test
 	@Order(1)
 	void testCreateTestWebshopSimple() throws JsonProcessingException {
@@ -54,6 +71,11 @@ public class EndpointControllerIntegrationTests extends TestEnvironment {
 
 	}
 
+	/**
+	 * Test create test webshop.
+	 *
+	 * @throws JsonProcessingException the json processing exception
+	 */
 	@Test
 	@Order(2)
 	void testCreateTestWebshop() throws JsonProcessingException {
@@ -82,6 +104,9 @@ public class EndpointControllerIntegrationTests extends TestEnvironment {
 	}
 
 
+	/**
+	 * Test get webshop.
+	 */
 	@Test
 	@Order(3)
 	void testGetWebshop() {
@@ -102,6 +127,9 @@ public class EndpointControllerIntegrationTests extends TestEnvironment {
 
 	}
 
+	/**
+	 * Test get webshop settings.
+	 */
 	@Test
 	@Order(4)
 	void testGetWebshopSettings() {
@@ -121,6 +149,9 @@ public class EndpointControllerIntegrationTests extends TestEnvironment {
 	}
 
 
+	/**
+	 * Test add email to webshop.
+	 */
 	@Test
 	@Order(5)
 	void testAddEmailToWebshop() {
@@ -132,6 +163,9 @@ public class EndpointControllerIntegrationTests extends TestEnvironment {
 
 	}
 
+	/**
+	 * Test get webshop emails.
+	 */
 	@Test
 	@Order(6)
 	void testGetWebshopEmails() {
@@ -148,6 +182,9 @@ public class EndpointControllerIntegrationTests extends TestEnvironment {
 
 	}
 
+	/**
+	 * Remove email from webshop.
+	 */
 	@Test
 	@Order(7)
 	void removeEmailFromWebshop() {
@@ -159,6 +196,11 @@ public class EndpointControllerIntegrationTests extends TestEnvironment {
 
 	}
 
+	/**
+	 * Test update webshop.
+	 *
+	 * @throws JsonProcessingException the json processing exception
+	 */
 	@Test
 	@Order(8)
 	void testUpdateWebshop() throws JsonProcessingException {
@@ -186,6 +228,9 @@ public class EndpointControllerIntegrationTests extends TestEnvironment {
 
 	}
 
+	/**
+	 * Test delete webshop.
+	 */
 	@Test
 	@Order(9)
 	void testDeleteWebshop() {

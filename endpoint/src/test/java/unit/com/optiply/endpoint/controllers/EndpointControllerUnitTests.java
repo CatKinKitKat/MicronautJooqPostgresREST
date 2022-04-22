@@ -25,6 +25,9 @@ import java.util.Optional;
 
 import static org.mockito.Mockito.when;
 
+/**
+ * The type Endpoint controller unit tests.
+ */
 @MicronautTest
 public class EndpointControllerUnitTests extends TestEnvironment {
 
@@ -37,11 +40,17 @@ public class EndpointControllerUnitTests extends TestEnvironment {
 	@Mock
 	private WebshopemailsRepository webshopemailsRepository;
 
+	/**
+	 * Sets .
+	 */
 	@BeforeEach
 	public void setup() {
 		MockitoAnnotations.openMocks(this);
 	}
 
+	/**
+	 * Test find various single.
+	 */
 	@Test
 	void testFindVariousSingle() {
 
@@ -78,6 +87,9 @@ public class EndpointControllerUnitTests extends TestEnvironment {
 		Assertions.assertEquals(test, resultFoundSingle.get()[0]);
 	}
 
+	/**
+	 * Test find various multiple.
+	 */
 	@Test
 	void testFindVariousMultiple() {
 
@@ -128,6 +140,9 @@ public class EndpointControllerUnitTests extends TestEnvironment {
 		Assertions.assertEquals(optiply, resultFoundMultiple.get()[1]);
 	}
 
+	/**
+	 * Test get webshop.
+	 */
 	@Test
 	void testGetWebshop() {
 
@@ -158,6 +173,9 @@ public class EndpointControllerUnitTests extends TestEnvironment {
 		Assertions.assertEquals(test, resultFoundSingle.get());
 	}
 
+	/**
+	 * Test get webshop setiings.
+	 */
 	@Test
 	void testGetWebshopSetiings() {
 
@@ -187,6 +205,9 @@ public class EndpointControllerUnitTests extends TestEnvironment {
 
 	}
 
+	/**
+	 * Test get webshop emails.
+	 */
 	@Test
 	void testGetWebshopEmails() {
 
@@ -210,11 +231,14 @@ public class EndpointControllerUnitTests extends TestEnvironment {
 
 	}
 
+	/**
+	 * Test create with defaults.
+	 */
 	@Test
 	void testCreateWithDefaults() {
 
 		final String OK_STR = "Webshop created.";
-		WebshopBodyModel sumthin = new WebshopBodyModel();
+		WebshopSimpleModel sumthin = new WebshopSimpleModel();
 		sumthin.setHandle("sumthin");
 		sumthin.setUrl("http://www.sumthin.com");
 		sumthin.setA(20.0);
@@ -241,6 +265,9 @@ public class EndpointControllerUnitTests extends TestEnvironment {
 
 	}
 
+	/**
+	 * Test create.
+	 */
 	@Test
 	void testCreate() {
 
@@ -276,6 +303,9 @@ public class EndpointControllerUnitTests extends TestEnvironment {
 
 	}
 
+	/**
+	 * Test add emails.
+	 */
 	@Test
 	void testAddEmails() {
 
@@ -299,6 +329,9 @@ public class EndpointControllerUnitTests extends TestEnvironment {
 
 	}
 
+	/**
+	 * Test update webshop.
+	 */
 	@Test
 	void testUpdateWebshop() {
 
@@ -334,6 +367,9 @@ public class EndpointControllerUnitTests extends TestEnvironment {
 
 	}
 
+	/**
+	 * Test remove email.
+	 */
 	@Test
 	void testRemoveEmail() {
 
@@ -355,6 +391,9 @@ public class EndpointControllerUnitTests extends TestEnvironment {
 
 	}
 
+	/**
+	 * Test delete webshop.
+	 */
 	@Test
 	void testDeleteWebshop() {
 
@@ -371,6 +410,56 @@ public class EndpointControllerUnitTests extends TestEnvironment {
 
 		Assertions.assertFalse(response.isPresent());
 
+	}
+
+	/**
+	 * Test get all webshops.
+	 */
+	@Test
+	void testGetAllWebshops() {
+
+
+		Webshop webshop = new Webshop();
+		webshop.setHandle("sumthin");
+		webshop.setUrl("http://www.sumthin.com");
+		webshop.setA(20.0);
+		webshop.setB(30.0);
+		webshop.setC(50.0);
+		webshop.setInterestRate((short) 15);
+		webshop.setCurrency("USD");
+		webshop.setRunJobs(false);
+		webshop.setMultiSupply(false);
+
+		Webshop webshop2 = new Webshop();
+		webshop2.setHandle("sumthin2");
+		webshop2.setUrl("http://www.sumthin2.com");
+		webshop2.setA(20.0);
+		webshop2.setB(30.0);
+		webshop2.setC(50.0);
+		webshop2.setInterestRate((short) 15);
+		webshop2.setCurrency("USD");
+		webshop2.setRunJobs(false);
+		webshop2.setMultiSupply(false);
+
+		WebshopBodyModel webshopBodyModel = new WebshopBodyModel(webshop);
+		WebshopBodyModel webshopBodyModel2 = new WebshopBodyModel(webshop2);
+
+
+		when(
+				webshopRepository.findAll()
+		).thenReturn(
+				Flux.just(webshop, webshop2)
+		);
+
+		Optional<WebshopBodyModel[]> response =
+				Objects.requireNonNull(endpointController
+						.getAllWebshops().block()
+				).getBody();
+
+		Assertions.assertTrue(response.isPresent());
+		Assertions.assertEquals(2, response.get().length);
+		Assertions.assertEquals(webshopBodyModel, response.get()[0]);
+		Assertions.assertEquals(webshopBodyModel2, response.get()[1]);
 	}
 
 }

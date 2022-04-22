@@ -15,6 +15,15 @@ jacocoTestReport {
 	}
 }
 
+jacocoTestCoverageVerification {
+	violationRules {
+		rule {
+			limit {
+				minimum = 0.85
+			}
+		}
+	}
+}
 
 allprojects {
 	buildscript {

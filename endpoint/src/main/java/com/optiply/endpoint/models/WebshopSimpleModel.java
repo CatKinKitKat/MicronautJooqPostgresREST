@@ -10,15 +10,10 @@ import com.optiply.infrastructure.data.models.tables.pojos.Webshop;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.apache.commons.validator.routines.EmailValidator;
 import org.apache.commons.validator.routines.UrlValidator;
 
 /**
- * The JSON representation of a Webshop (Simple)
- * Should represent a Webshop Result without the webshop_id,
- * neither the email list or its settings.
- *
- * @author G. Amaro
+ * The type Webshop simple model.
  */
 @Data
 @JsonPropertyOrder({
@@ -70,7 +65,7 @@ public class WebshopSimpleModel {
 	/**
 	 * Instantiates a new Webshop simple model.
 	 *
-	 * @param webshop the webshop model
+	 * @param webshop the webshop
 	 */
 	public WebshopSimpleModel(Webshop webshop) {
 		this.handle = webshop.getHandle();
@@ -82,9 +77,26 @@ public class WebshopSimpleModel {
 	}
 
 	/**
-	 * Run validation checks.
+	 * Instantiates a new Webshop simple model.
 	 *
-	 * @return is valid?
+	 * @param handle the handle
+	 * @param url    the url
+	 * @param a      the a
+	 * @param b      the b
+	 * @param c      the c
+	 */
+	public WebshopSimpleModel(String handle, String url, Double a, Double b, Double c) {
+		this.handle = handle;
+		this.url = url;
+		this.a = a;
+		this.b = b;
+		this.c = c;
+	}
+
+	/**
+	 * Is valid boolean.
+	 *
+	 * @return the boolean
 	 */
 	public Boolean isValid() {
 		return this.isValidUrl(this.url) &&
