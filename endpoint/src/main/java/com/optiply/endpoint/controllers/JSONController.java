@@ -23,7 +23,7 @@ import reactor.core.publisher.Mono;
 @Log
 @Validated
 @Controller("/")
-public class EndpointController extends BaseController {
+public class JSONController extends BaseController {
 
 	/**
 	 * Gets webshops.

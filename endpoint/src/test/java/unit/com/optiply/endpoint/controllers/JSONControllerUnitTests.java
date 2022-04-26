@@ -29,10 +29,10 @@ import static org.mockito.Mockito.when;
  * The type Endpoint controller unit tests.
  */
 @MicronautTest
-public class EndpointControllerUnitTests extends TestEnvironment {
+public class JSONControllerUnitTests extends TestEnvironment {
 
 	@InjectMocks
-	private EndpointController endpointController;
+	private JSONController JSONController;
 
 	@Mock
 	private WebshopRepository webshopRepository;
@@ -79,7 +79,7 @@ public class EndpointControllerUnitTests extends TestEnvironment {
 		);
 
 		Optional<WebshopBodyModel[]> resultFoundSingle =
-				Objects.requireNonNull(endpointController
+				Objects.requireNonNull(JSONController
 						.getWebshops(new String[]{"handle:test"}, "handle", "asc")
 						.block()).getBody();
 
@@ -131,7 +131,7 @@ public class EndpointControllerUnitTests extends TestEnvironment {
 		);
 
 		Optional<WebshopBodyModel[]> resultFoundMultiple =
-				Objects.requireNonNull(endpointController
+				Objects.requireNonNull(JSONController
 						.getWebshops(new String[]{"interestRate>10"}, "handle", "desc")
 						.block()).getBody();
 
@@ -165,7 +165,7 @@ public class EndpointControllerUnitTests extends TestEnvironment {
 		);
 
 		Optional<WebshopSimpleModel> resultFoundSingle =
-				Objects.requireNonNull(endpointController
+				Objects.requireNonNull(JSONController
 						.getWebshop("test")
 						.block()).getBody();
 
@@ -196,7 +196,7 @@ public class EndpointControllerUnitTests extends TestEnvironment {
 		);
 
 		Optional<WebshopSettingsModel> resultFoundSingle =
-				Objects.requireNonNull(endpointController
+				Objects.requireNonNull(JSONController
 						.getWebshopSettings("test")
 						.block()).getBody();
 
@@ -222,7 +222,7 @@ public class EndpointControllerUnitTests extends TestEnvironment {
 		);
 
 		Optional<WebshopEmailsModel> result =
-				Objects.requireNonNull(endpointController
+				Objects.requireNonNull(JSONController
 						.getWebshopEmails("test")
 						.block()).getBody();
 
@@ -256,7 +256,7 @@ public class EndpointControllerUnitTests extends TestEnvironment {
 		);
 
 		Optional<String> response =
-				Objects.requireNonNull(endpointController
+				Objects.requireNonNull(JSONController
 						.createWebshopSimple(sumthin).block()
 				).getBody();
 
@@ -294,7 +294,7 @@ public class EndpointControllerUnitTests extends TestEnvironment {
 		);
 
 		Optional<String> response =
-				Objects.requireNonNull(endpointController
+				Objects.requireNonNull(JSONController
 						.createWebshop(sumthin).block()
 				).getBody();
 
@@ -320,7 +320,7 @@ public class EndpointControllerUnitTests extends TestEnvironment {
 		);
 
 		Optional<String> response =
-				Objects.requireNonNull(endpointController
+				Objects.requireNonNull(JSONController
 						.addEmail("sumthin", "redneck@sumthin.com").block()
 				).getBody();
 
@@ -358,7 +358,7 @@ public class EndpointControllerUnitTests extends TestEnvironment {
 		);
 
 		Optional<String> response =
-				Objects.requireNonNull(endpointController
+				Objects.requireNonNull(JSONController
 						.updateWebshop(sumthin).block()
 				).getBody();
 
@@ -382,7 +382,7 @@ public class EndpointControllerUnitTests extends TestEnvironment {
 		);
 
 		Optional<String> response =
-				Objects.requireNonNull(endpointController
+				Objects.requireNonNull(JSONController
 						.removeEmail("test", "test@test.pt").block()
 				).getBody();
 
@@ -404,7 +404,7 @@ public class EndpointControllerUnitTests extends TestEnvironment {
 		);
 
 		Optional<Object> response =
-				Objects.requireNonNull(endpointController
+				Objects.requireNonNull(JSONController
 						.deleteWebshop("test").block()
 				).getBody();
 
@@ -452,7 +452,7 @@ public class EndpointControllerUnitTests extends TestEnvironment {
 		);
 
 		Optional<WebshopBodyModel[]> response =
-				Objects.requireNonNull(endpointController
+				Objects.requireNonNull(JSONController
 						.getAllWebshops().block()
 				).getBody();
 

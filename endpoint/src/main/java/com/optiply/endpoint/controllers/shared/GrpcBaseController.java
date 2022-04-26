@@ -2,10 +2,12 @@ package com.optiply.endpoint.controllers.shared;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.optiply.endpoint.controllers.shared.interfaces.IBaseController;
+import com.optiply.endpoint.protobuf.EndpointsGrpc;
 import com.optiply.infrastructure.data.models.Tables;
 import com.optiply.infrastructure.data.repositories.WebshopRepository;
 import com.optiply.infrastructure.data.repositories.WebshopemailsRepository;
 import jakarta.inject.Inject;
+import jakarta.inject.Singleton;
 import org.jooq.Condition;
 import org.jooq.SortField;
 
@@ -15,9 +17,10 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * The type Base controller.
+ * The type Grpc base controller.
  */
-public abstract class BaseController implements IBaseController {
+@Singleton
+public abstract class GrpcBaseController extends EndpointsGrpc.EndpointsImplBase implements IBaseController {
 
 	/**
 	 * The Webshop repository.
@@ -34,7 +37,6 @@ public abstract class BaseController implements IBaseController {
 	 */
 	@Inject
 	public ObjectMapper objectMapper;
-
 
 	/**
 	 * Parse params webshop condition.

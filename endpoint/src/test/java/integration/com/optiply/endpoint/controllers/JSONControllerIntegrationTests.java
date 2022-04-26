@@ -22,7 +22,7 @@ import java.util.List;
  */
 @MicronautTest
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-public class EndpointControllerIntegrationTests extends TestEnvironment {
+public class JSONControllerIntegrationTests extends TestEnvironment {
 
 	/**
 	 * The Client.
@@ -41,7 +41,7 @@ public class EndpointControllerIntegrationTests extends TestEnvironment {
 	 * The Endpoint controller.
 	 */
 	@Inject
-	EndpointController endpointController;
+	JSONController JSONController;
 
 	/**
 	 * Test create test webshop simple.

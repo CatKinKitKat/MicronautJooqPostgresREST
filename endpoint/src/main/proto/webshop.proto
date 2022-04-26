@@ -1,9 +1,52 @@
 syntax = "proto3";
 
-option java_outer_classname = "WebshopBodyModel";
+option java_generic_services = true;
+option java_outer_classname = "WebshopProtos";
 option java_package = "com.optiply.endpoint.protobuf";
 
-message SomeMessage {
+service Endpoints {
+
+	rpc addEmail(EmailRequest) returns (TextResponse) {}
+	rpc createWebshop(WebshopBodyProto) returns (TextResponse) {}
+	rpc createWebshopSimple(WebshopSimpleProto) returns (TextResponse) {}
+	rpc deleteWebshop(HandleRequest) returns (TextResponse) {}
+	rpc getWebshop(HandleRequest) returns (WebshopSimpleProto) {}
+	rpc getWebshopEmails(HandleRequest) returns (WebshopEmailsProto) {}
+	rpc getWebshopSettings(HandleRequest) returns (WebshopSettingsProto) {}
+	rpc getWebshops(FindVariousRequest) returns (FindWebshopsProto) {}
+	rpc updateWebshop(WebshopBodyProto) returns (TextResponse) {}
+	rpc removeEmail(EmailRequest) returns (TextResponse) {}
+
+}
+
+message EmailRequest {
+	string handle = 1;
+	string email = 2;
+}
+
+message HandleRequest {
+	string handle = 1;
+}
+
+message BooleanResponse {
+	bool success = 1;
+}
+
+message TextResponse {
+	string text = 1;
+}
+
+message FindVariousRequest {
+	string query = 1;
+	string sort = 2;
+	string order = 3;
+}
+
+message FindWebshopsProto {
+	repeated WebshopSimpleProto webshops = 1;
+}
+
+message WebshopBodyProto {
 
 	string handle = 1;
 	string url = 2;
@@ -14,6 +57,32 @@ message SomeMessage {
 	string currency = 7;
 	bool runJobs = 8;
 	bool multiSupplier = 9;
-	repeated string emails = 10;
+
+}
+
+message WebshopSimpleProto {
+
+	string handle = 1;
+	string url = 2;
+	uint32 interestRate = 3;
+	double A = 4;
+	double B = 5;
+	double C = 6;
+
+}
+
+message WebshopEmailsProto {
+
+	string handle = 1;
+	repeated string emails = 2;
+
+}
+
+message WebshopSettingsProto {
+
+	string handle = 1;
+	string currency = 3;
+	bool runJobs = 4;
+	bool multiSupplier = 5;
 
 }
