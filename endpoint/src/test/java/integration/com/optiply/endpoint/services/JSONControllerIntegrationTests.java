@@ -1,14 +1,12 @@
-package com.optiply.endpoint.controllers;
+package com.optiply.endpoint.services;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.optiply.endpoint.environment.TestEnvironment;
-import com.optiply.endpoint.models.WebshopBodyModel;
-import com.optiply.endpoint.models.WebshopEmailsModel;
-import com.optiply.endpoint.models.WebshopSettingsModel;
-import com.optiply.endpoint.models.WebshopSimpleModel;
+import com.optiply.endpoint.models.*;
 import io.micronaut.http.HttpRequest;
 import io.micronaut.http.HttpResponse;
+import io.micronaut.http.MutableHttpRequest;
 import io.micronaut.http.client.HttpClient;
 import io.micronaut.http.client.annotation.Client;
 import io.micronaut.test.extensions.junit5.annotation.MicronautTest;
@@ -41,7 +39,7 @@ public class JSONControllerIntegrationTests extends TestEnvironment {
 	 * The Endpoint controller.
 	 */
 	@Inject
-	JSONController JSONController;
+	com.optiply.endpoint.controllers.JSONController JSONController;
 
 	/**
 	 * Test create test webshop simple.
@@ -64,7 +62,7 @@ public class JSONControllerIntegrationTests extends TestEnvironment {
 
 		WebshopBodyModel webshop = objectMapper.readValue(body, WebshopBodyModel.class);
 
-		HttpRequest<WebshopBodyModel> request = HttpRequest.POST("/create/simple", webshop);
+		HttpRequest<WebshopBodyModel> request = HttpRequest.POST("/simple", webshop);
 		String result = client.toBlocking().retrieve(request, String.class);
 
 		Assertions.assertEquals("Webshop created.", result);
@@ -96,7 +94,7 @@ public class JSONControllerIntegrationTests extends TestEnvironment {
 
 		WebshopBodyModel webshop = objectMapper.readValue(body, WebshopBodyModel.class);
 
-		HttpRequest<WebshopBodyModel> request = HttpRequest.POST("/create", webshop);
+		HttpRequest<WebshopBodyModel> request = HttpRequest.POST("/", webshop);
 		String result = client.toBlocking().retrieve(request, String.class);
 
 		Assertions.assertEquals("Webshop created.", result);
@@ -119,7 +117,7 @@ public class JSONControllerIntegrationTests extends TestEnvironment {
 		expected.setC(25.0);
 		expected.setInterestRate((short) 25);
 
-		HttpRequest<WebshopSimpleModel> request = HttpRequest.GET("/get/test3");
+		HttpRequest<WebshopSimpleModel> request = HttpRequest.GET("/test3");
 		WebshopSimpleModel result = client.toBlocking()
 				.retrieve(request, WebshopSimpleModel.class);
 
@@ -140,7 +138,7 @@ public class JSONControllerIntegrationTests extends TestEnvironment {
 		expected.setRunJobs(false);
 		expected.setMultiSupplier(true);
 
-		HttpRequest<WebshopSettingsModel> request = HttpRequest.GET("/get/test3/settings");
+		HttpRequest<WebshopSettingsModel> request = HttpRequest.GET("/test3/settings");
 		WebshopSettingsModel result = client.toBlocking()
 				.retrieve(request, WebshopSettingsModel.class);
 
@@ -154,9 +152,17 @@ public class JSONControllerIntegrationTests extends TestEnvironment {
 	 */
 	@Test
 	@Order(5)
-	void testAddEmailToWebshop() {
+	void testAddEmailToWebshop() throws JsonProcessingException {
 
-		HttpRequest<String> request = HttpRequest.POST("/add/email/test3/lol@test.pt", null);
+		String body = """
+					{
+						"email": "lol@test.pt"
+					}
+				""";
+
+		EmailModel emailModel = objectMapper.readValue(body, EmailModel.class);
+
+		MutableHttpRequest<EmailModel> request = HttpRequest.POST("/email/test3/", emailModel);
 		String result = client.toBlocking().retrieve(request, String.class);
 
 		Assertions.assertEquals("Email added.", result);
@@ -175,7 +181,7 @@ public class JSONControllerIntegrationTests extends TestEnvironment {
 		expected.setEmails(List.of("lol@test.pt"));
 
 
-		HttpRequest<WebshopEmailsModel> request = HttpRequest.GET("/get/test3/emails");
+		HttpRequest<WebshopEmailsModel> request = HttpRequest.GET("/test3/emails");
 		WebshopEmailsModel result = client.toBlocking().retrieve(request, WebshopEmailsModel.class);
 
 		Assertions.assertEquals(expected, result);
@@ -187,9 +193,17 @@ public class JSONControllerIntegrationTests extends TestEnvironment {
 	 */
 	@Test
 	@Order(7)
-	void removeEmailFromWebshop() {
+	void removeEmailFromWebshop() throws JsonProcessingException {
 
-		HttpRequest<String> request = HttpRequest.DELETE("/remove/email/test3/lol@test.pt");
+		String body = """
+					{
+						"email": "lol@test.pt"
+					}
+				""";
+
+		EmailModel emailModel = objectMapper.readValue(body, EmailModel.class);
+
+		MutableHttpRequest<EmailModel> request = HttpRequest.DELETE("/email/test3/", emailModel);
 		String result = client.toBlocking().retrieve(request, String.class);
 
 		Assertions.assertEquals("Email removed.", result);
@@ -221,7 +235,7 @@ public class JSONControllerIntegrationTests extends TestEnvironment {
 
 		WebshopBodyModel webshop = objectMapper.readValue(body, WebshopBodyModel.class);
 
-		HttpRequest<WebshopBodyModel> request = HttpRequest.PUT("/update", webshop);
+		HttpRequest<WebshopBodyModel> request = HttpRequest.PUT("/", webshop);
 		String result = client.toBlocking().retrieve(request, String.class);
 
 		Assertions.assertEquals("Webshop updated.", result);
@@ -235,10 +249,10 @@ public class JSONControllerIntegrationTests extends TestEnvironment {
 	@Order(9)
 	void testDeleteWebshop() {
 
-		HttpRequest<Boolean> requestT = HttpRequest.DELETE("/delete/test2");
+		HttpRequest<Boolean> requestT = HttpRequest.DELETE("/test2");
 		HttpResponse<Object> resultT = client.toBlocking().exchange(requestT);
 
-		HttpRequest<Boolean> requestO = HttpRequest.DELETE("/delete/test3");
+		HttpRequest<Boolean> requestO = HttpRequest.DELETE("/test3");
 		HttpResponse<Object> resultO = client.toBlocking().exchange(requestO);
 
 		Assertions.assertNull(resultT.body());

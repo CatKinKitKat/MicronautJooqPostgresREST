@@ -20,6 +20,8 @@ public class GrpcController extends GrpcBaseController {
 
 		log.info("Received request to add email");
 
+		//Use service to add email __ TODO
+
 		WebshopProtos.TextResponse response = WebshopProtos.TextResponse.newBuilder()
 				.setText("Email added successfully")
 				.build();

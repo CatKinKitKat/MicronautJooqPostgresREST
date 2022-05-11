@@ -1,4 +1,4 @@
-package com.optiply.endpoint.controllers;
+package com.optiply.endpoint.services;
 
 import com.optiply.endpoint.environment.TestEnvironment;
 import com.optiply.endpoint.models.WebshopBodyModel;
@@ -29,10 +29,10 @@ import static org.mockito.Mockito.when;
  * The type Endpoint controller unit tests.
  */
 @MicronautTest
-public class JSONControllerUnitTests extends TestEnvironment {
+public class RepositoryServiceUnitTests extends TestEnvironment {
 
 	@InjectMocks
-	private JSONController JSONController;
+	private RepositoryService repositoryService;
 
 	@Mock
 	private WebshopRepository webshopRepository;
@@ -79,8 +79,8 @@ public class JSONControllerUnitTests extends TestEnvironment {
 		);
 
 		Optional<WebshopBodyModel[]> resultFoundSingle =
-				Objects.requireNonNull(JSONController
-						.getWebshops(new String[]{"handle:test"}, "handle", "asc")
+				Objects.requireNonNull(repositoryService
+						.getWebshops(Tables.WEBSHOP.HANDLE.equalIgnoreCase("test"), Tables.WEBSHOP.HANDLE.asc())
 						.block()).getBody();
 
 		Assertions.assertTrue(resultFoundSingle.isPresent());
@@ -131,8 +131,8 @@ public class JSONControllerUnitTests extends TestEnvironment {
 		);
 
 		Optional<WebshopBodyModel[]> resultFoundMultiple =
-				Objects.requireNonNull(JSONController
-						.getWebshops(new String[]{"interestRate>10"}, "handle", "desc")
+				Objects.requireNonNull(repositoryService
+						.getWebshops(Tables.WEBSHOP.INTEREST_RATE.greaterThan((short) 10), Tables.WEBSHOP.HANDLE.desc())
 						.block()).getBody();
 
 		Assertions.assertTrue(resultFoundMultiple.isPresent());
@@ -165,7 +165,7 @@ public class JSONControllerUnitTests extends TestEnvironment {
 		);
 
 		Optional<WebshopSimpleModel> resultFoundSingle =
-				Objects.requireNonNull(JSONController
+				Objects.requireNonNull(repositoryService
 						.getWebshop("test")
 						.block()).getBody();
 
@@ -196,7 +196,7 @@ public class JSONControllerUnitTests extends TestEnvironment {
 		);
 
 		Optional<WebshopSettingsModel> resultFoundSingle =
-				Objects.requireNonNull(JSONController
+				Objects.requireNonNull(repositoryService
 						.getWebshopSettings("test")
 						.block()).getBody();
 
@@ -222,7 +222,7 @@ public class JSONControllerUnitTests extends TestEnvironment {
 		);
 
 		Optional<WebshopEmailsModel> result =
-				Objects.requireNonNull(JSONController
+				Objects.requireNonNull(repositoryService
 						.getWebshopEmails("test")
 						.block()).getBody();
 
@@ -256,7 +256,7 @@ public class JSONControllerUnitTests extends TestEnvironment {
 		);
 
 		Optional<String> response =
-				Objects.requireNonNull(JSONController
+				Objects.requireNonNull(repositoryService
 						.createWebshopSimple(sumthin).block()
 				).getBody();
 
@@ -294,7 +294,7 @@ public class JSONControllerUnitTests extends TestEnvironment {
 		);
 
 		Optional<String> response =
-				Objects.requireNonNull(JSONController
+				Objects.requireNonNull(repositoryService
 						.createWebshop(sumthin).block()
 				).getBody();
 
@@ -320,7 +320,7 @@ public class JSONControllerUnitTests extends TestEnvironment {
 		);
 
 		Optional<String> response =
-				Objects.requireNonNull(JSONController
+				Objects.requireNonNull(repositoryService
 						.addEmail("sumthin", "redneck@sumthin.com").block()
 				).getBody();
 
@@ -358,7 +358,7 @@ public class JSONControllerUnitTests extends TestEnvironment {
 		);
 
 		Optional<String> response =
-				Objects.requireNonNull(JSONController
+				Objects.requireNonNull(repositoryService
 						.updateWebshop(sumthin).block()
 				).getBody();
 
@@ -382,7 +382,7 @@ public class JSONControllerUnitTests extends TestEnvironment {
 		);
 
 		Optional<String> response =
-				Objects.requireNonNull(JSONController
+				Objects.requireNonNull(repositoryService
 						.removeEmail("test", "test@test.pt").block()
 				).getBody();
 
@@ -404,7 +404,7 @@ public class JSONControllerUnitTests extends TestEnvironment {
 		);
 
 		Optional<Object> response =
-				Objects.requireNonNull(JSONController
+				Objects.requireNonNull(repositoryService
 						.deleteWebshop("test").block()
 				).getBody();
 
@@ -452,7 +452,7 @@ public class JSONControllerUnitTests extends TestEnvironment {
 		);
 
 		Optional<WebshopBodyModel[]> response =
-				Objects.requireNonNull(JSONController
+				Objects.requireNonNull(repositoryService
 						.getAllWebshops().block()
 				).getBody();
 

@@ -3,6 +3,7 @@ package com.optiply.endpoint.controllers.shared;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.optiply.endpoint.controllers.shared.interfaces.IBaseController;
 import com.optiply.endpoint.protobuf.EndpointsGrpc;
+import com.optiply.endpoint.services.RepositoryService;
 import com.optiply.infrastructure.data.models.Tables;
 import com.optiply.infrastructure.data.repositories.WebshopRepository;
 import com.optiply.infrastructure.data.repositories.WebshopemailsRepository;
@@ -23,15 +24,10 @@ import java.util.regex.Pattern;
 public abstract class GrpcBaseController extends EndpointsGrpc.EndpointsImplBase implements IBaseController {
 
 	/**
-	 * The Webshop repository.
+	 * The repository service.
 	 */
 	@Inject
-	public WebshopRepository webshopRepository;
-	/**
-	 * The Webshopemails repository.
-	 */
-	@Inject
-	public WebshopemailsRepository webshopemailsRepository;
+	public RepositoryService repositoryService;
 	/**
 	 * The Object mapper.
 	 */
