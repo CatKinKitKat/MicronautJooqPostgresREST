@@ -51,9 +51,9 @@ message WebshopBodyProto {
 	string handle = 1;
 	string url = 2;
 	uint32 interestRate = 3;
-	double A = 4;
-	double B = 5;
-	double C = 6;
+	double serviceLevelA = 4;
+	double serviceLevelB = 5;
+	double serviceLevelC = 6;
 	string currency = 7;
 	bool runJobs = 8;
 	bool multiSupplier = 9;
@@ -65,9 +65,9 @@ message WebshopSimpleProto {
 	string handle = 1;
 	string url = 2;
 	uint32 interestRate = 3;
-	double A = 4;
-	double B = 5;
-	double C = 6;
+	double serviceLevelA = 4;
+	double serviceLevelB = 5;
+	double serviceLevelC = 6;
 
 }
 

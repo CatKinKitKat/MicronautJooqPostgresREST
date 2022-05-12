@@ -14,15 +14,6 @@ public interface IWebshopemailsRepository {
 	/**
 	 * Create a new webshopemails record.
 	 *
-	 * @param id    the webshop_id
-	 * @param email the address
-	 * @return Mono with boolean indicating success
-	 */
-	Mono<Boolean> create(Long id, String email);
-
-	/**
-	 * Create a new webshopemails record.
-	 *
 	 * @param handle the handle from which to get the webshop_id
 	 * @param email  the address
 	 * @return Mono with boolean indicating success

@@ -93,6 +93,57 @@ public interface IWebshopRepository {
 	                            Boolean RUN_JOBS, Boolean multiSupplier);
 
 	/**
+	 * Update webshop handle mono.
+	 *
+	 * @param handle    the handle
+	 * @param newHandle the new handle
+	 * @return the mono
+	 */
+	Mono<Boolean> updateWebshopHandle(String handle, String newHandle);
+
+	/**
+	 * Update webshop url mono.
+	 *
+	 * @param handle the handle
+	 * @param url    the url
+	 * @return the mono
+	 */
+	Mono<Boolean> updateWebshopUrl(String handle, String url);
+
+	/**
+	 * Update webshop interest rate mono.
+	 *
+	 * @param handle       the handle
+	 * @param interestRate the interest rate
+	 * @return the mono
+	 */
+	Mono<Boolean> updateWebshopInterestRate(String handle, Short interestRate);
+
+	/**
+	 * Update webshop settings mono.
+	 *
+	 * @param handle        the handle
+	 * @param currency      the currency
+	 * @param runJobs       the run jobs
+	 * @param multiSupplier the multi supplier
+	 * @return the mono
+	 */
+	Mono<Boolean> updateWebshopSettings(String handle, String currency,
+	                                    Boolean runJobs, Boolean multiSupplier);
+
+	/**
+	 * Update webshop service levels mono.
+	 *
+	 * @param handle        the handle
+	 * @param serviceLevelA the service level a
+	 * @param serviceLevelB the service level b
+	 * @param serviceLevelC the service level c
+	 * @return the mono
+	 */
+	Mono<Boolean> updateWebshopServiceLevels(String handle, Double serviceLevelA,
+	                                         Double serviceLevelB, Double serviceLevelC);
+
+	/**
 	 * Delete a webshop by its handle.
 	 *
 	 * @param handle the handle

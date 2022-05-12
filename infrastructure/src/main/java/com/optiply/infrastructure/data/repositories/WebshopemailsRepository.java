@@ -54,28 +54,6 @@ public class WebshopemailsRepository implements com.optiply.infrastructure.data.
 	/**
 	 * Create a new email for a given webshop.
 	 *
-	 * @param id    the webshop_id
-	 * @param email the email address
-	 * @return Mono with Boolean indicating success
-	 */
-	@Override
-	public Mono<Boolean> create(Long id, String email) {
-		log.info("Creating email: " + email);
-		return Mono.from(operations.withTransaction(
-				new DefaultTransactionDefinition(
-						TransactionDefinition.Propagation.REQUIRES_NEW
-				), status -> Mono
-						.from(DSL
-								.using(status.getConnection(), SQLDialect.POSTGRES, dslContext.settings())
-								.insertInto(Tables.WEBSHOPEMAILS)
-								.columns(Tables.WEBSHOPEMAILS.WEBSHOP_ID, Tables.WEBSHOPEMAILS.ADDRESS)
-								.values(id, email))
-						.map(result -> result == QueryResult.SUCCESS.ordinal())));
-	}
-
-	/**
-	 * Create a new email for a given webshop.
-	 *
 	 * @param handle the webshop handle
 	 * @param email  the email address
 	 * @return Mono with Boolean indicating success

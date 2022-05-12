@@ -48,21 +48,21 @@ public class JSONControllerIntegrationTests extends TestEnvironment {
 	 */
 	@Test
 	@Order(1)
-	void testCreateTestWebshopSimple() throws JsonProcessingException {
+	void testCreateTestWebshop1() throws JsonProcessingException {
 
 		String body = """
 					{
 						"handle": "test2",
 						"url": "https://www.test2.com",
-						"A": 33.0,
-						"B": 33.0,
-						"C": 34.0
+						"serviceLevelA": 33.0,
+						"serviceLevelB": 33.0,
+						"serviceLevelC": 34.0
 					}
 				""";
 
 		WebshopBodyModel webshop = objectMapper.readValue(body, WebshopBodyModel.class);
 
-		HttpRequest<WebshopBodyModel> request = HttpRequest.POST("/simple", webshop);
+		HttpRequest<WebshopBodyModel> request = HttpRequest.POST("/", webshop);
 		String result = client.toBlocking().retrieve(request, String.class);
 
 		Assertions.assertEquals("Webshop created.", result);
@@ -76,16 +76,16 @@ public class JSONControllerIntegrationTests extends TestEnvironment {
 	 */
 	@Test
 	@Order(2)
-	void testCreateTestWebshop() throws JsonProcessingException {
+	void testCreateTestWebshop2() throws JsonProcessingException {
 
 		String body = """
 					{
 						"handle": "test3",
 						"url": "https://www.test3.nl",
 						"interestRate": 25,
-						"A": 50.0,
-						"B": 25.0,
-						"C": 25.0,
+						"serviceLevelA": 50.0,
+						"serviceLevelB": 25.0,
+						"serviceLevelC": 25.0,
 						"currency": "USD",
 						"runJobs": false,
 						"multiSupplier": true
@@ -112,9 +112,9 @@ public class JSONControllerIntegrationTests extends TestEnvironment {
 		WebshopSimpleModel expected = new WebshopSimpleModel();
 		expected.setHandle("test3");
 		expected.setUrl("https://www.test3.nl");
-		expected.setA(50.0);
-		expected.setB(25.0);
-		expected.setC(25.0);
+		expected.setServiceLevelA(50.0);
+		expected.setServiceLevelB(25.0);
+		expected.setServiceLevelC(25.0);
 		expected.setInterestRate((short) 25);
 
 		HttpRequest<WebshopSimpleModel> request = HttpRequest.GET("/test3");
@@ -224,9 +224,9 @@ public class JSONControllerIntegrationTests extends TestEnvironment {
 						"handle": "test3",
 						"url": "https://www.test3.nl",
 						"interestRate": 25,
-						"A": 50.0,
-						"B": 25.0,
-						"C": 25.0,
+						"serviceLevelA": 50.0,
+						"serviceLevelB": 25.0,
+						"serviceLevelC": 25.0,
 						"currency": "USD",
 						"runJobs": false,
 						"multiSupplier": true

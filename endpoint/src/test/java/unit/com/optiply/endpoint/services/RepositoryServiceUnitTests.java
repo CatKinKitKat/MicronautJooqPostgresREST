@@ -58,9 +58,9 @@ public class RepositoryServiceUnitTests extends TestEnvironment {
 		test.setHandle("test");
 		test.setUrl("http://www.test.com");
 		test.setInterestRate((short) 20);
-		test.setA(33.0);
-		test.setB(33.0);
-		test.setC(34.0);
+		test.setServiceLevelA(33.0);
+		test.setServiceLevelB(33.0);
+		test.setServiceLevelC(34.0);
 		test.setCurrency("EUR");
 		test.setRunJobs(true);
 		test.setMultiSupplier(false);
@@ -97,9 +97,9 @@ public class RepositoryServiceUnitTests extends TestEnvironment {
 		test.setHandle("test");
 		test.setUrl("http://www.test.com");
 		test.setInterestRate((short) 20);
-		test.setA(33.0);
-		test.setB(33.0);
-		test.setC(34.0);
+		test.setServiceLevelA(33.0);
+		test.setServiceLevelB(33.0);
+		test.setServiceLevelC(34.0);
 		test.setCurrency("EUR");
 		test.setRunJobs(true);
 		test.setMultiSupplier(false);
@@ -108,9 +108,9 @@ public class RepositoryServiceUnitTests extends TestEnvironment {
 		optiply.setHandle("optiply");
 		optiply.setUrl("http://www.optiply.nl");
 		optiply.setInterestRate((short) 25);
-		optiply.setA(50.0);
-		optiply.setB(25.0);
-		optiply.setC(25.0);
+		optiply.setServiceLevelA(50.0);
+		optiply.setServiceLevelB(25.0);
+		optiply.setServiceLevelC(25.0);
 		optiply.setCurrency("USD");
 		optiply.setRunJobs(false);
 		optiply.setMultiSupplier(true);
@@ -150,9 +150,9 @@ public class RepositoryServiceUnitTests extends TestEnvironment {
 		test.setHandle("test");
 		test.setUrl("http://www.test.com");
 		test.setInterestRate((short) 20);
-		test.setA(33.0);
-		test.setB(33.0);
-		test.setC(34.0);
+		test.setServiceLevelA(33.0);
+		test.setServiceLevelB(33.0);
+		test.setServiceLevelC(34.0);
 
 		when(
 				webshopRepository.find("test")
@@ -232,40 +232,6 @@ public class RepositoryServiceUnitTests extends TestEnvironment {
 	}
 
 	/**
-	 * Test create with defaults.
-	 */
-	@Test
-	void testCreateWithDefaults() {
-
-		final String OK_STR = "Webshop created.";
-		WebshopSimpleModel sumthin = new WebshopSimpleModel();
-		sumthin.setHandle("sumthin");
-		sumthin.setUrl("http://www.sumthin.com");
-		sumthin.setA(20.0);
-		sumthin.setB(30.0);
-		sumthin.setC(50.0);
-		// leave defaults
-
-		when(
-				webshopRepository.create(
-						"sumthin", "http://www.sumthin.com",
-						20.0, 30.0, 50.0
-				)
-		).thenReturn(
-				Mono.just(true)
-		);
-
-		Optional<String> response =
-				Objects.requireNonNull(repositoryService
-						.createWebshopSimple(sumthin).block()
-				).getBody();
-
-		Assertions.assertTrue(response.isPresent());
-		Assertions.assertEquals(OK_STR, response.get());
-
-	}
-
-	/**
 	 * Test create.
 	 */
 	@Test
@@ -275,9 +241,9 @@ public class RepositoryServiceUnitTests extends TestEnvironment {
 		WebshopBodyModel sumthin = new WebshopBodyModel();
 		sumthin.setHandle("sumthin");
 		sumthin.setUrl("http://www.sumthin.com");
-		sumthin.setA(20.0);
-		sumthin.setB(30.0);
-		sumthin.setC(50.0);
+		sumthin.setServiceLevelA(20.0);
+		sumthin.setServiceLevelB(30.0);
+		sumthin.setServiceLevelC(50.0);
 		sumthin.setInterestRate((short) 15);
 		sumthin.setCurrency("USD");
 		sumthin.setRunJobs(false);
@@ -339,9 +305,9 @@ public class RepositoryServiceUnitTests extends TestEnvironment {
 		WebshopBodyModel sumthin = new WebshopBodyModel();
 		sumthin.setHandle("sumthin");
 		sumthin.setUrl("http://www.sumthin.com");
-		sumthin.setA(20.0);
-		sumthin.setB(30.0);
-		sumthin.setC(50.0);
+		sumthin.setServiceLevelA(20.0);
+		sumthin.setServiceLevelB(30.0);
+		sumthin.setServiceLevelC(50.0);
 		sumthin.setInterestRate((short) 15);
 		sumthin.setCurrency("USD");
 		sumthin.setRunJobs(false);
@@ -410,56 +376,6 @@ public class RepositoryServiceUnitTests extends TestEnvironment {
 
 		Assertions.assertFalse(response.isPresent());
 
-	}
-
-	/**
-	 * Test get all webshops.
-	 */
-	@Test
-	void testGetAllWebshops() {
-
-
-		Webshop webshop = new Webshop();
-		webshop.setHandle("sumthin");
-		webshop.setUrl("http://www.sumthin.com");
-		webshop.setA(20.0);
-		webshop.setB(30.0);
-		webshop.setC(50.0);
-		webshop.setInterestRate((short) 15);
-		webshop.setCurrency("USD");
-		webshop.setRunJobs(false);
-		webshop.setMultiSupply(false);
-
-		Webshop webshop2 = new Webshop();
-		webshop2.setHandle("sumthin2");
-		webshop2.setUrl("http://www.sumthin2.com");
-		webshop2.setA(20.0);
-		webshop2.setB(30.0);
-		webshop2.setC(50.0);
-		webshop2.setInterestRate((short) 15);
-		webshop2.setCurrency("USD");
-		webshop2.setRunJobs(false);
-		webshop2.setMultiSupply(false);
-
-		WebshopBodyModel webshopBodyModel = new WebshopBodyModel(webshop);
-		WebshopBodyModel webshopBodyModel2 = new WebshopBodyModel(webshop2);
-
-
-		when(
-				webshopRepository.findAll()
-		).thenReturn(
-				Flux.just(webshop, webshop2)
-		);
-
-		Optional<WebshopBodyModel[]> response =
-				Objects.requireNonNull(repositoryService
-						.getAllWebshops().block()
-				).getBody();
-
-		Assertions.assertTrue(response.isPresent());
-		Assertions.assertEquals(2, response.get().length);
-		Assertions.assertEquals(webshopBodyModel, response.get()[0]);
-		Assertions.assertEquals(webshopBodyModel2, response.get()[1]);
 	}
 
 }

@@ -23,9 +23,9 @@ import java.util.Set;
 		"handle",
 		"url",
 		"interestRate",
-		"A",
-		"B",
-		"C",
+		"serviceLevelA",
+		"serviceLevelB",
+		"serviceLevelC",
 		"currency",
 		"runJobs",
 		"multiSupplier"
@@ -55,18 +55,18 @@ public class WebshopBodyModel {
 	/**
 	 * The A.
 	 */
-	@JsonProperty("A")
-	private Double a;
+	@JsonProperty("serviceLevelA")
+	private Double serviceLevelA;
 	/**
 	 * The B.
 	 */
-	@JsonProperty("B")
-	private Double b;
+	@JsonProperty("serviceLevelB")
+	private Double serviceLevelB;
 	/**
 	 * The C.
 	 */
-	@JsonProperty("C")
-	private Double c;
+	@JsonProperty("serviceLevelC")
+	private Double serviceLevelC;
 	/**
 	 * The Currency.
 	 */
@@ -92,9 +92,9 @@ public class WebshopBodyModel {
 		this.handle = webshop.getHandle();
 		this.url = webshop.getUrl();
 		this.interestRate = webshop.getInterestRate();
-		this.a = webshop.getA();
-		this.b = webshop.getB();
-		this.c = webshop.getC();
+		this.serviceLevelA = webshop.getA();
+		this.serviceLevelB = webshop.getB();
+		this.serviceLevelC = webshop.getC();
 		this.currency = webshop.getCurrency();
 		this.runJobs = webshop.getRunJobs();
 		this.multiSupplier = webshop.getMultiSupply();
@@ -109,7 +109,7 @@ public class WebshopBodyModel {
 
 		return this.isValidUrl(this.url) &&
 				this.isValidCurrency(this.currency) &&
-				this.isValidServiceSum(this.a, this.b, this.c);
+				this.isValidServiceSum(this.serviceLevelA, this.serviceLevelB, this.serviceLevelC);
 	}
 
 	/**
@@ -151,4 +151,5 @@ public class WebshopBodyModel {
 	private Boolean isValidServiceSum(Double A, Double B, Double C) {
 		return A + B + C == 100;
 	}
+
 }

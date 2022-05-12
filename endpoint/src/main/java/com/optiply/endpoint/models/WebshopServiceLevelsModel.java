@@ -10,7 +10,6 @@ import com.optiply.infrastructure.data.models.tables.pojos.Webshop;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.apache.commons.validator.routines.UrlValidator;
 
 /**
  * The type Webshop simple model.
@@ -18,8 +17,6 @@ import org.apache.commons.validator.routines.UrlValidator;
 @Data
 @JsonPropertyOrder({
 		"handle",
-		"url",
-		"interestRate",
 		"serviceLevelA",
 		"serviceLevelB",
 		"serviceLevelC"
@@ -29,23 +26,13 @@ import org.apache.commons.validator.routines.UrlValidator;
 @JsonDeserialize
 @AllArgsConstructor
 @NoArgsConstructor
-public class WebshopSimpleModel {
+public class WebshopServiceLevelsModel {
 
 	/**
 	 * The Handle.
 	 */
 	@JsonProperty("handle")
 	private String handle;
-	/**
-	 * The Url.
-	 */
-	@JsonProperty("url")
-	private String url;
-	/**
-	 * The Interest rate.
-	 */
-	@JsonProperty("interestRate")
-	private Short interestRate = 20;
 	/**
 	 * The Servicel Level A Percentage.
 	 */
@@ -67,30 +54,11 @@ public class WebshopSimpleModel {
 	 *
 	 * @param webshop the webshop
 	 */
-	public WebshopSimpleModel(Webshop webshop) {
+	public WebshopServiceLevelsModel(Webshop webshop) {
 		this.handle = webshop.getHandle();
-		this.url = webshop.getUrl();
-		this.interestRate = webshop.getInterestRate();
 		this.serviceLevelA = webshop.getA();
 		this.serviceLevelB = webshop.getB();
 		this.serviceLevelC = webshop.getC();
-	}
-
-	/**
-	 * Instantiates a new Webshop simple model.
-	 *
-	 * @param handle the handle
-	 * @param url    the url
-	 * @param a      the a
-	 * @param b      the b
-	 * @param c      the c
-	 */
-	public WebshopSimpleModel(String handle, String url, Double a, Double b, Double c) {
-		this.handle = handle;
-		this.url = url;
-		this.serviceLevelA = a;
-		this.serviceLevelB = b;
-		this.serviceLevelC = c;
 	}
 
 	/**
@@ -99,22 +67,7 @@ public class WebshopSimpleModel {
 	 * @return the boolean
 	 */
 	public Boolean isValid() {
-		return this.isValidUrl(this.url) &&
-				this.isValidServiceSum(this.serviceLevelA, this.serviceLevelB, this.serviceLevelC);
-	}
-
-	/**
-	 * Is the URL valid?
-	 * It must be a valid URL and it must not be null
-	 * The URL must only use the following protocols: http, https
-	 *
-	 * @param url the url
-	 * @return is valid?
-	 */
-	private Boolean isValidUrl(String url) {
-		String[] schemes = {"http", "https"};
-		UrlValidator urlValidator = new UrlValidator(schemes);
-		return urlValidator.isValid(url);
+		return this.isValidServiceSum(this.serviceLevelA, this.serviceLevelB, this.serviceLevelC);
 	}
 
 	/**

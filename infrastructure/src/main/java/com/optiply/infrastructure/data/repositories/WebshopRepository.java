@@ -83,9 +83,9 @@ public class WebshopRepository implements com.optiply.infrastructure.data.reposi
 	 *
 	 * @param handle        the webshop handle
 	 * @param url           the webshop url
-	 * @param A             the percentage of service level A
-	 * @param B             the percentage of service level B
-	 * @param C             the percentage of service level C
+	 * @param serviceLevelA the percentage of service level A
+	 * @param serviceLevelB the percentage of service level B
+	 * @param serviceLevelC the percentage of service level C
 	 * @param interestRate  the webshop interest rate
 	 * @param currency      the currency used in ISO 4217 format
 	 * @param runJobs       the ability to run jobs
@@ -94,7 +94,7 @@ public class WebshopRepository implements com.optiply.infrastructure.data.reposi
 	 */
 	@Override
 	public Mono<Boolean> create(String handle, String url,
-	                            Double A, Double B, Double C,
+	                            Double serviceLevelA, Double serviceLevelB, Double serviceLevelC,
 	                            Short interestRate, String currency,
 	                            Boolean runJobs, Boolean multiSupplier) {
 		log.info("Creating webshop: " + handle);
@@ -106,7 +106,7 @@ public class WebshopRepository implements com.optiply.infrastructure.data.reposi
 								.using(status.getConnection(), SQLDialect.POSTGRES, dslContext.settings())
 								.insertInto(Tables.WEBSHOP)
 								.columns(Tables.WEBSHOP.HANDLE, Tables.WEBSHOP.URL, Tables.WEBSHOP.A, Tables.WEBSHOP.B, Tables.WEBSHOP.C, Tables.WEBSHOP.INTEREST_RATE, Tables.WEBSHOP.CURRENCY, Tables.WEBSHOP.RUN_JOBS, Tables.WEBSHOP.MULTI_SUPPLY)
-								.values(handle, url, A, B, C, interestRate, currency, runJobs, multiSupplier))
+								.values(handle, url, serviceLevelA, serviceLevelB, serviceLevelC, interestRate, currency, runJobs, multiSupplier))
 						.map(result -> result == QueryResult.SUCCESS.ordinal())
 						.onErrorReturn(false)));
 	}
@@ -171,10 +171,10 @@ public class WebshopRepository implements com.optiply.infrastructure.data.reposi
 	 *
 	 * @param handle        the handle
 	 * @param url           the url
-	 * @param A             the service level A percentage
-	 * @param B             the service level B percentage
-	 * @param C             the service level C percentage
-	 * @param INTEREST_RATE the interest rate
+	 * @param serviceLevelA the service level A percentage
+	 * @param serviceLevelB the service level B percentage
+	 * @param serviceLevelC the service level C percentage
+	 * @param interestRate the interest rate
 	 * @param currency      the currency in ISO 4217 format
 	 * @param runJobs       the ability to run jobs
 	 * @param multiSupplier if it has multiple suppliers
@@ -182,8 +182,8 @@ public class WebshopRepository implements com.optiply.infrastructure.data.reposi
 	 */
 	@Override
 	public Mono<Boolean> updateWebshop(String handle, String url,
-	                                   Double A, Double B, Double C,
-	                                   Short INTEREST_RATE, String currency,
+	                                   Double serviceLevelA, Double serviceLevelB, Double serviceLevelC,
+	                                   Short interestRate, String currency,
 	                                   Boolean runJobs, Boolean multiSupplier) {
 		log.info("Updating webshop: " + handle);
 		return Mono.from(operations.withTransaction(
@@ -195,13 +195,137 @@ public class WebshopRepository implements com.optiply.infrastructure.data.reposi
 								.update(Tables.WEBSHOP)
 								.set(Tables.WEBSHOP.HANDLE, handle)
 								.set(Tables.WEBSHOP.URL, url)
-								.set(Tables.WEBSHOP.A, A)
-								.set(Tables.WEBSHOP.B, B)
-								.set(Tables.WEBSHOP.C, C)
-								.set(Tables.WEBSHOP.INTEREST_RATE, INTEREST_RATE)
+								.set(Tables.WEBSHOP.A, serviceLevelA)
+								.set(Tables.WEBSHOP.B, serviceLevelB)
+								.set(Tables.WEBSHOP.C, serviceLevelC)
+								.set(Tables.WEBSHOP.INTEREST_RATE, interestRate)
 								.set(Tables.WEBSHOP.CURRENCY, currency)
 								.set(Tables.WEBSHOP.RUN_JOBS, runJobs)
 								.set(Tables.WEBSHOP.MULTI_SUPPLY, multiSupplier)
+								.where(Tables.WEBSHOP.HANDLE.equalIgnoreCase(handle)))
+						.map(result -> result == QueryResult.SUCCESS.ordinal())));
+
+	}
+
+	/**
+	 * Updates a webshop given all the fields.
+	 *
+	 * @param handle        the handle
+	 * @return Mono with boolean indicating success
+	 */
+	@Override
+	public Mono<Boolean> updateWebshopHandle(String handle, String newHandle) {
+		log.info("Updating webshop: " + handle);
+		return Mono.from(operations.withTransaction(
+				new DefaultTransactionDefinition(
+						TransactionDefinition.Propagation.REQUIRES_NEW
+				), status -> Mono
+						.from(DSL
+								.using(status.getConnection(), SQLDialect.POSTGRES, dslContext.settings())
+								.update(Tables.WEBSHOP)
+								.set(Tables.WEBSHOP.HANDLE, newHandle)
+								.where(Tables.WEBSHOP.HANDLE.equalIgnoreCase(handle)))
+						.map(result -> result == QueryResult.SUCCESS.ordinal())));
+
+	}
+
+	/**
+	 * Updates a webshop given all the fields.
+	 *
+	 * @param handle        the handle
+	 * @param url           the url
+	 * @return Mono with boolean indicating success
+	 */
+	@Override
+	public Mono<Boolean> updateWebshopUrl(String handle, String url) {
+		log.info("Updating webshop: " + handle);
+		return Mono.from(operations.withTransaction(
+				new DefaultTransactionDefinition(
+						TransactionDefinition.Propagation.REQUIRES_NEW
+				), status -> Mono
+						.from(DSL
+								.using(status.getConnection(), SQLDialect.POSTGRES, dslContext.settings())
+								.update(Tables.WEBSHOP)
+								.set(Tables.WEBSHOP.URL, url)
+								.where(Tables.WEBSHOP.HANDLE.equalIgnoreCase(handle)))
+						.map(result -> result == QueryResult.SUCCESS.ordinal())));
+
+	}
+
+	/**
+	 * Updates a webshop given all the fields.
+	 *
+	 * @param handle        the handle
+	 * @param interestRate the interest rate
+	 * @return Mono with boolean indicating success
+	 */
+	@Override
+	public Mono<Boolean> updateWebshopInterestRate(String handle, Short interestRate) {
+		log.info("Updating webshop: " + handle);
+		return Mono.from(operations.withTransaction(
+				new DefaultTransactionDefinition(
+						TransactionDefinition.Propagation.REQUIRES_NEW
+				), status -> Mono
+						.from(DSL
+								.using(status.getConnection(), SQLDialect.POSTGRES, dslContext.settings())
+								.update(Tables.WEBSHOP)
+								.set(Tables.WEBSHOP.INTEREST_RATE, interestRate)
+								.where(Tables.WEBSHOP.HANDLE.equalIgnoreCase(handle)))
+						.map(result -> result == QueryResult.SUCCESS.ordinal())));
+
+	}
+
+	/**
+	 * Updates a webshop given all the fields.
+	 *
+	 * @param handle        the handle
+	 * @param currency      the currency in ISO 4217 format
+	 * @param runJobs       the ability to run jobs
+	 * @param multiSupplier if it has multiple suppliers
+	 * @return Mono with boolean indicating success
+	 */
+	@Override
+	public Mono<Boolean> updateWebshopSettings(String handle, String currency,
+	                                   Boolean runJobs, Boolean multiSupplier) {
+		log.info("Updating webshop: " + handle);
+		return Mono.from(operations.withTransaction(
+				new DefaultTransactionDefinition(
+						TransactionDefinition.Propagation.REQUIRES_NEW
+				), status -> Mono
+						.from(DSL
+								.using(status.getConnection(), SQLDialect.POSTGRES, dslContext.settings())
+								.update(Tables.WEBSHOP)
+								.set(Tables.WEBSHOP.CURRENCY, currency)
+								.set(Tables.WEBSHOP.RUN_JOBS, runJobs)
+								.set(Tables.WEBSHOP.MULTI_SUPPLY, multiSupplier)
+								.where(Tables.WEBSHOP.HANDLE.equalIgnoreCase(handle)))
+						.map(result -> result == QueryResult.SUCCESS.ordinal())));
+
+	}
+
+	/**
+	 * Updates a webshop given all the fields.
+	 *
+	 * @param handle        the handle
+	 * @param serviceLevelA the service level A percentage
+	 * @param serviceLevelB the service level B percentage
+	 * @param serviceLevelC the service level C percentage
+	 * @return Mono with boolean indicating success
+	 */
+	@Override
+	public Mono<Boolean> updateWebshopServiceLevels(String handle, Double serviceLevelA,
+	                                                Double serviceLevelB, Double serviceLevelC) {
+		log.info("Updating webshop: " + handle);
+		return Mono.from(operations.withTransaction(
+				new DefaultTransactionDefinition(
+						TransactionDefinition.Propagation.REQUIRES_NEW
+				), status -> Mono
+						.from(DSL
+								.using(status.getConnection(), SQLDialect.POSTGRES, dslContext.settings())
+								.update(Tables.WEBSHOP)
+								.set(Tables.WEBSHOP.A, serviceLevelA)
+								.set(Tables.WEBSHOP.B, serviceLevelB)
+								.set(Tables.WEBSHOP.C, serviceLevelC)
 								.where(Tables.WEBSHOP.HANDLE.equalIgnoreCase(handle)))
 						.map(result -> result == QueryResult.SUCCESS.ordinal())));
 

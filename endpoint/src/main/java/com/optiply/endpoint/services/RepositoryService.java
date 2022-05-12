@@ -1,9 +1,6 @@
 package com.optiply.endpoint.services;
 
-import com.optiply.endpoint.models.WebshopBodyModel;
-import com.optiply.endpoint.models.WebshopEmailsModel;
-import com.optiply.endpoint.models.WebshopSettingsModel;
-import com.optiply.endpoint.models.WebshopSimpleModel;
+import com.optiply.endpoint.models.*;
 import com.optiply.infrastructure.data.models.tables.pojos.Webshop;
 import com.optiply.infrastructure.data.repositories.WebshopRepository;
 import com.optiply.infrastructure.data.repositories.WebshopemailsRepository;
@@ -15,6 +12,9 @@ import org.jooq.Condition;
 import org.jooq.SortField;
 import reactor.core.publisher.Mono;
 
+/**
+ * The type Repository service.
+ */
 @Log
 public class RepositoryService {
 
@@ -40,24 +40,6 @@ public class RepositoryService {
 	public Mono<MutableHttpResponse<WebshopBodyModel[]>> getWebshops(Condition condition, SortField<?> sortField) {
 
 		return webshopRepository.findVarious(condition, sortField).collectList().flatMap(webshops -> {
-			log.info("webshop found");
-			WebshopBodyModel[] webshopBodyModels = new WebshopBodyModel[webshops.size()];
-			for (Webshop webshop : webshops) {
-				webshopBodyModels[webshops.indexOf(webshop)] = new WebshopBodyModel(webshop);
-			}
-			return Mono.just(webshopBodyModels);
-		}).flatMap(webshopBodyModels -> Mono.just(HttpResponse.ok(webshopBodyModels)));
-
-	}
-
-	/**
-	 * Gets all webshops.
-	 *
-	 * @return the all webshops
-	 */
-	public Mono<MutableHttpResponse<WebshopBodyModel[]>> getAllWebshops() {
-
-		return webshopRepository.findAll().collectList().flatMap(webshops -> {
 			log.info("webshop found");
 			WebshopBodyModel[] webshopBodyModels = new WebshopBodyModel[webshops.size()];
 			for (Webshop webshop : webshops) {
@@ -120,28 +102,6 @@ public class RepositoryService {
 	}
 
 	/**
-	 * Create webshop simple mono.
-	 *
-	 * @param webshopModel the webshop model
-	 * @return the mono
-	 */
-	public Mono<MutableHttpResponse<String>> createWebshopSimple(WebshopSimpleModel webshopModel) {
-
-		return webshopRepository.create(
-						webshopModel.getHandle(), webshopModel.getUrl(),
-						webshopModel.getA(), webshopModel.getB(), webshopModel.getC()
-				).flatMap(response -> {
-					if (response) {
-						log.info("webshop created");
-						return Mono.just(HttpResponse.created("Webshop created."));
-					}
-					log.info("webshop not created");
-					return Mono.empty();
-				})
-				.switchIfEmpty(Mono.just(HttpResponse.badRequest())).onErrorReturn(HttpResponse.serverError());
-	}
-
-	/**
 	 * Create webshop mono.
 	 *
 	 * @param webshopModel the webshop model
@@ -151,7 +111,7 @@ public class RepositoryService {
 
 		return webshopRepository.create(
 						webshopModel.getHandle(), webshopModel.getUrl(),
-						webshopModel.getA(), webshopModel.getB(), webshopModel.getC(),
+						webshopModel.getServiceLevelA(), webshopModel.getServiceLevelB(), webshopModel.getServiceLevelC(),
 						webshopModel.getInterestRate(), webshopModel.getCurrency(),
 						webshopModel.getRunJobs(), webshopModel.getMultiSupplier()
 				).flatMap(response -> {
@@ -236,7 +196,7 @@ public class RepositoryService {
 
 		return webshopRepository.updateWebshop(
 						webshopModel.getHandle(), webshopModel.getUrl(),
-						webshopModel.getA(), webshopModel.getB(), webshopModel.getC(),
+						webshopModel.getServiceLevelA(), webshopModel.getServiceLevelB(), webshopModel.getServiceLevelC(),
 						webshopModel.getInterestRate(), webshopModel.getCurrency(),
 						webshopModel.getRunJobs(), webshopModel.getMultiSupplier()
 				).flatMap(response -> {
@@ -249,5 +209,116 @@ public class RepositoryService {
 				})
 				.switchIfEmpty(Mono.just(HttpResponse.notFound())).onErrorReturn(HttpResponse.serverError());
 	}
+
+	/**
+	 * Update webshop handle mono.
+	 *
+	 * @param handle    the handle
+	 * @param newHandle the new handle
+	 * @return the mono
+	 */
+	public Mono<MutableHttpResponse<String>> updateWebshopHandle(String handle, String newHandle) {
+
+		return webshopRepository.updateWebshopHandle(handle, newHandle)
+				.flatMap(response -> {
+					if (response) {
+						log.info("webshop updated");
+						return Mono.just(HttpResponse.ok("Webshop updated."));
+					}
+					log.info("webshop not updated");
+					return Mono.empty();
+				})
+				.switchIfEmpty(Mono.just(HttpResponse.notFound())).onErrorReturn(HttpResponse.serverError());
+	}
+
+	/**
+	 * Update webshop url mono.
+	 *
+	 * @param handle the handle
+	 * @param url    the url
+	 * @return the mono
+	 */
+	public Mono<MutableHttpResponse<String>> updateWebshopUrl(String handle, String url) {
+
+		return webshopRepository.updateWebshopUrl(handle, url)
+				.flatMap(response -> {
+					if (response) {
+						log.info("webshop updated");
+						return Mono.just(HttpResponse.ok("Webshop updated."));
+					}
+					log.info("webshop not updated");
+					return Mono.empty();
+				})
+				.switchIfEmpty(Mono.just(HttpResponse.notFound())).onErrorReturn(HttpResponse.serverError());
+	}
+
+
+	/**
+	 * Update webshop interest rate mono.
+	 *
+	 * @param handle       the handle
+	 * @param interestRate the interest rate
+	 * @return the mono
+	 */
+	public Mono<MutableHttpResponse<String>> updateWebshopInterestRate(String handle, Short interestRate) {
+
+		return webshopRepository.updateWebshopInterestRate(handle, interestRate)
+				.flatMap(response -> {
+					if (response) {
+						log.info("webshop updated");
+						return Mono.just(HttpResponse.ok("Webshop updated."));
+					}
+					log.info("webshop not updated");
+					return Mono.empty();
+				})
+				.switchIfEmpty(Mono.just(HttpResponse.notFound())).onErrorReturn(HttpResponse.serverError());
+	}
+
+
+	/**
+	 * Update webshop settings mono.
+	 *
+	 * @param webshopSettingsModel the webshop settings model
+	 * @return the mono
+	 */
+	public Mono<MutableHttpResponse<String>> updateWebshopSettings(WebshopSettingsModel webshopSettingsModel) {
+
+		return webshopRepository.updateWebshopSettings(webshopSettingsModel.getHandle(),
+						webshopSettingsModel.getCurrency(), webshopSettingsModel.getRunJobs(),
+						webshopSettingsModel.getMultiSupplier())
+				.flatMap(response -> {
+					if (response) {
+						log.info("webshop updated");
+						return Mono.just(HttpResponse.ok("Webshop updated."));
+					}
+					log.info("webshop not updated");
+					return Mono.empty();
+				})
+				.switchIfEmpty(Mono.just(HttpResponse.notFound())).onErrorReturn(HttpResponse.serverError());
+	}
+
+
+	/**
+	 * Update webshop service levels mono.
+	 *
+	 * @param webshopServiceLevelsModel the webshop service levels model
+	 * @return the mono
+	 */
+	public Mono<MutableHttpResponse<String>> updateWebshopServiceLevels(WebshopServiceLevelsModel webshopServiceLevelsModel) {
+
+		return webshopRepository.updateWebshopServiceLevels(
+						webshopServiceLevelsModel.getHandle(), webshopServiceLevelsModel.getServiceLevelA(),
+						webshopServiceLevelsModel.getServiceLevelB(), webshopServiceLevelsModel.getServiceLevelC())
+				.flatMap(response -> {
+					if (response) {
+						log.info("webshop updated");
+						return Mono.just(HttpResponse.ok("Webshop updated."));
+					}
+					log.info("webshop not updated");
+					return Mono.empty();
+				})
+				.switchIfEmpty(Mono.just(HttpResponse.notFound())).onErrorReturn(HttpResponse.serverError());
+	}
+
 
 }

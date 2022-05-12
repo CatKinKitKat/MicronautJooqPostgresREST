@@ -36,9 +36,9 @@ class WebshopModelsUnitTests extends TestEnvironment {
 		WebshopSimpleModel test4 = new WebshopSimpleModel();
 		test4.setHandle("test3");
 		test4.setUrl("http://www.test3.com");
-		test4.setA(25.0);
-		test4.setB(30.0);
-		test4.setC(45.0);
+		test4.setServiceLevelA(25.0);
+		test4.setServiceLevelB(30.0);
+		test4.setServiceLevelC(45.0);
 
 		Assertions.assertTrue(test4.isValid());
 		Assertions.assertEquals(test4, test3);
@@ -76,9 +76,9 @@ class WebshopModelsUnitTests extends TestEnvironment {
 		test5.setHandle("test4");
 		test5.setUrl("http://www.test4.com");
 		test5.setInterestRate((short) 15);
-		test5.setA(25.0);
-		test5.setB(30.0);
-		test5.setC(45.0);
+		test5.setServiceLevelA(25.0);
+		test5.setServiceLevelB(30.0);
+		test5.setServiceLevelC(45.0);
 		test5.setCurrency("EUR");
 		test5.setRunJobs(false);
 		test5.setMultiSupplier(false);

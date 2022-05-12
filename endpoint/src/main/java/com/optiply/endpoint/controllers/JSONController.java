@@ -49,18 +49,6 @@ public class JSONController extends BaseController {
 	}
 
 	/**
-	 * Gets all webshops.
-	 *
-	 * @return the all webshops
-	 */
-	@Get(value = "/all", produces = "application/json", consumes = "application/json")
-	public Mono<MutableHttpResponse<WebshopBodyModel[]>> getAllWebshops() {
-
-		return repositoryService.getAllWebshops();
-
-	}
-
-	/**
 	 * Gets webshop.
 	 *
 	 * @param handle the handle
@@ -96,22 +84,6 @@ public class JSONController extends BaseController {
 
 		return repositoryService.getWebshopSettings(handle);
 
-	}
-
-	/**
-	 * Create webshop simple mono.
-	 *
-	 * @param webshopModel the webshop model
-	 * @return the mono
-	 */
-	@Post(value = "/simple", produces = "application/json", consumes = "application/json")
-	public Mono<MutableHttpResponse<String>> createWebshopSimple(@Body WebshopSimpleModel webshopModel) {
-
-		if (!webshopModel.isValid()) {
-			return Mono.just(HttpResponse.badRequest());
-		}
-
-		return repositoryService.createWebshopSimple(webshopModel);
 	}
 
 	/**
