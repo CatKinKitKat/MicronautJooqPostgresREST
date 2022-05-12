@@ -77,20 +77,21 @@ public interface IWebshopRepository {
 	 * Updates a webshop given all the fields.
 	 *
 	 * @param handle        the handle
+	 * @param newHandle     the new handle
 	 * @param url           the url
-	 * @param A             the service level A percentage
-	 * @param B             the service level B percentage
-	 * @param C             the service level C percentage
-	 * @param INTEREST_RATE the interest rate
+	 * @param serviceLevelA the service level A percentage
+	 * @param serviceLevelB the service level B percentage
+	 * @param serviceLevelC the service level C percentage
+	 * @param interestRate the interest rate
 	 * @param currency      the currency in ISO 4217 format
-	 * @param RUN_JOBS      the ability to run jobs
+	 * @param runJobs      the ability to run jobs
 	 * @param multiSupplier if it has multiple suppliers
 	 * @return Mono with boolean indicating success
 	 */
-	Mono<Boolean> updateWebshop(String handle, String url,
-	                            Double A, Double B, Double C,
-	                            Short INTEREST_RATE, String currency,
-	                            Boolean RUN_JOBS, Boolean multiSupplier);
+	Mono<Boolean> updateWebshop(String handle, String newHandle, String url,
+	                            Double serviceLevelA, Double serviceLevelB, Double serviceLevelC,
+	                            Short interestRate, String currency,
+	                            Boolean runJobs, Boolean multiSupplier);
 
 	/**
 	 * Update webshop handle mono.

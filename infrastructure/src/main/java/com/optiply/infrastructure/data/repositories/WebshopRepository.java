@@ -181,7 +181,7 @@ public class WebshopRepository implements com.optiply.infrastructure.data.reposi
 	 * @return Mono with boolean indicating success
 	 */
 	@Override
-	public Mono<Boolean> updateWebshop(String handle, String url,
+	public Mono<Boolean> updateWebshop(String handle, String newHandle, String url,
 	                                   Double serviceLevelA, Double serviceLevelB, Double serviceLevelC,
 	                                   Short interestRate, String currency,
 	                                   Boolean runJobs, Boolean multiSupplier) {
@@ -193,7 +193,7 @@ public class WebshopRepository implements com.optiply.infrastructure.data.reposi
 						.from(DSL
 								.using(status.getConnection(), SQLDialect.POSTGRES, dslContext.settings())
 								.update(Tables.WEBSHOP)
-								.set(Tables.WEBSHOP.HANDLE, handle)
+								.set(Tables.WEBSHOP.HANDLE, newHandle)
 								.set(Tables.WEBSHOP.URL, url)
 								.set(Tables.WEBSHOP.A, serviceLevelA)
 								.set(Tables.WEBSHOP.B, serviceLevelB)
@@ -286,7 +286,7 @@ public class WebshopRepository implements com.optiply.infrastructure.data.reposi
 	 */
 	@Override
 	public Mono<Boolean> updateWebshopSettings(String handle, String currency,
-	                                   Boolean runJobs, Boolean multiSupplier) {
+	                                           Boolean runJobs, Boolean multiSupplier) {
 		log.info("Updating webshop: " + handle);
 		return Mono.from(operations.withTransaction(
 				new DefaultTransactionDefinition(

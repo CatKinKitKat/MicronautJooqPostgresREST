@@ -37,15 +37,15 @@ public class RepositoryService {
 	 * @param sortField the sort fields
 	 * @return the webshops
 	 */
-	public Mono<MutableHttpResponse<WebshopBodyModel[]>> getWebshops(Condition condition, SortField<?> sortField) {
+	public Mono<MutableHttpResponse<WebshopModel[]>> getWebshops(Condition condition, SortField<?> sortField) {
 
 		return webshopRepository.findVarious(condition, sortField).collectList().flatMap(webshops -> {
 			log.info("webshop found");
-			WebshopBodyModel[] webshopBodyModels = new WebshopBodyModel[webshops.size()];
+			WebshopModel[] webshopModels = new WebshopModel[webshops.size()];
 			for (Webshop webshop : webshops) {
-				webshopBodyModels[webshops.indexOf(webshop)] = new WebshopBodyModel(webshop);
+				webshopModels[webshops.indexOf(webshop)] = new WebshopModel(webshop);
 			}
-			return Mono.just(webshopBodyModels);
+			return Mono.just(webshopModels);
 		}).flatMap(webshopBodyModels -> Mono.just(HttpResponse.ok(webshopBodyModels)));
 
 	}
@@ -107,7 +107,7 @@ public class RepositoryService {
 	 * @param webshopModel the webshop model
 	 * @return the mono
 	 */
-	public Mono<MutableHttpResponse<String>> createWebshop(WebshopBodyModel webshopModel) {
+	public Mono<MutableHttpResponse<String>> createWebshop(WebshopModel webshopModel) {
 
 		return webshopRepository.create(
 						webshopModel.getHandle(), webshopModel.getUrl(),
@@ -192,11 +192,11 @@ public class RepositoryService {
 	 * @param webshopModel the webshop model
 	 * @return the mono
 	 */
-	public Mono<MutableHttpResponse<String>> updateWebshop(WebshopBodyModel webshopModel) {
+	public Mono<MutableHttpResponse<String>> updateWebshop(String handle, WebshopModel webshopModel) {
 
-		return webshopRepository.updateWebshop(
-						webshopModel.getHandle(), webshopModel.getUrl(),
-						webshopModel.getServiceLevelA(), webshopModel.getServiceLevelB(), webshopModel.getServiceLevelC(),
+		return webshopRepository.updateWebshop(handle, webshopModel.getHandle(),
+						webshopModel.getUrl(), webshopModel.getServiceLevelA(),
+						webshopModel.getServiceLevelB(), webshopModel.getServiceLevelC(),
 						webshopModel.getInterestRate(), webshopModel.getCurrency(),
 						webshopModel.getRunJobs(), webshopModel.getMultiSupplier()
 				).flatMap(response -> {
@@ -278,14 +278,14 @@ public class RepositoryService {
 	/**
 	 * Update webshop settings mono.
 	 *
-	 * @param webshopSettingsModel the webshop settings model
+	 * @param settingsModel the webshop settings model
 	 * @return the mono
 	 */
-	public Mono<MutableHttpResponse<String>> updateWebshopSettings(WebshopSettingsModel webshopSettingsModel) {
+	public Mono<MutableHttpResponse<String>> updateWebshopSettings(String handle, SettingsModel settingsModel) {
 
-		return webshopRepository.updateWebshopSettings(webshopSettingsModel.getHandle(),
-						webshopSettingsModel.getCurrency(), webshopSettingsModel.getRunJobs(),
-						webshopSettingsModel.getMultiSupplier())
+		return webshopRepository.updateWebshopSettings(handle,
+						settingsModel.getCurrency(), settingsModel.getRunJobs(),
+						settingsModel.getMultiSupplier())
 				.flatMap(response -> {
 					if (response) {
 						log.info("webshop updated");
@@ -301,14 +301,14 @@ public class RepositoryService {
 	/**
 	 * Update webshop service levels mono.
 	 *
-	 * @param webshopServiceLevelsModel the webshop service levels model
+	 * @param serviceLevelsModel the webshop service levels model
 	 * @return the mono
 	 */
-	public Mono<MutableHttpResponse<String>> updateWebshopServiceLevels(WebshopServiceLevelsModel webshopServiceLevelsModel) {
+	public Mono<MutableHttpResponse<String>> updateWebshopServiceLevels(String handle, ServiceLevelsModel serviceLevelsModel) {
 
 		return webshopRepository.updateWebshopServiceLevels(
-						webshopServiceLevelsModel.getHandle(), webshopServiceLevelsModel.getServiceLevelA(),
-						webshopServiceLevelsModel.getServiceLevelB(), webshopServiceLevelsModel.getServiceLevelC())
+						handle, serviceLevelsModel.getServiceLevelA(),
+						serviceLevelsModel.getServiceLevelB(), serviceLevelsModel.getServiceLevelC())
 				.flatMap(response -> {
 					if (response) {
 						log.info("webshop updated");

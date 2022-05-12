@@ -50,20 +50,20 @@ class WebshopModelsUnitTests extends TestEnvironment {
 	@Test
 	void testWebshopBodyModel() {
 
-		WebshopBodyModel test1 =
-				new WebshopBodyModel("test1", "http://www.test1.com", (short) 15,
+		WebshopModel test1 =
+				new WebshopModel("test1", "http://www.test1.com", (short) 15,
 						10.0, 10.0, 10.0, "EUR", false, false);
 
-		WebshopBodyModel test2 =
-				new WebshopBodyModel("test2", "http://www.test2.com", (short) 15,
+		WebshopModel test2 =
+				new WebshopModel("test2", "http://www.test2.com", (short) 15,
 						25.0, 30.0, 45.0, "EURO", false, false);
 
-		WebshopBodyModel test3 =
-				new WebshopBodyModel("test3", "www.test3.com", (short) 15,
+		WebshopModel test3 =
+				new WebshopModel("test3", "www.test3.com", (short) 15,
 						25.0, 30.0, 45.0, "EUR", false, false);
 
-		WebshopBodyModel test4 =
-				new WebshopBodyModel("test4", "http://www.test4.com", (short) 15,
+		WebshopModel test4 =
+				new WebshopModel("test4", "http://www.test4.com", (short) 15,
 						25.0, 30.0, 45.0, "EUR", false, false);
 
 
@@ -72,7 +72,7 @@ class WebshopModelsUnitTests extends TestEnvironment {
 		Assertions.assertFalse(test3.isValid());
 		Assertions.assertTrue(test4.isValid());
 
-		WebshopBodyModel test5 = new WebshopBodyModel();
+		WebshopModel test5 = new WebshopModel();
 		test5.setHandle("test4");
 		test5.setUrl("http://www.test4.com");
 		test5.setInterestRate((short) 15);

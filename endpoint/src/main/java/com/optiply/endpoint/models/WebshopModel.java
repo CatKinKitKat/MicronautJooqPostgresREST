@@ -35,7 +35,7 @@ import java.util.Set;
 @JsonDeserialize
 @AllArgsConstructor
 @NoArgsConstructor
-public class WebshopBodyModel {
+public class WebshopModel {
 
 	/**
 	 * The Handle.
@@ -88,7 +88,7 @@ public class WebshopBodyModel {
 	 *
 	 * @param webshop the webshop
 	 */
-	public WebshopBodyModel(Webshop webshop) {
+	public WebshopModel(Webshop webshop) {
 		this.handle = webshop.getHandle();
 		this.url = webshop.getUrl();
 		this.interestRate = webshop.getInterestRate();

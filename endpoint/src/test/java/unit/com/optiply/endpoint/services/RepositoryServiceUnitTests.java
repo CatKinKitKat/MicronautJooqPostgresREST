@@ -1,7 +1,7 @@
 package com.optiply.endpoint.services;
 
 import com.optiply.endpoint.environment.TestEnvironment;
-import com.optiply.endpoint.models.WebshopBodyModel;
+import com.optiply.endpoint.models.WebshopModel;
 import com.optiply.endpoint.models.WebshopEmailsModel;
 import com.optiply.endpoint.models.WebshopSettingsModel;
 import com.optiply.endpoint.models.WebshopSimpleModel;
@@ -54,7 +54,7 @@ public class RepositoryServiceUnitTests extends TestEnvironment {
 	@Test
 	void testFindVariousSingle() {
 
-		WebshopBodyModel test = new WebshopBodyModel();
+		WebshopModel test = new WebshopModel();
 		test.setHandle("test");
 		test.setUrl("http://www.test.com");
 		test.setInterestRate((short) 20);
@@ -78,7 +78,7 @@ public class RepositoryServiceUnitTests extends TestEnvironment {
 				)
 		);
 
-		Optional<WebshopBodyModel[]> resultFoundSingle =
+		Optional<WebshopModel[]> resultFoundSingle =
 				Objects.requireNonNull(repositoryService
 						.getWebshops(Tables.WEBSHOP.HANDLE.equalIgnoreCase("test"), Tables.WEBSHOP.HANDLE.asc())
 						.block()).getBody();
@@ -93,7 +93,7 @@ public class RepositoryServiceUnitTests extends TestEnvironment {
 	@Test
 	void testFindVariousMultiple() {
 
-		WebshopBodyModel test = new WebshopBodyModel();
+		WebshopModel test = new WebshopModel();
 		test.setHandle("test");
 		test.setUrl("http://www.test.com");
 		test.setInterestRate((short) 20);
@@ -104,7 +104,7 @@ public class RepositoryServiceUnitTests extends TestEnvironment {
 		test.setRunJobs(true);
 		test.setMultiSupplier(false);
 
-		WebshopBodyModel optiply = new WebshopBodyModel();
+		WebshopModel optiply = new WebshopModel();
 		optiply.setHandle("optiply");
 		optiply.setUrl("http://www.optiply.nl");
 		optiply.setInterestRate((short) 25);
@@ -130,7 +130,7 @@ public class RepositoryServiceUnitTests extends TestEnvironment {
 								"USD", false, true))
 		);
 
-		Optional<WebshopBodyModel[]> resultFoundMultiple =
+		Optional<WebshopModel[]> resultFoundMultiple =
 				Objects.requireNonNull(repositoryService
 						.getWebshops(Tables.WEBSHOP.INTEREST_RATE.greaterThan((short) 10), Tables.WEBSHOP.HANDLE.desc())
 						.block()).getBody();
@@ -238,7 +238,7 @@ public class RepositoryServiceUnitTests extends TestEnvironment {
 	void testCreate() {
 
 		final String OK_STR = "Webshop created.";
-		WebshopBodyModel sumthin = new WebshopBodyModel();
+		WebshopModel sumthin = new WebshopModel();
 		sumthin.setHandle("sumthin");
 		sumthin.setUrl("http://www.sumthin.com");
 		sumthin.setServiceLevelA(20.0);
@@ -302,7 +302,7 @@ public class RepositoryServiceUnitTests extends TestEnvironment {
 	void testUpdateWebshop() {
 
 		final String OK_STR = "Webshop updated.";
-		WebshopBodyModel sumthin = new WebshopBodyModel();
+		WebshopModel sumthin = new WebshopModel();
 		sumthin.setHandle("sumthin");
 		sumthin.setUrl("http://www.sumthin.com");
 		sumthin.setServiceLevelA(20.0);
@@ -314,7 +314,7 @@ public class RepositoryServiceUnitTests extends TestEnvironment {
 		sumthin.setMultiSupplier(false);
 
 		when(
-				webshopRepository.updateWebshop(
+				webshopRepository.updateWebshop("sumthin",
 						"sumthin", "http://www.sumthin.com",
 						20.0, 30.0, 50.0, (short) 15,
 						"USD", false, false
@@ -325,7 +325,7 @@ public class RepositoryServiceUnitTests extends TestEnvironment {
 
 		Optional<String> response =
 				Objects.requireNonNull(repositoryService
-						.updateWebshop(sumthin).block()
+						.updateWebshop("sumthin", sumthin).block()
 				).getBody();
 
 		Assertions.assertTrue(response.isPresent());

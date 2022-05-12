@@ -60,9 +60,9 @@ public class JSONControllerIntegrationTests extends TestEnvironment {
 					}
 				""";
 
-		WebshopBodyModel webshop = objectMapper.readValue(body, WebshopBodyModel.class);
+		WebshopModel webshop = objectMapper.readValue(body, WebshopModel.class);
 
-		HttpRequest<WebshopBodyModel> request = HttpRequest.POST("/", webshop);
+		HttpRequest<WebshopModel> request = HttpRequest.POST("/", webshop);
 		String result = client.toBlocking().retrieve(request, String.class);
 
 		Assertions.assertEquals("Webshop created.", result);
@@ -92,9 +92,9 @@ public class JSONControllerIntegrationTests extends TestEnvironment {
 					}
 				""";
 
-		WebshopBodyModel webshop = objectMapper.readValue(body, WebshopBodyModel.class);
+		WebshopModel webshop = objectMapper.readValue(body, WebshopModel.class);
 
-		HttpRequest<WebshopBodyModel> request = HttpRequest.POST("/", webshop);
+		HttpRequest<WebshopModel> request = HttpRequest.POST("/", webshop);
 		String result = client.toBlocking().retrieve(request, String.class);
 
 		Assertions.assertEquals("Webshop created.", result);
@@ -233,9 +233,9 @@ public class JSONControllerIntegrationTests extends TestEnvironment {
 					}
 				""";
 
-		WebshopBodyModel webshop = objectMapper.readValue(body, WebshopBodyModel.class);
+		WebshopModel webshop = objectMapper.readValue(body, WebshopModel.class);
 
-		HttpRequest<WebshopBodyModel> request = HttpRequest.PUT("/", webshop);
+		HttpRequest<WebshopModel> request = HttpRequest.PUT("/test3", webshop);
 		String result = client.toBlocking().retrieve(request, String.class);
 
 		Assertions.assertEquals("Webshop updated.", result);

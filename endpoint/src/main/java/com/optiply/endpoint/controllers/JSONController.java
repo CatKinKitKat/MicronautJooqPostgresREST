@@ -28,9 +28,9 @@ public class JSONController extends BaseController {
 	 * @return the webshops
 	 */
 	@Get(value = "/find/{q*}", produces = "application/json", consumes = "application/json")
-	public Mono<MutableHttpResponse<WebshopBodyModel[]>> getWebshops(String[] q,
-	                                                                 @Nullable @QueryValue String s,
-	                                                                 @Nullable @QueryValue String o) {
+	public Mono<MutableHttpResponse<WebshopModel[]>> getWebshops(String[] q,
+	                                                             @Nullable @QueryValue String s,
+	                                                             @Nullable @QueryValue String o) {
 
 		if (s == null || s.isEmpty()) {
 			s = "handle";
@@ -93,7 +93,7 @@ public class JSONController extends BaseController {
 	 * @return the mono
 	 */
 	@Post(value = "/", produces = "application/json", consumes = "application/json")
-	public Mono<MutableHttpResponse<String>> createWebshop(@Body WebshopBodyModel webshopModel) {
+	public Mono<MutableHttpResponse<String>> createWebshop(@Body WebshopModel webshopModel) {
 
 		return repositoryService.createWebshop(webshopModel);
 	}
@@ -101,7 +101,8 @@ public class JSONController extends BaseController {
 	/**
 	 * Add email mono.
 	 *
-	 * @param handle the handle
+	 * @param handle     the handle
+	 * @param emailModel the email model
 	 * @return the mono
 	 */
 	@Post(value = "/email/{handle}", produces = "application/json", consumes = "application/json")
@@ -117,7 +118,8 @@ public class JSONController extends BaseController {
 	/**
 	 * Remove email mono.
 	 *
-	 * @param handle the handle
+	 * @param handle     the handle
+	 * @param emailModel the email model
 	 * @return the mono
 	 */
 	@Delete(value = "/email/{handle}", produces = "application/json", consumes = "application/json")
@@ -147,15 +149,100 @@ public class JSONController extends BaseController {
 	/**
 	 * Update webshop mono.
 	 *
+	 * @param handle       the handle
 	 * @param webshopModel the webshop model
 	 * @return the mono
 	 */
-	@Put(value = "/", produces = "application/json", consumes = "application/json")
-	public Mono<MutableHttpResponse<String>> updateWebshop(@Body WebshopBodyModel webshopModel) {
+	@Put(value = "/{handle}", produces = "application/json", consumes = "application/json")
+	public Mono<MutableHttpResponse<String>> updateWebshop(String handle, @Body WebshopModel webshopModel) {
 
-		return repositoryService.updateWebshop(webshopModel);
+		return repositoryService.updateWebshop(handle, webshopModel);
 	}
 
+	/**
+	 * Update webshop mono.
+	 *
+	 * @param handle      the handle
+	 * @param handleModel the handle model
+	 * @return the mono
+	 */
+	@Put(value = "/{handle}/handle", produces = "application/json", consumes = "application/json")
+	public Mono<MutableHttpResponse<String>> updateWebshop(String handle, @Body HandleModel handleModel) {
+
+		if (!handleModel.isValid()) {
+			return Mono.just(HttpResponse.badRequest());
+		}
+
+		return repositoryService.updateWebshopHandle(handle, handleModel.getHandle());
+	}
+
+	/**
+	 * Update webshop mono.
+	 *
+	 * @param handle   the handle
+	 * @param urlModel the url model
+	 * @return the mono
+	 */
+	@Put(value = "/{handle}/url", produces = "application/json", consumes = "application/json")
+	public Mono<MutableHttpResponse<String>> updateWebshop(String handle, @Body UrlModel urlModel) {
+
+		if (!urlModel.isValid()) {
+			return Mono.just(HttpResponse.badRequest());
+		}
+
+		return repositoryService.updateWebshopUrl(handle, urlModel.getUrl());
+	}
+
+	/**
+	 * Update webshop mono.
+	 *
+	 * @param handle            the handle
+	 * @param interestRateModel the interest rate model
+	 * @return the mono
+	 */
+	@Put(value = "/{handle}/interestRate", produces = "application/json", consumes = "application/json")
+	public Mono<MutableHttpResponse<String>> updateWebshop(String handle, @Body InterestRateModel interestRateModel) {
+
+		if (!interestRateModel.isValid()) {
+			return Mono.just(HttpResponse.badRequest());
+		}
+
+		return repositoryService.updateWebshopInterestRate(handle, interestRateModel.getInterestRate());
+	}
+
+	/**
+	 * Update webshop mono.
+	 *
+	 * @param handle             the handle
+	 * @param serviceLevelsModel the webshop service levels model
+	 * @return the mono
+	 */
+	@Put(value = "/{handle}/serviceLevels", produces = "application/json", consumes = "application/json")
+	public Mono<MutableHttpResponse<String>> updateWebshop(String handle, @Body ServiceLevelsModel serviceLevelsModel) {
+
+		if (!serviceLevelsModel.isValid()) {
+			return Mono.just(HttpResponse.badRequest());
+		}
+
+		return repositoryService.updateWebshopServiceLevels(handle, serviceLevelsModel);
+	}
+
+	/**
+	 * Update webshop mono.
+	 *
+	 * @param handle        the handle
+	 * @param settingsModel the webshop settings model
+	 * @return the mono
+	 */
+	@Put(value = "/{handle}/settings", produces = "application/json", consumes = "application/json")
+	public Mono<MutableHttpResponse<String>> updateWebshop(String handle, @Body SettingsModel settingsModel) {
+
+		if (!settingsModel.isValid()) {
+			return Mono.just(HttpResponse.badRequest());
+		}
+
+		return repositoryService.updateWebshopSettings(handle, settingsModel);
+	}
 }
 
 
