@@ -1,6 +1,7 @@
 package com.optiply.endpoint.models;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
@@ -15,11 +16,10 @@ import javax.validation.Valid;
 import java.util.List;
 
 /**
- * The type Webshop emails model.
+ * The type Webshop body model.
  */
 @Data
 @JsonPropertyOrder({
-		"handle",
 		"emails"
 })
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -27,13 +27,8 @@ import java.util.List;
 @JsonDeserialize
 @AllArgsConstructor
 @NoArgsConstructor
-public class WebshopEmailsModel {
+public class EmailListModel {
 
-	/**
-	 * The Handle.
-	 */
-	@JsonProperty("handle")
-	private String handle;
 	/**
 	 * The Emails.
 	 */
@@ -46,6 +41,7 @@ public class WebshopEmailsModel {
 	 *
 	 * @return the boolean
 	 */
+	@JsonIgnore
 	public Boolean isValid() {
 		Boolean valid = true;
 		for (String email : emails) {
@@ -65,4 +61,5 @@ public class WebshopEmailsModel {
 	private Boolean isValidEmailAddress(String email) {
 		return EmailValidator.getInstance().isValid(email);
 	}
+
 }

@@ -15,20 +15,6 @@ import reactor.core.publisher.Mono;
 public interface IWebshopRepository {
 
 	/**
-	 * Create a new webshop (simple).
-	 * Meaning, it will create a new webshop with only the fields that do not have default values.
-	 *
-	 * @param handle the handle
-	 * @param url    the url
-	 * @param A      the service level A percentage
-	 * @param B      the service level B percentage
-	 * @param C      the service level C percentage
-	 * @return Mono with boolean indicating success
-	 */
-	Mono<Boolean> create(String handle, String url,
-	                     Double A, Double B, Double C);
-
-	/**
 	 * Create a new webshop (complex).
 	 * Meaning, it will create a new webshop with all the fields.
 	 *
@@ -56,14 +42,7 @@ public interface IWebshopRepository {
 	 * @param sort      the sortfield which sorts the webshops
 	 * @return Flux with the webshops found
 	 */
-	Flux<Webshop> findVarious(Condition condition, SortField<?> sort);
-
-	/**
-	 * Find all webshops in the database.
-	 *
-	 * @return Flux with all the webshops
-	 */
-	Flux<Webshop> findAll();
+	Flux<String> findVarious(Condition condition, SortField<?> sort);
 
 	/**
 	 * Find a webshop by its handle.
@@ -82,9 +61,9 @@ public interface IWebshopRepository {
 	 * @param serviceLevelA the service level A percentage
 	 * @param serviceLevelB the service level B percentage
 	 * @param serviceLevelC the service level C percentage
-	 * @param interestRate the interest rate
+	 * @param interestRate  the interest rate
 	 * @param currency      the currency in ISO 4217 format
-	 * @param runJobs      the ability to run jobs
+	 * @param runJobs       the ability to run jobs
 	 * @param multiSupplier if it has multiple suppliers
 	 * @return Mono with boolean indicating success
 	 */

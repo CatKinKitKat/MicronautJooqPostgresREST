@@ -1,7 +1,8 @@
 package com.optiply.infrastructure.data.repositories.interfaces;
 
-import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+
+import java.util.List;
 
 /**
  * The interface for the webshopemails table repository.
@@ -12,13 +13,13 @@ import reactor.core.publisher.Mono;
 public interface IWebshopemailsRepository {
 
 	/**
-	 * Create a new webshopemails record.
+	 * Create various mono.
 	 *
-	 * @param handle the handle from which to get the webshop_id
-	 * @param email  the address
-	 * @return Mono with boolean indicating success
+	 * @param handle the handle
+	 * @param emails the emails
+	 * @return the mono
 	 */
-	Mono<Boolean> create(String handle, String email);
+	Mono<Boolean> createVarious(String handle, List<String> emails);
 
 	/**
 	 * Find emails pertaining to a certain webshop via its handle.
@@ -26,14 +27,22 @@ public interface IWebshopemailsRepository {
 	 * @param handle the handle
 	 * @return Flux with webshopemails records matching the handle
 	 */
-	Flux<String> findEmails(String handle);
+	Mono<List<String>> findEmails(String handle);
 
 	/**
-	 * Delete a specific email pertaining to a certain webshop.
+	 * Delete all mono.
 	 *
-	 * @param handle the webshop handle
-	 * @param email  the email address
-	 * @return Mono with boolean indicating success
+	 * @param handle the handle
+	 * @return the mono
 	 */
-	Mono<Boolean> delete(String handle, String email);
+	Mono<Boolean> deleteAll(String handle);
+
+	/**
+	 * Update webshop emails mono.
+	 *
+	 * @param handle the handle
+	 * @param emails the emails
+	 * @return the mono
+	 */
+	Mono<Boolean> updateWebshopEmails(String handle, List<String> emails);
 }

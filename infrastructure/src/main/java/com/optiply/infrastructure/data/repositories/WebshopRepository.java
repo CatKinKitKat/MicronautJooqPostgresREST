@@ -44,38 +44,10 @@ public class WebshopRepository implements com.optiply.infrastructure.data.reposi
 	 * @param operations the operations
 	 */
 	@Inject
-	public WebshopRepository(@Named("dsl") DSLContext dslContext,
-	                         R2dbcOperations operations) {
+	public WebshopRepository(@Named("dsl") DSLContext dslContext, R2dbcOperations operations) {
 
 		this.dslContext = dslContext;
 		this.operations = operations;
-	}
-
-	/**
-	 * Creates a new webshop with only non-default fields required.
-	 *
-	 * @param handle the webshop handle
-	 * @param url    the webshop
-	 * @param A      the percentage of service level A
-	 * @param B      the percentage of service level B
-	 * @param C      the percentage of service level C
-	 * @return the mono
-	 */
-	@Override
-	public Mono<Boolean> create(String handle, String url,
-	                            Double A, Double B, Double C) {
-		log.info("Creating webshop: " + handle);
-		return Mono.from(operations.withTransaction(
-				new DefaultTransactionDefinition(
-						TransactionDefinition.Propagation.REQUIRES_NEW
-				), status -> Mono
-						.from(DSL
-								.using(status.getConnection(), SQLDialect.POSTGRES, dslContext.settings())
-								.insertInto(Tables.WEBSHOP)
-								.columns(Tables.WEBSHOP.HANDLE, Tables.WEBSHOP.URL, Tables.WEBSHOP.A, Tables.WEBSHOP.B, Tables.WEBSHOP.C)
-								.values(handle, url, A, B, C))
-						.map(result -> result == QueryResult.SUCCESS.ordinal())
-						.onErrorReturn(false)));
 	}
 
 	/**
@@ -93,10 +65,10 @@ public class WebshopRepository implements com.optiply.infrastructure.data.reposi
 	 * @return the mono
 	 */
 	@Override
-	public Mono<Boolean> create(String handle, String url,
-	                            Double serviceLevelA, Double serviceLevelB, Double serviceLevelC,
-	                            Short interestRate, String currency,
+	public Mono<Boolean> create(String handle, String url, Double serviceLevelA, Double serviceLevelB,
+	                            Double serviceLevelC, Short interestRate, String currency,
 	                            Boolean runJobs, Boolean multiSupplier) {
+
 		log.info("Creating webshop: " + handle);
 		return Mono.from(operations.withTransaction(
 				new DefaultTransactionDefinition(
@@ -119,33 +91,17 @@ public class WebshopRepository implements com.optiply.infrastructure.data.reposi
 	 * @return Flux of webshops found
 	 */
 	@Override
-	public Flux<Webshop> findVarious(Condition condition, SortField<?> sort) {
+	public Flux<String> findVarious(Condition condition, SortField<?> sort) {
+
 		log.info("Finding webshops with variable conditions sorted by specific field");
 
 		return Flux.from(operations.withTransaction(TransactionDefinition.READ_ONLY, status -> DSL
-						.using(status.getConnection(), SQLDialect.POSTGRES, dslContext.settings())
-						.select(Tables.WEBSHOP.asterisk())
-						.from(Tables.WEBSHOP)
-						.where(condition)
-						.orderBy(sort)
-				))
-				.map(result -> result.into(Webshop.class));
-	}
-
-	/**
-	 * Find all webshops in the database.
-	 *
-	 * @return Flux with all the webshops
-	 */
-	@Override
-	public Flux<Webshop> findAll() {
-		log.info("Finding all webshops");
-		return Flux.from(operations.withTransaction(TransactionDefinition.READ_ONLY, status -> DSL
-						.using(status.getConnection(), SQLDialect.POSTGRES, dslContext.settings())
-						.select(Tables.WEBSHOP.asterisk())
-						.from(Tables.WEBSHOP)
-				))
-				.map(result -> result.into(Webshop.class));
+				.using(status.getConnection(), SQLDialect.POSTGRES, dslContext.settings())
+				.select(Tables.WEBSHOP.asterisk())
+				.from(Tables.WEBSHOP)
+				.where(condition)
+				.orderBy(sort)
+		)).map(result -> result.into(Webshop.class)).map(Webshop::getHandle);
 	}
 
 	/**
@@ -156,6 +112,7 @@ public class WebshopRepository implements com.optiply.infrastructure.data.reposi
 	 */
 	@Override
 	public Mono<Webshop> find(String handle) {
+
 		log.info("Finding webshop: " + handle);
 		return Mono
 				.from(operations.withTransaction(TransactionDefinition.READ_ONLY, status -> DSL
@@ -174,17 +131,17 @@ public class WebshopRepository implements com.optiply.infrastructure.data.reposi
 	 * @param serviceLevelA the service level A percentage
 	 * @param serviceLevelB the service level B percentage
 	 * @param serviceLevelC the service level C percentage
-	 * @param interestRate the interest rate
+	 * @param interestRate  the interest rate
 	 * @param currency      the currency in ISO 4217 format
 	 * @param runJobs       the ability to run jobs
 	 * @param multiSupplier if it has multiple suppliers
 	 * @return Mono with boolean indicating success
 	 */
 	@Override
-	public Mono<Boolean> updateWebshop(String handle, String newHandle, String url,
-	                                   Double serviceLevelA, Double serviceLevelB, Double serviceLevelC,
-	                                   Short interestRate, String currency,
-	                                   Boolean runJobs, Boolean multiSupplier) {
+	public Mono<Boolean> updateWebshop(String handle, String newHandle, String url, Double serviceLevelA,
+	                                   Double serviceLevelB, Double serviceLevelC, Short interestRate,
+	                                   String currency, Boolean runJobs, Boolean multiSupplier) {
+
 		log.info("Updating webshop: " + handle);
 		return Mono.from(operations.withTransaction(
 				new DefaultTransactionDefinition(
@@ -210,11 +167,12 @@ public class WebshopRepository implements com.optiply.infrastructure.data.reposi
 	/**
 	 * Updates a webshop given all the fields.
 	 *
-	 * @param handle        the handle
+	 * @param handle the handle
 	 * @return Mono with boolean indicating success
 	 */
 	@Override
 	public Mono<Boolean> updateWebshopHandle(String handle, String newHandle) {
+
 		log.info("Updating webshop: " + handle);
 		return Mono.from(operations.withTransaction(
 				new DefaultTransactionDefinition(
@@ -232,12 +190,13 @@ public class WebshopRepository implements com.optiply.infrastructure.data.reposi
 	/**
 	 * Updates a webshop given all the fields.
 	 *
-	 * @param handle        the handle
-	 * @param url           the url
+	 * @param handle the handle
+	 * @param url    the url
 	 * @return Mono with boolean indicating success
 	 */
 	@Override
 	public Mono<Boolean> updateWebshopUrl(String handle, String url) {
+
 		log.info("Updating webshop: " + handle);
 		return Mono.from(operations.withTransaction(
 				new DefaultTransactionDefinition(
@@ -255,12 +214,13 @@ public class WebshopRepository implements com.optiply.infrastructure.data.reposi
 	/**
 	 * Updates a webshop given all the fields.
 	 *
-	 * @param handle        the handle
+	 * @param handle       the handle
 	 * @param interestRate the interest rate
 	 * @return Mono with boolean indicating success
 	 */
 	@Override
 	public Mono<Boolean> updateWebshopInterestRate(String handle, Short interestRate) {
+
 		log.info("Updating webshop: " + handle);
 		return Mono.from(operations.withTransaction(
 				new DefaultTransactionDefinition(
@@ -285,8 +245,8 @@ public class WebshopRepository implements com.optiply.infrastructure.data.reposi
 	 * @return Mono with boolean indicating success
 	 */
 	@Override
-	public Mono<Boolean> updateWebshopSettings(String handle, String currency,
-	                                           Boolean runJobs, Boolean multiSupplier) {
+	public Mono<Boolean> updateWebshopSettings(String handle, String currency, Boolean runJobs, Boolean multiSupplier) {
+
 		log.info("Updating webshop: " + handle);
 		return Mono.from(operations.withTransaction(
 				new DefaultTransactionDefinition(
@@ -313,8 +273,9 @@ public class WebshopRepository implements com.optiply.infrastructure.data.reposi
 	 * @return Mono with boolean indicating success
 	 */
 	@Override
-	public Mono<Boolean> updateWebshopServiceLevels(String handle, Double serviceLevelA,
-	                                                Double serviceLevelB, Double serviceLevelC) {
+	public Mono<Boolean> updateWebshopServiceLevels(String handle, Double serviceLevelA, Double serviceLevelB,
+	                                                Double serviceLevelC) {
+
 		log.info("Updating webshop: " + handle);
 		return Mono.from(operations.withTransaction(
 				new DefaultTransactionDefinition(
@@ -339,6 +300,7 @@ public class WebshopRepository implements com.optiply.infrastructure.data.reposi
 	 */
 	@Override
 	public Mono<Boolean> deleteWebshop(String handle) {
+
 		log.info("Deleting webshop: " + handle);
 		return Mono.from(operations.withTransaction(
 				new DefaultTransactionDefinition(
@@ -361,4 +323,5 @@ public class WebshopRepository implements com.optiply.infrastructure.data.reposi
 										.where(Tables.WEBSHOP.HANDLE.equalIgnoreCase(handle))))
 						.map(result3 -> result3 == QueryResult.SUCCESS.ordinal())));
 	}
+
 }

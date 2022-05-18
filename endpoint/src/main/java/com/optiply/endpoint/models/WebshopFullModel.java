@@ -1,6 +1,7 @@
 package com.optiply.endpoint.models;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
@@ -10,10 +11,16 @@ import com.optiply.infrastructure.data.models.tables.pojos.Webshop;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.apache.commons.validator.routines.EmailValidator;
 import org.apache.commons.validator.routines.UrlValidator;
 
+import javax.validation.Valid;
+import java.util.Currency;
+import java.util.List;
+import java.util.Set;
+
 /**
- * The type Webshop simple model.
+ * The type Webshop body model.
  */
 @Data
 @JsonPropertyOrder({
@@ -22,14 +29,18 @@ import org.apache.commons.validator.routines.UrlValidator;
 		"interestRate",
 		"serviceLevelA",
 		"serviceLevelB",
-		"serviceLevelC"
+		"serviceLevelC",
+		"currency",
+		"runJobs",
+		"multiSupplier",
+		"emails"
 })
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonSerialize
 @JsonDeserialize
 @AllArgsConstructor
 @NoArgsConstructor
-public class WebshopSimpleModel {
+public class WebshopFullModel {
 
 	/**
 	 * The Handle.
@@ -47,50 +58,57 @@ public class WebshopSimpleModel {
 	@JsonProperty("interestRate")
 	private Short interestRate = 20;
 	/**
-	 * The Servicel Level A Percentage.
+	 * The A.
 	 */
 	@JsonProperty("serviceLevelA")
 	private Double serviceLevelA;
 	/**
-	 * The Servicel Level B Percentage.
+	 * The B.
 	 */
 	@JsonProperty("serviceLevelB")
 	private Double serviceLevelB;
 	/**
-	 * The Servicel Level C Percentage.
+	 * The C.
 	 */
 	@JsonProperty("serviceLevelC")
 	private Double serviceLevelC;
+	/**
+	 * The Currency.
+	 */
+	@JsonProperty("currency")
+	private String currency = "EUR";
+	/**
+	 * The Run jobs.
+	 */
+	@JsonProperty("runJobs")
+	private Boolean runJobs = true;
+	/**
+	 * The Multi supplier.
+	 */
+	@JsonProperty("multiSupplier")
+	private Boolean multiSupplier = false;
+	/**
+	 * The Emails.
+	 */
+	@JsonProperty("emails")
+	@Valid
+	private List<String> emails = null;
 
 	/**
-	 * Instantiates a new Webshop simple model.
+	 * Instantiates a new Webshop body model.
 	 *
 	 * @param webshop the webshop
 	 */
-	public WebshopSimpleModel(Webshop webshop) {
+	public WebshopFullModel(Webshop webshop) {
 		this.handle = webshop.getHandle();
 		this.url = webshop.getUrl();
 		this.interestRate = webshop.getInterestRate();
 		this.serviceLevelA = webshop.getA();
 		this.serviceLevelB = webshop.getB();
 		this.serviceLevelC = webshop.getC();
-	}
-
-	/**
-	 * Instantiates a new Webshop simple model.
-	 *
-	 * @param handle the handle
-	 * @param url    the url
-	 * @param a      the a
-	 * @param b      the b
-	 * @param c      the c
-	 */
-	public WebshopSimpleModel(String handle, String url, Double a, Double b, Double c) {
-		this.handle = handle;
-		this.url = url;
-		this.serviceLevelA = a;
-		this.serviceLevelB = b;
-		this.serviceLevelC = c;
+		this.currency = webshop.getCurrency();
+		this.runJobs = webshop.getRunJobs();
+		this.multiSupplier = webshop.getMultiSupply();
 	}
 
 	/**
@@ -98,18 +116,20 @@ public class WebshopSimpleModel {
 	 *
 	 * @return the boolean
 	 */
+	@JsonIgnore
 	public Boolean isValid() {
+
 		return this.isValidUrl(this.url) &&
+				this.isValidCurrency(this.currency) &&
+				this.areValidEmailAddresses() &&
 				this.isValidServiceSum(this.serviceLevelA, this.serviceLevelB, this.serviceLevelC);
 	}
 
 	/**
-	 * Is the URL valid?
-	 * It must be a valid URL and it must not be null
-	 * The URL must only use the following protocols: http, https
+	 * Is valid url boolean.
 	 *
 	 * @param url the url
-	 * @return is valid?
+	 * @return the boolean
 	 */
 	private Boolean isValidUrl(String url) {
 		String[] schemes = {"http", "https"};
@@ -118,15 +138,56 @@ public class WebshopSimpleModel {
 	}
 
 	/**
-	 * The sum of the service levels must be 100%
+	 * Is valid currency boolean.
 	 *
-	 * @param A the percentage of the servicel level A
-	 * @param B the percentage of the servicel level B
-	 * @param C the percentage of the servicel level C
-	 * @return is the sum of the service levels 100%?
+	 * @param currency the currency
+	 * @return the boolean
+	 */
+	private Boolean isValidCurrency(String currency) {
+		Set<Currency> currencies = Currency.getAvailableCurrencies();
+		for (Currency c : currencies) {
+			if (c.getCurrencyCode().equals(currency)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	/**
+	 * Is valid service sum boolean.
+	 *
+	 * @param A the a
+	 * @param B the b
+	 * @param C the c
+	 * @return the boolean
 	 */
 	private Boolean isValidServiceSum(Double A, Double B, Double C) {
 		return A + B + C == 100;
 	}
 
+
+	/**
+	 * Is valid email address boolean.
+	 *
+	 * @param email the email
+	 * @return the boolean
+	 */
+	private Boolean isValidEmailAddress(String email) {
+		return EmailValidator.getInstance().isValid(email);
+	}
+
+	/**
+	 * Is valid boolean.
+	 *
+	 * @return the boolean
+	 */
+	private Boolean areValidEmailAddresses() {
+		Boolean valid = true;
+		for (String email : emails) {
+			if (!this.isValidEmailAddress(email)) {
+				valid = false;
+			}
+		}
+		return valid;
+	}
 }

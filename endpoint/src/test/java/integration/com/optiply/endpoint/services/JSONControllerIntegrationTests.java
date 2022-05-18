@@ -3,10 +3,9 @@ package com.optiply.endpoint.services;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.optiply.endpoint.environment.TestEnvironment;
-import com.optiply.endpoint.models.*;
+import com.optiply.endpoint.models.WebshopFullModel;
+import com.optiply.endpoint.models.WebshopModel;
 import io.micronaut.http.HttpRequest;
-import io.micronaut.http.HttpResponse;
-import io.micronaut.http.MutableHttpRequest;
 import io.micronaut.http.client.HttpClient;
 import io.micronaut.http.client.annotation.Client;
 import io.micronaut.test.extensions.junit5.annotation.MicronautTest;
@@ -41,223 +40,147 @@ public class JSONControllerIntegrationTests extends TestEnvironment {
 	@Inject
 	com.optiply.endpoint.controllers.JSONController JSONController;
 
-	/**
-	 * Test create test webshop simple.
-	 *
-	 * @throws JsonProcessingException the json processing exception
-	 */
 	@Test
 	@Order(1)
-	void testCreateTestWebshop1() throws JsonProcessingException {
+	void testCreateWebshop() throws JsonProcessingException {
 
 		String body = """
 					{
-						"handle": "test2",
-						"url": "https://www.test2.com",
+						"handle": "test1",
+						"url": "https://www.test1.com",
 						"serviceLevelA": 33.0,
 						"serviceLevelB": 33.0,
-						"serviceLevelC": 34.0
+						"serviceLevelC": 34.0,
+						"emails": [
+							"test@test1.com",
+							"tester@test1.com"
+						]
 					}
 				""";
 
-		WebshopModel webshop = objectMapper.readValue(body, WebshopModel.class);
+		WebshopFullModel webshop = objectMapper.readValue(body, WebshopFullModel.class);
 
-		HttpRequest<WebshopModel> request = HttpRequest.POST("/", webshop);
+		HttpRequest<WebshopFullModel> request = HttpRequest.POST("/", webshop);
 		String result = client.toBlocking().retrieve(request, String.class);
 
 		Assertions.assertEquals("Webshop created.", result);
-
 	}
 
-	/**
-	 * Test create test webshop.
-	 *
-	 * @throws JsonProcessingException the json processing exception
-	 */
 	@Test
 	@Order(2)
-	void testCreateTestWebshop2() throws JsonProcessingException {
+	void testCreateVariousWebshops() throws JsonProcessingException {
 
 		String body = """
-					{
-						"handle": "test3",
-						"url": "https://www.test3.nl",
-						"interestRate": 25,
-						"serviceLevelA": 50.0,
-						"serviceLevelB": 25.0,
-						"serviceLevelC": 25.0,
-						"currency": "USD",
-						"runJobs": false,
-						"multiSupplier": true
-					}
+					[
+						{
+							"handle": "test2",
+							"url": "https://www.test2.com",
+							"serviceLevelA": 25.0,
+							"serviceLevelB": 25.0,
+							"serviceLevelC": 50.0,
+							"emails": [
+								"ti84plus@test2.com",
+								"zelenski@test2.com",
+								"putin@test2.com"
+							]
+						},
+						{
+							"handle": "test3",
+							"url": "https://www.test3.com",
+							"interestRate": 25,
+							"serviceLevelA": 20.0,
+							"serviceLevelB": 35.0,
+							"serviceLevelC": 45.0,
+							"emails": [
+								"beau@test3.com",
+								"fifthcolumn@test3.com"
+							]
+						}
+					]
 				""";
 
-		WebshopModel webshop = objectMapper.readValue(body, WebshopModel.class);
+		List<WebshopFullModel> webshops = objectMapper.readValue(body,
+				objectMapper.getTypeFactory().constructCollectionType(List.class, WebshopFullModel.class)
+		);
 
-		HttpRequest<WebshopModel> request = HttpRequest.POST("/", webshop);
+		HttpRequest<List<WebshopFullModel>> request = HttpRequest.POST("/various", webshops);
 		String result = client.toBlocking().retrieve(request, String.class);
 
-		Assertions.assertEquals("Webshop created.", result);
-
+		Assertions.assertEquals("Webshops created.", result);
 	}
 
-
-	/**
-	 * Test get webshop.
-	 */
 	@Test
 	@Order(3)
-	void testGetWebshop() {
-
-		WebshopSimpleModel expected = new WebshopSimpleModel();
-		expected.setHandle("test3");
-		expected.setUrl("https://www.test3.nl");
-		expected.setServiceLevelA(50.0);
-		expected.setServiceLevelB(25.0);
-		expected.setServiceLevelC(25.0);
-		expected.setInterestRate((short) 25);
-
-		HttpRequest<WebshopSimpleModel> request = HttpRequest.GET("/test3");
-		WebshopSimpleModel result = client.toBlocking()
-				.retrieve(request, WebshopSimpleModel.class);
-
-		Assertions.assertEquals(expected, result);
-
-	}
-
-	/**
-	 * Test get webshop settings.
-	 */
-	@Test
-	@Order(4)
-	void testGetWebshopSettings() {
-
-		WebshopSettingsModel expected = new WebshopSettingsModel();
-		expected.setHandle("test3");
-		expected.setCurrency("USD");
-		expected.setRunJobs(false);
-		expected.setMultiSupplier(true);
-
-		HttpRequest<WebshopSettingsModel> request = HttpRequest.GET("/test3/settings");
-		WebshopSettingsModel result = client.toBlocking()
-				.retrieve(request, WebshopSettingsModel.class);
-
-		Assertions.assertEquals(expected, result);
-
-	}
-
-
-	/**
-	 * Test add email to webshop.
-	 */
-	@Test
-	@Order(5)
-	void testAddEmailToWebshop() throws JsonProcessingException {
+	void testGetWebshop() throws JsonProcessingException {
 
 		String body = """
 					{
-						"email": "lol@test.pt"
-					}
-				""";
-
-		EmailModel emailModel = objectMapper.readValue(body, EmailModel.class);
-
-		MutableHttpRequest<EmailModel> request = HttpRequest.POST("/email/test3/", emailModel);
-		String result = client.toBlocking().retrieve(request, String.class);
-
-		Assertions.assertEquals("Email added.", result);
-
-	}
-
-	/**
-	 * Test get webshop emails.
-	 */
-	@Test
-	@Order(6)
-	void testGetWebshopEmails() {
-
-		WebshopEmailsModel expected = new WebshopEmailsModel();
-		expected.setHandle("test3");
-		expected.setEmails(List.of("lol@test.pt"));
-
-
-		HttpRequest<WebshopEmailsModel> request = HttpRequest.GET("/test3/emails");
-		WebshopEmailsModel result = client.toBlocking().retrieve(request, WebshopEmailsModel.class);
-
-		Assertions.assertEquals(expected, result);
-
-	}
-
-	/**
-	 * Remove email from webshop.
-	 */
-	@Test
-	@Order(7)
-	void removeEmailFromWebshop() throws JsonProcessingException {
-
-		String body = """
-					{
-						"email": "lol@test.pt"
-					}
-				""";
-
-		EmailModel emailModel = objectMapper.readValue(body, EmailModel.class);
-
-		MutableHttpRequest<EmailModel> request = HttpRequest.DELETE("/email/test3/", emailModel);
-		String result = client.toBlocking().retrieve(request, String.class);
-
-		Assertions.assertEquals("Email removed.", result);
-
-	}
-
-	/**
-	 * Test update webshop.
-	 *
-	 * @throws JsonProcessingException the json processing exception
-	 */
-	@Test
-	@Order(8)
-	void testUpdateWebshop() throws JsonProcessingException {
-
-		String body = """
-					{
-						"handle": "test3",
-						"url": "https://www.test3.nl",
-						"interestRate": 25,
-						"serviceLevelA": 50.0,
-						"serviceLevelB": 25.0,
-						"serviceLevelC": 25.0,
-						"currency": "USD",
-						"runJobs": false,
-						"multiSupplier": true
-					}
+							"handle": "test2",
+							"url": "https://www.test2.com",
+							"serviceLevelA": 25.0,
+							"serviceLevelB": 25.0,
+							"serviceLevelC": 50.0,
+							"emails": [
+								"ti84plus@test2.com",
+								"zelenski@test2.com",
+								"putin@test2.com"
+							]
+						}
 				""";
 
 		WebshopModel webshop = objectMapper.readValue(body, WebshopModel.class);
 
-		HttpRequest<WebshopModel> request = HttpRequest.PUT("/test3", webshop);
+		HttpRequest<WebshopModel> request = HttpRequest.GET("/test2");
 		String result = client.toBlocking().retrieve(request, String.class);
 
-		Assertions.assertEquals("Webshop updated.", result);
-
+		Assertions.assertEquals(objectMapper.writeValueAsString(webshop), result);
 	}
 
-	/**
-	 * Test delete webshop.
-	 */
+
 	@Test
-	@Order(9)
-	void testDeleteWebshop() {
+	@Order(4)
+	void testFindWebshopByInterestRate() throws JsonProcessingException {
 
-		HttpRequest<Boolean> requestT = HttpRequest.DELETE("/test2");
-		HttpResponse<Object> resultT = client.toBlocking().exchange(requestT);
+		String body = """
+					[
+				    {
+					  	"handle": "test1",
+					  	"url": "https://www.test1.com",
+							"interestRate": 20,
+					  	"serviceLevelA": 33.0,
+					  	"serviceLevelB": 33.0,
+					  	"serviceLevelC": 34.0,
+					  	"emails": [
+					  		"test@test1.com",
+					  		"tester@test1.com"
+					  	]
+					  },
+					  {
+					  	"handle": "test2",
+					  	"url": "https://www.test2.com",
+							"interestRate": 20,
+					  	"serviceLevelA": 25.0,
+					  	"serviceLevelB": 25.0,
+					  	"serviceLevelC": 50.0,
+					  	"emails": [
+					  		"ti84plus@test2.com",
+					  		"zelenski@test2.com",
+					  		"putin@test2.com"
+					  	]
+					  }
+					]
+				"""
+				.replace(" ", "")
+				.replace("\t", "")
+				.replace("\n", "");
 
-		HttpRequest<Boolean> requestO = HttpRequest.DELETE("/test3");
-		HttpResponse<Object> resultO = client.toBlocking().exchange(requestO);
+		// < = %3C
+		// > = %3E
 
-		Assertions.assertNull(resultT.body());
-		Assertions.assertNull(resultO.body());
+		HttpRequest<List<WebshopModel>> request = HttpRequest.GET("/find/interestRate%3C25");
+		String result = client.toBlocking().retrieve(request, String.class);
+
+		Assertions.assertEquals(body, result);
 
 	}
-
 }

@@ -1,6 +1,7 @@
 package com.optiply.endpoint.models;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
@@ -73,6 +74,7 @@ public class WebshopSettingsModel {
 	 *
 	 * @return is valid?
 	 */
+	@JsonIgnore
 	public Boolean isValid() {
 		return this.isValidCurrency(this.currency);
 	}

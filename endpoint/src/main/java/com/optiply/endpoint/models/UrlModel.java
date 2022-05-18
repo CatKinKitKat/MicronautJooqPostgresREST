@@ -1,5 +1,6 @@
 package com.optiply.endpoint.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
@@ -35,6 +36,7 @@ public class UrlModel {
 	 *
 	 * @return the boolean
 	 */
+	@JsonIgnore
 	public Boolean isValid() {
 		return UrlValidator.getInstance().isValid(this.url);
 	}

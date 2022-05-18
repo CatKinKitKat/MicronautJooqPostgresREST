@@ -1,6 +1,7 @@
 package com.optiply.endpoint.models;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
@@ -59,6 +60,7 @@ public class ServiceLevelsModel {
 	 *
 	 * @return the boolean
 	 */
+	@JsonIgnore
 	public Boolean isValid() {
 		return this.isValidServiceSum(this.serviceLevelA, this.serviceLevelB, this.serviceLevelC);
 	}

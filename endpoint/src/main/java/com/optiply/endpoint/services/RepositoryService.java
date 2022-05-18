@@ -1,21 +1,21 @@
 package com.optiply.endpoint.services;
 
 import com.optiply.endpoint.models.*;
-import com.optiply.infrastructure.data.models.tables.pojos.Webshop;
 import com.optiply.infrastructure.data.repositories.WebshopRepository;
 import com.optiply.infrastructure.data.repositories.WebshopemailsRepository;
 import io.micronaut.http.HttpResponse;
 import io.micronaut.http.MutableHttpResponse;
 import jakarta.inject.Inject;
-import lombok.extern.java.Log;
 import org.jooq.Condition;
 import org.jooq.SortField;
 import reactor.core.publisher.Mono;
+import reactor.core.scheduler.Schedulers;
+
+import java.util.List;
 
 /**
  * The type Repository service.
  */
-@Log
 public class RepositoryService {
 
 
@@ -37,16 +37,12 @@ public class RepositoryService {
 	 * @param sortField the sort fields
 	 * @return the webshops
 	 */
-	public Mono<MutableHttpResponse<WebshopModel[]>> getWebshops(Condition condition, SortField<?> sortField) {
+	public Mono<MutableHttpResponse<List<WebshopModel>>> getWebshops(Condition condition, SortField<?> sortField) {
 
-		return webshopRepository.findVarious(condition, sortField).collectList().flatMap(webshops -> {
-			log.info("webshop found");
-			WebshopModel[] webshopModels = new WebshopModel[webshops.size()];
-			for (Webshop webshop : webshops) {
-				webshopModels[webshops.indexOf(webshop)] = new WebshopModel(webshop);
-			}
-			return Mono.just(webshopModels);
-		}).flatMap(webshopBodyModels -> Mono.just(HttpResponse.ok(webshopBodyModels)));
+		return webshopRepository.findVarious(condition, sortField).flatMap(this::getWebshopPriv)
+				.collectList().flatMap(webshops -> Mono.just(HttpResponse.ok(webshops)))
+				.switchIfEmpty(Mono.just(HttpResponse.notFound())).onErrorReturn(HttpResponse.serverError());
+
 
 	}
 
@@ -56,33 +52,33 @@ public class RepositoryService {
 	 * @param handle the handle
 	 * @return the webshop
 	 */
-	public Mono<MutableHttpResponse<WebshopSimpleModel>> getWebshop(String handle) {
+	private Mono<WebshopModel> getWebshopPriv(String handle) {
 
-		return webshopRepository.find(handle).flatMap(webshop -> {
-					log.info("webshop found");
-					return Mono.just(new WebshopSimpleModel(webshop));
-				}).flatMap(webshopModel -> Mono.just(HttpResponse.ok(webshopModel)))
-				.switchIfEmpty(Mono.just(HttpResponse.notFound())).onErrorReturn(HttpResponse.serverError());
-
+		return webshopRepository.find(handle).flatMap(webshop -> Mono.just(new WebshopModel(webshop)))
+				.flatMap(webshopModel -> webshopemailsRepository.findEmails(handle)
+						.flatMap(webshopemails -> {
+							webshopModel.setEmails(webshopemails);
+							return Mono.just(webshopModel);
+						}).flatMap(Mono::just));
 	}
 
 	/**
-	 * Gets webshop emails.
+	 * Gets webshop.
 	 *
 	 * @param handle the handle
-	 * @return the webshop emails
+	 * @return the webshop
 	 */
-	public Mono<MutableHttpResponse<WebshopEmailsModel>> getWebshopEmails(String handle) {
+	public Mono<MutableHttpResponse<WebshopModel>> getWebshop(String handle) {
 
-		return Mono.from(webshopemailsRepository.findEmails(handle).collectList()).flatMap(emails -> {
-					if (emails.isEmpty()) {
-						log.info("emails for webshop" + handle + " not found");
-						return Mono.empty();
-					}
-					log.info("emails for webshop" + handle + " found\n" + "emails: " + emails);
-					return Mono.just(new WebshopEmailsModel(handle, emails));
-				}).flatMap(webshopEmailsModel -> Mono.just(HttpResponse.ok(webshopEmailsModel)))
-				.switchIfEmpty(Mono.just(HttpResponse.notFound())).onErrorReturn(HttpResponse.serverError());
+		return webshopRepository.find(handle).flatMap(webshop -> Mono.just(new WebshopModel(webshop)))
+				.flatMap(webshopModel -> webshopemailsRepository.findEmails(handle)
+						.flatMap(webshopemails -> {
+							webshopModel.setEmails(webshopemails);
+							return Mono.just(webshopModel);
+						}).flatMap(webshopModelWithEmails ->
+								Mono.just(HttpResponse.ok(webshopModelWithEmails))))
+				.switchIfEmpty(Mono.just(HttpResponse.notFound()))
+				.onErrorReturn(HttpResponse.serverError());
 	}
 
 	/**
@@ -93,11 +89,13 @@ public class RepositoryService {
 	 */
 	public Mono<MutableHttpResponse<WebshopSettingsModel>> getWebshopSettings(String handle) {
 
-		return webshopRepository.find(handle).flatMap(webshop -> {
-					log.info("webshop found");
-					return Mono.just(new WebshopSettingsModel(webshop));
-				}).flatMap(webshopSettingsModel -> Mono.just(HttpResponse.ok(webshopSettingsModel)))
-				.switchIfEmpty(Mono.just(HttpResponse.notFound())).onErrorReturn(HttpResponse.serverError());
+		return webshopRepository.find(handle)
+				.flatMap(webshop ->
+						Mono.just(new WebshopSettingsModel(webshop)))
+				.flatMap(webshopSettingsModel ->
+						Mono.just(HttpResponse.ok(webshopSettingsModel)))
+				.switchIfEmpty(Mono.just(HttpResponse.notFound()))
+				.onErrorReturn(HttpResponse.serverError());
 
 	}
 
@@ -107,64 +105,61 @@ public class RepositoryService {
 	 * @param webshopModel the webshop model
 	 * @return the mono
 	 */
-	public Mono<MutableHttpResponse<String>> createWebshop(WebshopModel webshopModel) {
+	public Mono<MutableHttpResponse<String>> createWebshop(WebshopFullModel webshopModel) {
+
+		if (!webshopModel.isValid()) {
+			return Mono.just(HttpResponse.badRequest());
+		}
 
 		return webshopRepository.create(
 						webshopModel.getHandle(), webshopModel.getUrl(),
 						webshopModel.getServiceLevelA(), webshopModel.getServiceLevelB(), webshopModel.getServiceLevelC(),
 						webshopModel.getInterestRate(), webshopModel.getCurrency(),
 						webshopModel.getRunJobs(), webshopModel.getMultiSupplier()
-				).flatMap(response -> {
-					if (response) {
-						log.info("webshop created");
-						return Mono.just(HttpResponse.created("Webshop created."));
+				).flatMap(webshopResponse -> {
+					if (webshopResponse) {
+						return webshopemailsRepository.createVarious(webshopModel.getHandle(), webshopModel.getEmails())
+								.flatMap(emailsResponse -> {
+									if (emailsResponse) {
+										return Mono.just(HttpResponse.ok("Webshop created."));
+									}
+									return Mono.empty();
+								});
 					}
-					log.info("webshop not created");
 					return Mono.empty();
-				})
-				.switchIfEmpty(Mono.just(HttpResponse.badRequest())).onErrorReturn(HttpResponse.serverError());
+				}).switchIfEmpty(Mono.just(HttpResponse.notFound()))
+				.onErrorReturn(HttpResponse.serverError());
 	}
 
 	/**
-	 * Add email mono.
+	 * Create webshops mono.
 	 *
-	 * @param handle the handle
-	 * @param email  the email
+	 * @param webshopModels the webshop models
 	 * @return the mono
 	 */
-	public Mono<MutableHttpResponse<String>> addEmail(String handle, String email) {
+	public Mono<MutableHttpResponse<String>> createWebshops(List<WebshopFullModel> webshopModels) {
 
-		return webshopemailsRepository.create(handle, email).flatMap(response -> {
-					if (response) {
-						log.info("email added");
-						return Mono.just(HttpResponse.created("Email added."));
-					}
-					log.info("email not added");
-					return Mono.empty();
-				})
-				.switchIfEmpty(Mono.just(HttpResponse.badRequest())).onErrorReturn(HttpResponse.serverError());
+		for (WebshopFullModel webshopFullModel : webshopModels) {
+			if (!webshopFullModel.isValid()) {
+				return Mono.just(HttpResponse.badRequest());
+			}
+		}
+
+		return Mono.just(webshopModels).publishOn(Schedulers.boundedElastic()).flatMap(webshops -> {
+			for (WebshopFullModel webshopModel : webshops) {
+				webshopRepository.create(
+								webshopModel.getHandle(), webshopModel.getUrl(),
+								webshopModel.getServiceLevelA(), webshopModel.getServiceLevelB(), webshopModel.getServiceLevelC(),
+								webshopModel.getInterestRate(), webshopModel.getCurrency(),
+								webshopModel.getRunJobs(), webshopModel.getMultiSupplier()
+						).subscribeOn(Schedulers.boundedElastic())
+						.then(webshopemailsRepository.createVarious(webshopModel.getHandle(), webshopModel.getEmails()))
+						.subscribe();
+			}
+			return Mono.just(HttpResponse.ok("Webshops created."));
+		}).onErrorReturn(HttpResponse.serverError());
+
 	}
-
-	/**
-	 * Remove email mono.
-	 *
-	 * @param handle the handle
-	 * @param email  the email
-	 * @return the mono
-	 */
-	public Mono<MutableHttpResponse<String>> removeEmail(String handle, String email) {
-
-		return webshopemailsRepository.delete(handle, email).flatMap(response -> {
-					if (response) {
-						log.info("email removed");
-						return Mono.just(HttpResponse.created("Email removed."));
-					}
-					log.info("email not removed");
-					return Mono.empty();
-				})
-				.switchIfEmpty(Mono.just(HttpResponse.badRequest())).onErrorReturn(HttpResponse.serverError());
-	}
-
 
 	/**
 	 * Delete webshop mono.
@@ -176,23 +171,23 @@ public class RepositoryService {
 
 		return webshopRepository.deleteWebshop(handle).flatMap(response -> {
 					if (response) {
-						log.info("webshop deleted");
 						return Mono.just(HttpResponse.noContent());
 					}
-					log.info("webshop not deleted");
 					return Mono.empty();
-				})
-				.switchIfEmpty(Mono.just(HttpResponse.badRequest()));
+				}).switchIfEmpty(Mono.just(HttpResponse.badRequest()))
+				.onErrorReturn(HttpResponse.serverError());
 	}
 
 
 	/**
 	 * Update webshop mono.
 	 *
+	 * @param handle       the handle
 	 * @param webshopModel the webshop model
 	 * @return the mono
 	 */
-	public Mono<MutableHttpResponse<String>> updateWebshop(String handle, WebshopModel webshopModel) {
+	public Mono<MutableHttpResponse<String>> updateWebshop(String
+			                                                       handle, WebshopFullModel webshopModel) {
 
 		return webshopRepository.updateWebshop(handle, webshopModel.getHandle(),
 						webshopModel.getUrl(), webshopModel.getServiceLevelA(),
@@ -201,13 +196,11 @@ public class RepositoryService {
 						webshopModel.getRunJobs(), webshopModel.getMultiSupplier()
 				).flatMap(response -> {
 					if (response) {
-						log.info("webshop updated");
 						return Mono.just(HttpResponse.ok("Webshop updated."));
 					}
-					log.info("webshop not updated");
 					return Mono.empty();
-				})
-				.switchIfEmpty(Mono.just(HttpResponse.notFound())).onErrorReturn(HttpResponse.serverError());
+				}).switchIfEmpty(Mono.just(HttpResponse.notFound()))
+				.onErrorReturn(HttpResponse.serverError());
 	}
 
 	/**
@@ -222,13 +215,11 @@ public class RepositoryService {
 		return webshopRepository.updateWebshopHandle(handle, newHandle)
 				.flatMap(response -> {
 					if (response) {
-						log.info("webshop updated");
 						return Mono.just(HttpResponse.ok("Webshop updated."));
 					}
-					log.info("webshop not updated");
 					return Mono.empty();
-				})
-				.switchIfEmpty(Mono.just(HttpResponse.notFound())).onErrorReturn(HttpResponse.serverError());
+				}).switchIfEmpty(Mono.just(HttpResponse.notFound()))
+				.onErrorReturn(HttpResponse.serverError());
 	}
 
 	/**
@@ -243,13 +234,11 @@ public class RepositoryService {
 		return webshopRepository.updateWebshopUrl(handle, url)
 				.flatMap(response -> {
 					if (response) {
-						log.info("webshop updated");
 						return Mono.just(HttpResponse.ok("Webshop updated."));
 					}
-					log.info("webshop not updated");
 					return Mono.empty();
-				})
-				.switchIfEmpty(Mono.just(HttpResponse.notFound())).onErrorReturn(HttpResponse.serverError());
+				}).switchIfEmpty(Mono.just(HttpResponse.notFound()))
+				.onErrorReturn(HttpResponse.serverError());
 	}
 
 
@@ -265,19 +254,18 @@ public class RepositoryService {
 		return webshopRepository.updateWebshopInterestRate(handle, interestRate)
 				.flatMap(response -> {
 					if (response) {
-						log.info("webshop updated");
 						return Mono.just(HttpResponse.ok("Webshop updated."));
 					}
-					log.info("webshop not updated");
 					return Mono.empty();
-				})
-				.switchIfEmpty(Mono.just(HttpResponse.notFound())).onErrorReturn(HttpResponse.serverError());
+				}).switchIfEmpty(Mono.just(HttpResponse.notFound()))
+				.onErrorReturn(HttpResponse.serverError());
 	}
 
 
 	/**
 	 * Update webshop settings mono.
 	 *
+	 * @param handle        the handle
 	 * @param settingsModel the webshop settings model
 	 * @return the mono
 	 */
@@ -288,37 +276,53 @@ public class RepositoryService {
 						settingsModel.getMultiSupplier())
 				.flatMap(response -> {
 					if (response) {
-						log.info("webshop updated");
 						return Mono.just(HttpResponse.ok("Webshop updated."));
 					}
-					log.info("webshop not updated");
 					return Mono.empty();
-				})
-				.switchIfEmpty(Mono.just(HttpResponse.notFound())).onErrorReturn(HttpResponse.serverError());
+				}).switchIfEmpty(Mono.just(HttpResponse.notFound()))
+				.onErrorReturn(HttpResponse.serverError());
 	}
 
 
 	/**
 	 * Update webshop service levels mono.
 	 *
+	 * @param handle             the handle
 	 * @param serviceLevelsModel the webshop service levels model
 	 * @return the mono
 	 */
-	public Mono<MutableHttpResponse<String>> updateWebshopServiceLevels(String handle, ServiceLevelsModel serviceLevelsModel) {
+	public Mono<MutableHttpResponse<String>> updateWebshopServiceLevels
+	(String handle, ServiceLevelsModel serviceLevelsModel) {
 
 		return webshopRepository.updateWebshopServiceLevels(
 						handle, serviceLevelsModel.getServiceLevelA(),
 						serviceLevelsModel.getServiceLevelB(), serviceLevelsModel.getServiceLevelC())
 				.flatMap(response -> {
 					if (response) {
-						log.info("webshop updated");
 						return Mono.just(HttpResponse.ok("Webshop updated."));
 					}
-					log.info("webshop not updated");
 					return Mono.empty();
-				})
-				.switchIfEmpty(Mono.just(HttpResponse.notFound())).onErrorReturn(HttpResponse.serverError());
+				}).switchIfEmpty(Mono.just(HttpResponse.notFound()))
+				.onErrorReturn(HttpResponse.serverError());
 	}
 
 
+	/**
+	 * Update webshop emails mono.
+	 *
+	 * @param handle      the handle
+	 * @param emailsModel the emails model
+	 * @return the mono
+	 */
+	public Mono<MutableHttpResponse<String>> updateWebshopEmails(String handle, EmailListModel emailsModel) {
+
+		return webshopemailsRepository.updateWebshopEmails(handle, emailsModel.getEmails())
+				.flatMap(response -> {
+					if (response) {
+						return Mono.just(HttpResponse.ok("Webshop emails updated."));
+					}
+					return Mono.empty();
+				}).switchIfEmpty(Mono.just(HttpResponse.notFound()))
+				.onErrorReturn(HttpResponse.serverError());
+	}
 }

@@ -1,5 +1,6 @@
 package com.optiply.endpoint.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
@@ -34,6 +35,7 @@ public class HandleModel {
 	 *
 	 * @return the boolean
 	 */
+	@JsonIgnore
 	public Boolean isValid() {
 		return !this.handle.isEmpty();
 	}

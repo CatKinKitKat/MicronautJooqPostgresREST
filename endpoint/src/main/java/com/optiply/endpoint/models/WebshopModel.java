@@ -1,6 +1,7 @@
 package com.optiply.endpoint.models;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
@@ -10,10 +11,11 @@ import com.optiply.infrastructure.data.models.tables.pojos.Webshop;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.apache.commons.validator.routines.EmailValidator;
 import org.apache.commons.validator.routines.UrlValidator;
 
-import java.util.Currency;
-import java.util.Set;
+import javax.validation.Valid;
+import java.util.List;
 
 /**
  * The type Webshop body model.
@@ -26,9 +28,7 @@ import java.util.Set;
 		"serviceLevelA",
 		"serviceLevelB",
 		"serviceLevelC",
-		"currency",
-		"runJobs",
-		"multiSupplier"
+		"emails"
 })
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonSerialize
@@ -68,20 +68,11 @@ public class WebshopModel {
 	@JsonProperty("serviceLevelC")
 	private Double serviceLevelC;
 	/**
-	 * The Currency.
+	 * The Emails.
 	 */
-	@JsonProperty("currency")
-	private String currency = "EUR";
-	/**
-	 * The Run jobs.
-	 */
-	@JsonProperty("runJobs")
-	private Boolean runJobs = true;
-	/**
-	 * The Multi supplier.
-	 */
-	@JsonProperty("multiSupplier")
-	private Boolean multiSupplier = false;
+	@JsonProperty("emails")
+	@Valid
+	private List<String> emails = null;
 
 	/**
 	 * Instantiates a new Webshop body model.
@@ -95,9 +86,6 @@ public class WebshopModel {
 		this.serviceLevelA = webshop.getA();
 		this.serviceLevelB = webshop.getB();
 		this.serviceLevelC = webshop.getC();
-		this.currency = webshop.getCurrency();
-		this.runJobs = webshop.getRunJobs();
-		this.multiSupplier = webshop.getMultiSupply();
 	}
 
 	/**
@@ -105,10 +93,11 @@ public class WebshopModel {
 	 *
 	 * @return the boolean
 	 */
+	@JsonIgnore
 	public Boolean isValid() {
 
 		return this.isValidUrl(this.url) &&
-				this.isValidCurrency(this.currency) &&
+				this.areValidEmailAddresses() &&
 				this.isValidServiceSum(this.serviceLevelA, this.serviceLevelB, this.serviceLevelC);
 	}
 
@@ -125,22 +114,6 @@ public class WebshopModel {
 	}
 
 	/**
-	 * Is valid currency boolean.
-	 *
-	 * @param currency the currency
-	 * @return the boolean
-	 */
-	private Boolean isValidCurrency(String currency) {
-		Set<Currency> currencies = Currency.getAvailableCurrencies();
-		for (Currency c : currencies) {
-			if (c.getCurrencyCode().equals(currency)) {
-				return true;
-			}
-		}
-		return false;
-	}
-
-	/**
 	 * Is valid service sum boolean.
 	 *
 	 * @param A the a
@@ -152,4 +125,29 @@ public class WebshopModel {
 		return A + B + C == 100;
 	}
 
+
+	/**
+	 * Is valid email address boolean.
+	 *
+	 * @param email the email
+	 * @return the boolean
+	 */
+	private Boolean isValidEmailAddress(String email) {
+		return EmailValidator.getInstance().isValid(email);
+	}
+
+	/**
+	 * Is valid boolean.
+	 *
+	 * @return the boolean
+	 */
+	private Boolean areValidEmailAddresses() {
+		Boolean valid = true;
+		for (String email : emails) {
+			if (!this.isValidEmailAddress(email)) {
+				valid = false;
+			}
+		}
+		return valid;
+	}
 }
