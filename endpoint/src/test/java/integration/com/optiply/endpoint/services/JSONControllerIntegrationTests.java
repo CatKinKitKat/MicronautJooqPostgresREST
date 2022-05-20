@@ -5,7 +5,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.optiply.endpoint.environment.TestEnvironment;
 import com.optiply.endpoint.models.WebshopFullModel;
 import com.optiply.endpoint.models.WebshopModel;
+import com.optiply.endpoint.models.WebshopSettingsModel;
 import io.micronaut.http.HttpRequest;
+import io.micronaut.http.HttpResponse;
 import io.micronaut.http.client.HttpClient;
 import io.micronaut.http.client.annotation.Client;
 import io.micronaut.test.extensions.junit5.annotation.MicronautTest;
@@ -40,6 +42,11 @@ public class JSONControllerIntegrationTests extends TestEnvironment {
 	@Inject
 	com.optiply.endpoint.controllers.JSONController JSONController;
 
+	/**
+	 * Test create webshop.
+	 *
+	 * @throws JsonProcessingException the json processing exception
+	 */
 	@Test
 	@Order(1)
 	void testCreateWebshop() throws JsonProcessingException {
@@ -66,6 +73,11 @@ public class JSONControllerIntegrationTests extends TestEnvironment {
 		Assertions.assertEquals("Webshop created.", result);
 	}
 
+	/**
+	 * Test create various webshops.
+	 *
+	 * @throws JsonProcessingException the json processing exception
+	 */
 	@Test
 	@Order(2)
 	void testCreateVariousWebshops() throws JsonProcessingException {
@@ -109,6 +121,11 @@ public class JSONControllerIntegrationTests extends TestEnvironment {
 		Assertions.assertEquals("Webshops created.", result);
 	}
 
+	/**
+	 * Test get webshop.
+	 *
+	 * @throws JsonProcessingException the json processing exception
+	 */
 	@Test
 	@Order(3)
 	void testGetWebshop() throws JsonProcessingException {
@@ -137,6 +154,11 @@ public class JSONControllerIntegrationTests extends TestEnvironment {
 	}
 
 
+	/**
+	 * Test find webshop by interest rate.
+	 *
+	 * @throws JsonProcessingException the json processing exception
+	 */
 	@Test
 	@Order(4)
 	void testFindWebshopByInterestRate() throws JsonProcessingException {
@@ -183,4 +205,237 @@ public class JSONControllerIntegrationTests extends TestEnvironment {
 		Assertions.assertEquals(body, result);
 
 	}
+
+	/**
+	 * Test get webshop settings.
+	 *
+	 * @throws JsonProcessingException the json processing exception
+	 */
+	@Test
+	@Order(5)
+	void testGetWebshopSettings() throws JsonProcessingException {
+
+		String body = """
+					{
+							"handle": "test2",
+							"currency": "EUR",
+							"runJobs": true,
+							"multiSupplier": false
+					}
+				"""
+				.replace(" ", "")
+				.replace("\t", "")
+				.replace("\n", "");
+
+		HttpRequest<WebshopSettingsModel> request = HttpRequest.GET("/test2/settings");
+		String result = client.toBlocking().retrieve(request, String.class);
+
+		Assertions.assertEquals(body, result);
+	}
+
+	/**
+	 * Test update webshop.
+	 *
+	 * @throws JsonProcessingException the json processing exception
+	 */
+	@Test
+	@Order(6)
+	void testUpdateWebshop() throws JsonProcessingException {
+
+		String urlBody = """
+				  {
+						"url": "https://www.test22.com"
+				  }
+				""";
+
+		HttpRequest<String> urlRequest = HttpRequest.PUT("/test2/url", urlBody);
+		String urlResult = client.toBlocking().retrieve(urlRequest, String.class);
+
+		Assertions.assertEquals("Webshop updated.", urlResult);
+
+		String serviceLevelsBody = """
+					{
+						"serviceLevelA": 33.3,
+						"serviceLevelB": 33.3,
+						"serviceLevelC": 33.4
+				  }
+				""";
+
+		HttpRequest<String> serviceLevelsRequest = HttpRequest.PUT("/test2/serviceLevels", serviceLevelsBody);
+		String serviceLevelsResult = client.toBlocking().retrieve(serviceLevelsRequest, String.class);
+
+		Assertions.assertEquals("Webshop updated.", serviceLevelsResult);
+
+		String interestRateBody = """
+				  {
+						"interestRate": 22
+				  }
+				""";
+
+		HttpRequest<String> interestRateRequest = HttpRequest.PUT("/test2/interestRate", interestRateBody);
+		String interestRateResult = client.toBlocking().retrieve(interestRateRequest, String.class);
+
+		Assertions.assertEquals("Webshop updated.", interestRateResult);
+
+		String emailsBody = """
+				  {
+					  "emails": [
+					  	"ti34@test22.pt",
+					  	"multiview@test22.pt"
+					  ]
+				   }
+				""";
+
+		HttpRequest<String> emailsRequest = HttpRequest.PUT("/test2/emails", emailsBody);
+		String emailsResult = client.toBlocking().retrieve(emailsRequest, String.class);
+
+		Assertions.assertEquals("Webshop emails updated.", emailsResult);
+
+		String handleBody = """
+				  {
+						"handle": "test22"
+				  }
+				""";
+
+		HttpRequest<String> handleRequest = HttpRequest.PUT("/test2/handle", handleBody);
+		String handleResult = client.toBlocking().retrieve(handleRequest, String.class);
+
+		Assertions.assertEquals("Webshop updated.", handleResult);
+
+		String body = """
+					{
+					    "handle": "test22",
+					    "url": "https://www.test22.com",
+						  "interestRate": 22,
+					    "serviceLevelA": 33.3,
+					    "serviceLevelB": 33.3,
+					    "serviceLevelC": 33.4,
+					    "emails": [
+					  	  "ti34@test22.pt",
+					  	  "multiview@test22.pt"
+					    ]
+					}
+				"""
+				.replace(" ", "")
+				.replace("\t", "")
+				.replace("\n", "");
+
+		HttpRequest<WebshopModel> request = HttpRequest.GET("/test22");
+		String result = client.toBlocking().retrieve(request, String.class);
+
+		Assertions.assertEquals(body, result);
+
+	}
+
+	/**
+	 * Test update webshop settings.
+	 *
+	 * @throws JsonProcessingException the json processing exception
+	 */
+	@Test
+	@Order(7)
+	void testUpdateWebshopSettings() throws JsonProcessingException {
+
+		String body = """
+					{
+							"currency": "USD",
+							"runJobs": true,
+							"multiSupplier": true
+					}
+				""";
+
+		HttpRequest<WebshopSettingsModel> request = HttpRequest.PUT("/test22/settings", objectMapper.readValue(body, WebshopSettingsModel.class));
+		String result = client.toBlocking().retrieve(request, String.class);
+
+		Assertions.assertEquals("Webshop updated.", result);
+
+		HttpRequest<WebshopSettingsModel> request2 = HttpRequest.GET("/test22/settings");
+		String result2 = client.toBlocking().retrieve(request2, String.class);
+
+		body = body
+				.replace(" ", "")
+				.replace("\t", "")
+				.replace("\n", "")
+				.replace("{", "{\"handle\":\"test22\",");
+
+		Assertions.assertEquals(body, result2);
+	}
+
+	/**
+	 * Test full webshop update.
+	 *
+	 * @throws JsonProcessingException the json processing exception
+	 */
+	@Test
+	@Order(8)
+	void testFullWebshopUpdate() throws JsonProcessingException {
+
+		String fullBody = """
+					{
+					    "handle": "test2",
+					    "url": "https://www.test2.com",
+						  "interestRate": 20,
+					    "serviceLevelA": 25.0,
+					    "serviceLevelB": 25.0,
+					    "serviceLevelC": 50.0,
+					    "currency": "EUR",
+						  "runJobs": true,
+						  "multiSupplier": false,
+					    "emails": [
+					    	"ti84plus@test2.com",
+					    	"zelenski@test2.com",
+					    	"putin@test2.com"
+					    ]
+					}
+				""";
+
+		HttpRequest<WebshopFullModel> request = HttpRequest.PUT("/test22", objectMapper.readValue(fullBody, WebshopFullModel.class));
+		String result = client.toBlocking().retrieve(request, String.class);
+
+		Assertions.assertEquals("Webshop updated.", result);
+
+		HttpRequest<WebshopModel> request2 = HttpRequest.GET("/test2");
+		String result2 = client.toBlocking().retrieve(request2, String.class);
+
+		fullBody = fullBody
+				.replace(" ", "")
+				.replace("\t", "")
+				.replace("\n", "")
+				.replace("\"currency\":\"EUR\",\"runJobs\":true,\"multiSupplier\":false,", "");
+
+		Assertions.assertEquals(fullBody, result2);
+
+		HttpRequest<WebshopSettingsModel> request3 = HttpRequest.GET("/test2/settings");
+		String result3 = client.toBlocking().retrieve(request3, String.class);
+
+		String settingsBody = """
+					{
+							"handle": "test2",
+							"currency": "EUR",
+							"runJobs": true,
+							"multiSupplier": false
+					}
+				"""
+				.replace(" ", "")
+				.replace("\t", "")
+				.replace("\n", "");
+
+		Assertions.assertEquals(settingsBody, result3);
+
+	}
+
+	/**
+	 * Test delete webshop.
+	 */
+	@Test
+	@Order(9)
+	void testDeleteWebshop() {
+
+		HttpRequest<Boolean> request = HttpRequest.DELETE("/test2");
+		HttpResponse<Object> result = client.toBlocking().exchange(request);
+
+		Assertions.assertNull(result.body());
+
+	}
+
 }

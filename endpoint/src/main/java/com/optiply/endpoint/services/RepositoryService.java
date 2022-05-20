@@ -196,7 +196,15 @@ public class RepositoryService {
 						webshopModel.getRunJobs(), webshopModel.getMultiSupplier()
 				).flatMap(response -> {
 					if (response) {
-						return Mono.just(HttpResponse.ok("Webshop updated."));
+						return webshopemailsRepository.deleteAll(webshopModel.getHandle())
+								.flatMap(deleteResponse ->
+										webshopemailsRepository.createVarious(webshopModel.getHandle(), webshopModel.getEmails())
+												.flatMap(emailsResponse -> {
+													if (emailsResponse) {
+														return Mono.just(HttpResponse.ok("Webshop updated."));
+													}
+													return Mono.just(HttpResponse.ok("Webshop updated without emails."));
+												}));
 					}
 					return Mono.empty();
 				}).switchIfEmpty(Mono.just(HttpResponse.notFound()))
