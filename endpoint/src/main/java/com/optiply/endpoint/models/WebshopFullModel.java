@@ -7,7 +7,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.optiply.infrastructure.data.models.tables.pojos.Webshop;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -93,23 +92,6 @@ public class WebshopFullModel {
 	@JsonProperty("emails")
 	@Valid
 	private List<String> emails = null;
-
-	/**
-	 * Instantiates a new Webshop body model.
-	 *
-	 * @param webshop the webshop
-	 */
-	public WebshopFullModel(Webshop webshop) {
-		this.handle = webshop.getHandle();
-		this.url = webshop.getUrl();
-		this.interestRate = webshop.getInterestRate();
-		this.serviceLevelA = webshop.getA();
-		this.serviceLevelB = webshop.getB();
-		this.serviceLevelC = webshop.getC();
-		this.currency = webshop.getCurrency();
-		this.runJobs = webshop.getRunJobs();
-		this.multiSupplier = webshop.getMultiSupply();
-	}
 
 	/**
 	 * Is valid boolean.

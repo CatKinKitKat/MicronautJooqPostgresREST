@@ -1,4 +1,4 @@
-package com.optiply.endpoint.services;
+package com.optiply.endpoint.controllers;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -21,6 +21,7 @@ import java.util.List;
  */
 @MicronautTest
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class JSONControllerIntegrationTests extends TestEnvironment {
 
 	/**
@@ -156,12 +157,10 @@ public class JSONControllerIntegrationTests extends TestEnvironment {
 
 	/**
 	 * Test find webshop by interest rate.
-	 *
-	 * @throws JsonProcessingException the json processing exception
 	 */
 	@Test
 	@Order(4)
-	void testFindWebshopByInterestRate() throws JsonProcessingException {
+	void testFindWebshopByInterestRate() {
 
 		String body = """
 					[
@@ -208,12 +207,10 @@ public class JSONControllerIntegrationTests extends TestEnvironment {
 
 	/**
 	 * Test get webshop settings.
-	 *
-	 * @throws JsonProcessingException the json processing exception
 	 */
 	@Test
 	@Order(5)
-	void testGetWebshopSettings() throws JsonProcessingException {
+	void testGetWebshopSettings() {
 
 		String body = """
 					{
@@ -235,12 +232,10 @@ public class JSONControllerIntegrationTests extends TestEnvironment {
 
 	/**
 	 * Test update webshop.
-	 *
-	 * @throws JsonProcessingException the json processing exception
 	 */
 	@Test
 	@Order(6)
-	void testUpdateWebshop() throws JsonProcessingException {
+	void testUpdateWebshop() {
 
 		String urlBody = """
 				  {
@@ -373,8 +368,8 @@ public class JSONControllerIntegrationTests extends TestEnvironment {
 		String fullBody = """
 					{
 					    "handle": "test2",
-					    "url": "https://www.test2.com",
-						  "interestRate": 20,
+					    "url": "https://test2.com",
+						  "interestRate": 24,
 					    "serviceLevelA": 25.0,
 					    "serviceLevelB": 25.0,
 					    "serviceLevelC": 50.0,
@@ -424,11 +419,191 @@ public class JSONControllerIntegrationTests extends TestEnvironment {
 
 	}
 
+	@Test
+	@Order(9)
+	void testGetSortedByIntRateDesc() {
+
+		String body = """
+					[
+						{
+							"handle": "test3",
+							"url": "https://www.test3.com",
+							"interestRate": 25,
+							"serviceLevelA": 20.0,
+							"serviceLevelB": 35.0,
+							"serviceLevelC": 45.0,
+							"emails": [
+								"beau@test3.com",
+								"fifthcolumn@test3.com"
+							]
+						},
+					  {
+					  	"handle": "test2",
+					  	"url": "https://test2.com",
+							"interestRate": 24,
+					  	"serviceLevelA": 25.0,
+					  	"serviceLevelB": 25.0,
+					  	"serviceLevelC": 50.0,
+					  	"emails": [
+					  		"ti84plus@test2.com",
+					  		"zelenski@test2.com",
+					  		"putin@test2.com"
+					  	]
+					  },
+				    {
+					  	"handle": "test1",
+					  	"url": "https://www.test1.com",
+							"interestRate": 20,
+					  	"serviceLevelA": 33.0,
+					  	"serviceLevelB": 33.0,
+					  	"serviceLevelC": 34.0,
+					  	"emails": [
+					  		"test@test1.com",
+					  		"tester@test1.com"
+					  	]
+					  }
+					]
+				"""
+				.replace(" ", "")
+				.replace("\t", "")
+				.replace("\n", "");
+
+		// < = %3C
+		// > = %3E
+
+		HttpRequest<List<WebshopModel>> request = HttpRequest.GET("/find/interestRate%3E10?sort=interestRate&order=desc");
+		String result = client.toBlocking().retrieve(request, String.class);
+
+		Assertions.assertEquals(body, result);
+
+	}
+
+	@Test
+	@Order(10)
+	void testGetSortedByUrlAsc() {
+
+		String body = """
+					[
+						
+					  {
+					  	"handle": "test2",
+					  	"url": "https://test2.com",
+							"interestRate": 24,
+					  	"serviceLevelA": 25.0,
+					  	"serviceLevelB": 25.0,
+					  	"serviceLevelC": 50.0,
+					  	"emails": [
+					  		"ti84plus@test2.com",
+					  		"zelenski@test2.com",
+					  		"putin@test2.com"
+					  	]
+					  },
+						{
+					  	"handle": "test1",
+					  	"url": "https://www.test1.com",
+							"interestRate": 20,
+					  	"serviceLevelA": 33.0,
+					  	"serviceLevelB": 33.0,
+					  	"serviceLevelC": 34.0,
+					  	"emails": [
+					  		"test@test1.com",
+					  		"tester@test1.com"
+					  	]
+					  },
+						{
+							"handle": "test3",
+							"url": "https://www.test3.com",
+							"interestRate": 25,
+							"serviceLevelA": 20.0,
+							"serviceLevelB": 35.0,
+							"serviceLevelC": 45.0,
+							"emails": [
+								"beau@test3.com",
+								"fifthcolumn@test3.com"
+							]
+						}
+					]
+				"""
+				.replace(" ", "")
+				.replace("\t", "")
+				.replace("\n", "");
+
+		// < = %3C
+		// > = %3E
+
+		HttpRequest<List<WebshopModel>> request = HttpRequest.GET("/find/interestRate%3E10?sort=url&order=asc");
+		String result = client.toBlocking().retrieve(request, String.class);
+
+		Assertions.assertEquals(body, result);
+
+	}
+
+	@Test
+	@Order(11)
+	void testGetSortedByHandleDesc() {
+
+
+		String body = """
+					[
+						{
+							"handle": "test3",
+							"url": "https://www.test3.com",
+							"interestRate": 25,
+							"serviceLevelA": 20.0,
+							"serviceLevelB": 35.0,
+							"serviceLevelC": 45.0,
+							"emails": [
+								"beau@test3.com",
+								"fifthcolumn@test3.com"
+							]
+						},
+					  {
+					  	"handle": "test2",
+					  	"url": "https://test2.com",
+							"interestRate": 24,
+					  	"serviceLevelA": 25.0,
+					  	"serviceLevelB": 25.0,
+					  	"serviceLevelC": 50.0,
+					  	"emails": [
+					  		"ti84plus@test2.com",
+					  		"zelenski@test2.com",
+					  		"putin@test2.com"
+					  	]
+					  },
+				    {
+					  	"handle": "test1",
+					  	"url": "https://www.test1.com",
+							"interestRate": 20,
+					  	"serviceLevelA": 33.0,
+					  	"serviceLevelB": 33.0,
+					  	"serviceLevelC": 34.0,
+					  	"emails": [
+					  		"test@test1.com",
+					  		"tester@test1.com"
+					  	]
+					  }
+					]
+				"""
+				.replace(" ", "")
+				.replace("\t", "")
+				.replace("\n", "");
+
+		// < = %3C
+		// > = %3E
+
+		HttpRequest<List<WebshopModel>> request = HttpRequest.GET("/find/interestRate%3E10?sort=handle&order=desc");
+		String result = client.toBlocking().retrieve(request, String.class);
+
+		Assertions.assertEquals(body, result);
+
+	}
+
+
 	/**
 	 * Test delete webshop.
 	 */
 	@Test
-	@Order(9)
+	@Order(12)
 	void testDeleteWebshop() {
 
 		HttpRequest<Boolean> request = HttpRequest.DELETE("/test2");

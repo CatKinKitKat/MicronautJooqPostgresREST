@@ -25,24 +25,24 @@ public class JSONController extends BaseController {
 	 * Gets webshops.
 	 *
 	 * @param q the q
-	 * @param s the s
-	 * @param o the o
+	 * @param sort the s
+	 * @param order the o
 	 * @return the webshops
 	 */
 	@Get(value = "/find/{q*}", produces = "application/json", consumes = "application/json")
 	public Mono<MutableHttpResponse<List<WebshopModel>>> getWebshops(String[] q,
-	                                                                     @Nullable @QueryValue String s,
-	                                                                     @Nullable @QueryValue String o) {
+	                                                                     @Nullable @QueryValue String sort,
+	                                                                     @Nullable @QueryValue String order) {
 
-		if (s == null || s.isEmpty()) {
-			s = "handle";
+		if (sort == null || sort.isEmpty()) {
+			sort = "handle";
 		}
 
-		if (o == null || o.isEmpty()) {
-			o = "asc";
+		if (order == null || order.isEmpty()) {
+			order = "asc";
 		}
 
-		SortField<?> sortField = sortParserWebshop(s, o);
+		SortField<?> sortField = sortParserWebshop(sort, order);
 		Condition condition = parseParamsWebshop(q);
 
 

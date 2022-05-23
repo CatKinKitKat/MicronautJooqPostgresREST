@@ -39,7 +39,7 @@ public class RepositoryService {
 	 */
 	public Mono<MutableHttpResponse<List<WebshopModel>>> getWebshops(Condition condition, SortField<?> sortField) {
 
-		return webshopRepository.findVarious(condition, sortField).flatMap(this::getWebshopPriv)
+		return webshopRepository.findVarious(condition, sortField).flatMapSequential(this::getWebshopPriv)
 				.collectList().flatMap(webshops -> Mono.just(HttpResponse.ok(webshops)))
 				.switchIfEmpty(Mono.just(HttpResponse.notFound())).onErrorReturn(HttpResponse.serverError());
 

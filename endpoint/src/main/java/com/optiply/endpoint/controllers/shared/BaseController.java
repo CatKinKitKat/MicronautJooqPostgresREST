@@ -4,8 +4,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.optiply.endpoint.controllers.shared.interfaces.IBaseController;
 import com.optiply.endpoint.services.RepositoryService;
 import com.optiply.infrastructure.data.models.Tables;
-import com.optiply.infrastructure.data.repositories.WebshopRepository;
-import com.optiply.infrastructure.data.repositories.WebshopemailsRepository;
 import jakarta.inject.Inject;
 import org.jooq.Condition;
 import org.jooq.SortField;
@@ -70,13 +68,6 @@ public abstract class BaseController implements IBaseController {
 						filterList.add(Tables.WEBSHOP.HANDLE.likeIgnoreCase(split[1]));
 					}
 				}
-				case "url" -> {
-					if (operation.equals(":")) {
-						filterList.add(Tables.WEBSHOP.URL.equalIgnoreCase(split[1]));
-					} else if (operation.equals("%")) {
-						filterList.add(Tables.WEBSHOP.URL.likeIgnoreCase(split[1]));
-					}
-				}
 				case "interestRate" -> {
 					if (operation.equals(">")) {
 						filterList.add(Tables.WEBSHOP.INTEREST_RATE.greaterThan(Short.parseShort(split[1])));
@@ -123,47 +114,29 @@ public abstract class BaseController implements IBaseController {
 			case "handle" -> {
 				if (order.equals("asc")) {
 					return Tables.WEBSHOP.HANDLE.asc();
+				} else if (order.equals("desc")) {
+					return Tables.WEBSHOP.HANDLE.desc();
 				}
-				return Tables.WEBSHOP.HANDLE.desc();
+				return Tables.WEBSHOP.HANDLE.asc();
 			}
 			case "url" -> {
 				if (order.equals("asc")) {
 					return Tables.WEBSHOP.URL.asc();
+				} else if (order.equals("desc")) {
+					return Tables.WEBSHOP.URL.desc();
 				}
-				return Tables.WEBSHOP.URL.desc();
-			}
-			case "currency" -> {
-				if (order.equals("asc")) {
-					return Tables.WEBSHOP.CURRENCY.asc();
-				}
-				return Tables.WEBSHOP.CURRENCY.desc();
-			}
-			case "a" -> {
-				if (order.equals("asc")) {
-					return Tables.WEBSHOP.A.asc();
-				}
-				return Tables.WEBSHOP.A.desc();
-			}
-			case "b" -> {
-				if (order.equals("asc")) {
-					return Tables.WEBSHOP.B.asc();
-				}
-				return Tables.WEBSHOP.B.desc();
-			}
-			case "c" -> {
-				if (order.equals("asc")) {
-					return Tables.WEBSHOP.C.asc();
-				}
-				return Tables.WEBSHOP.C.desc();
+				return Tables.WEBSHOP.URL.asc();
 			}
 			case "interestrate" -> {
 				if (order.equals("asc")) {
 					return Tables.WEBSHOP.INTEREST_RATE.asc();
+				} else if (order.equals("desc")) {
+					return Tables.WEBSHOP.INTEREST_RATE.desc();
 				}
-				return Tables.WEBSHOP.INTEREST_RATE.desc();
+				return Tables.WEBSHOP.INTEREST_RATE.asc();
 			}
+			// To add more later
 		}
-
 
 		return Tables.WEBSHOP.HANDLE.asc();
 	}

@@ -128,7 +128,10 @@ jacocoTestReport {
 	}
 	afterEvaluate {
 		classDirectories.setFrom(files(classDirectories.files.collect {
-			fileTree(dir: it, exclude: 'build/generated/main/grpc/**')
+			fileTree(dir: it, exclude: [
+					'build/generated/main/grpc/**',
+					'src/test/java/shared/**',
+			])
 		}))
 	}
 }
