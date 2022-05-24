@@ -16,10 +16,7 @@ import java.util.Currency;
 import java.util.Set;
 
 /**
- * The JSON representation of a certain Webshop's settings.
- * Should represent the settings of a certain Webshop without it's own data.
- *
- * @author G. Amaro
+ * JSON Model for the Webshop's Settings
  */
 @Data
 @JsonPropertyOrder({

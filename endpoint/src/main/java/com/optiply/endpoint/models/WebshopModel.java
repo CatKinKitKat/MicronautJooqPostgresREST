@@ -18,7 +18,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 /**
- * The type Webshop body model.
+ * JSON Model for the Webshop
  */
 @Data
 @JsonPropertyOrder({
@@ -53,17 +53,17 @@ public class WebshopModel {
 	@JsonProperty("interestRate")
 	private Short interestRate = 20;
 	/**
-	 * The A.
+	 * The Servicel Level A Percentage.
 	 */
 	@JsonProperty("serviceLevelA")
 	private Double serviceLevelA;
 	/**
-	 * The B.
+	 * The Servicel Level B Percentage.
 	 */
 	@JsonProperty("serviceLevelB")
 	private Double serviceLevelB;
 	/**
-	 * The C.
+	 * The Servicel Level C Percentage.
 	 */
 	@JsonProperty("serviceLevelC")
 	private Double serviceLevelC;
@@ -89,9 +89,9 @@ public class WebshopModel {
 	}
 
 	/**
-	 * Is valid boolean.
+	 * Run validation checks..
 	 *
-	 * @return the boolean
+	 * @return is valid?
 	 */
 	@JsonIgnore
 	public Boolean isValid() {

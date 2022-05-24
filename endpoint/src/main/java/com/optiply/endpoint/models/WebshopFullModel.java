@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * The type Webshop body model.
+ * JSON Model for the Webshop + Settings
  */
 @Data
 @JsonPropertyOrder({
@@ -57,17 +57,17 @@ public class WebshopFullModel {
 	@JsonProperty("interestRate")
 	private Short interestRate = 20;
 	/**
-	 * The A.
+	 * The Servicel Level A Percentage.
 	 */
 	@JsonProperty("serviceLevelA")
 	private Double serviceLevelA;
 	/**
-	 * The B.
+	 * The Servicel Level B Percentage.
 	 */
 	@JsonProperty("serviceLevelB")
 	private Double serviceLevelB;
 	/**
-	 * The C.
+	 * The Servicel Level C Percentage.
 	 */
 	@JsonProperty("serviceLevelC")
 	private Double serviceLevelC;
@@ -94,9 +94,9 @@ public class WebshopFullModel {
 	private List<String> emails = null;
 
 	/**
-	 * Is valid boolean.
+	 * Run validation checks..
 	 *
-	 * @return the boolean
+	 * @return is valid?
 	 */
 	@JsonIgnore
 	public Boolean isValid() {
@@ -108,7 +108,7 @@ public class WebshopFullModel {
 	}
 
 	/**
-	 * Is valid url boolean.
+	 * Is valid url?
 	 *
 	 * @param url the url
 	 * @return the boolean
@@ -120,7 +120,7 @@ public class WebshopFullModel {
 	}
 
 	/**
-	 * Is valid currency boolean.
+	 * Is valid currency?
 	 *
 	 * @param currency the currency
 	 * @return the boolean
@@ -136,7 +136,7 @@ public class WebshopFullModel {
 	}
 
 	/**
-	 * Is valid service sum boolean.
+	 * Is valid service level sum? Must be 100%
 	 *
 	 * @param A the a
 	 * @param B the b
@@ -149,7 +149,7 @@ public class WebshopFullModel {
 
 
 	/**
-	 * Is valid email address boolean.
+	 * Is valid email?
 	 *
 	 * @param email the email
 	 * @return the boolean
@@ -159,7 +159,7 @@ public class WebshopFullModel {
 	}
 
 	/**
-	 * Is valid boolean.
+	 * Are all email addresses valid?
 	 *
 	 * @return the boolean
 	 */

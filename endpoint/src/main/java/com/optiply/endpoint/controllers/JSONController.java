@@ -15,24 +15,24 @@ import reactor.core.publisher.Mono;
 import java.util.List;
 
 /**
- * The type Endpoint controller.
+ * Controller for the JSON body endpoints. Uses Jackson to parse the JSON body.
  */
 @Validated
 @Controller("/")
 public class JSONController extends BaseController {
 
 	/**
-	 * Gets webshops.
+	 * Finds a list of webshops via a query string, and sorts them.
 	 *
-	 * @param q the q
-	 * @param sort the s
+	 * @param q     the q
+	 * @param sort  the s
 	 * @param order the o
 	 * @return the webshops
 	 */
 	@Get(value = "/find/{q*}", produces = "application/json", consumes = "application/json")
 	public Mono<MutableHttpResponse<List<WebshopModel>>> getWebshops(String[] q,
-	                                                                     @Nullable @QueryValue String sort,
-	                                                                     @Nullable @QueryValue String order) {
+	                                                                 @Nullable @QueryValue String sort,
+	                                                                 @Nullable @QueryValue String order) {
 
 		if (sort == null || sort.isEmpty()) {
 			sort = "handle";
@@ -77,7 +77,7 @@ public class JSONController extends BaseController {
 	}
 
 	/**
-	 * Create webshop mono.
+	 * Create a webshop.
 	 *
 	 * @param webshopModel the webshop model
 	 * @return the mono
@@ -89,7 +89,7 @@ public class JSONController extends BaseController {
 	}
 
 	/**
-	 * Create webshop mono.
+	 * Create various webshops.
 	 *
 	 * @param webshopModels the webshop models
 	 * @return the mono
@@ -101,7 +101,7 @@ public class JSONController extends BaseController {
 	}
 
 	/**
-	 * Delete webshop mono.
+	 * Delete a webshop.
 	 *
 	 * @param handle the handle
 	 * @return the mono
@@ -114,7 +114,7 @@ public class JSONController extends BaseController {
 
 
 	/**
-	 * Update webshop mono.
+	 * Fully update a webshop.
 	 *
 	 * @param handle       the handle
 	 * @param webshopModel the webshop model
@@ -127,7 +127,7 @@ public class JSONController extends BaseController {
 	}
 
 	/**
-	 * Update webshop mono.
+	 * Update a webshop's handle.
 	 *
 	 * @param handle      the handle
 	 * @param handleModel the handle model
@@ -144,7 +144,7 @@ public class JSONController extends BaseController {
 	}
 
 	/**
-	 * Update webshop mono.
+	 * Update a webshop's url.
 	 *
 	 * @param handle   the handle
 	 * @param urlModel the url model
@@ -161,7 +161,7 @@ public class JSONController extends BaseController {
 	}
 
 	/**
-	 * Update webshop mono.
+	 * Update a webshop's interest rate.
 	 *
 	 * @param handle            the handle
 	 * @param interestRateModel the interest rate model
@@ -178,7 +178,7 @@ public class JSONController extends BaseController {
 	}
 
 	/**
-	 * Update webshop mono.
+	 * Update a webshop's service levels.
 	 *
 	 * @param handle             the handle
 	 * @param serviceLevelsModel the webshop service levels model
@@ -195,7 +195,7 @@ public class JSONController extends BaseController {
 	}
 
 	/**
-	 * Update webshop mono.
+	 * Update a webshop's settings.
 	 *
 	 * @param handle        the handle
 	 * @param settingsModel the webshop settings model
@@ -212,7 +212,7 @@ public class JSONController extends BaseController {
 	}
 
 	/**
-	 * Update webshop emails mono.
+	 * Update a webshop's emails.
 	 *
 	 * @param handle      the handle
 	 * @param emailsModel the emails model

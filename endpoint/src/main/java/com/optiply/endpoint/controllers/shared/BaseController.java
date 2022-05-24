@@ -14,7 +14,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * The type Base controller.
+ * Base Controller implementation. As an abstract class so that it can be extended by other controllers.
  */
 public abstract class BaseController implements IBaseController {
 
@@ -24,18 +24,12 @@ public abstract class BaseController implements IBaseController {
 	@Inject
 	public RepositoryService repositoryService;
 	/**
-	 * The Object mapper.
+	 * Jackson object mapper.
 	 */
 	@Inject
 	public ObjectMapper objectMapper;
 
 
-	/**
-	 * Parse params webshop condition.
-	 *
-	 * @param params the params
-	 * @return the condition
-	 */
 	@Override
 	public Condition parseParamsWebshop(String... params) {
 
@@ -89,13 +83,6 @@ public abstract class BaseController implements IBaseController {
 		return condition;
 	}
 
-	/**
-	 * Sort parser webshop sort field.
-	 *
-	 * @param sort  the sort
-	 * @param order the order
-	 * @return the sort field
-	 */
 	@Override
 	public SortField<?> sortParserWebshop(String sort, String order) {
 

@@ -9,7 +9,7 @@ import org.junit.jupiter.api.TestInstance;
 import java.util.List;
 
 /**
- * The type Webshop models test.
+ * Model unit tests.
  */
 @MicronautTest
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
@@ -80,6 +80,9 @@ class WebshopFullModelsUnitTests extends TestEnvironment {
 		Assertions.assertEquals(test3, test2);
 	}
 
+	/**
+	 * Test webshop full model.
+	 */
 	@Test
 	void testWebshopFullModel() {
 
@@ -124,6 +127,9 @@ class WebshopFullModelsUnitTests extends TestEnvironment {
 
 	}
 
+	/**
+	 * Test small models.
+	 */
 	@Test
 	void testSmallModels() {
 
@@ -133,43 +139,37 @@ class WebshopFullModelsUnitTests extends TestEnvironment {
 		Assertions.assertFalse(test1.isValid());
 		Assertions.assertTrue(test2.isValid());
 
-		EmailModel test3 = new EmailModel("test1@test");
-		EmailModel test4 = new EmailModel("test1@test.com");
+		HandleModel test3 = new HandleModel("");
+		HandleModel test4 = new HandleModel("test");
 
 		Assertions.assertFalse(test3.isValid());
 		Assertions.assertTrue(test4.isValid());
 
-		HandleModel test5 = new HandleModel("");
-		HandleModel test6 = new HandleModel("test");
+		InterestRateModel test5 = new InterestRateModel((short) -1);
+		InterestRateModel test6 = new InterestRateModel((short) 1);
 
 		Assertions.assertFalse(test5.isValid());
 		Assertions.assertTrue(test6.isValid());
 
-		InterestRateModel test7 = new InterestRateModel((short) -1);
-		InterestRateModel test8 = new InterestRateModel((short) 1);
+		ServiceLevelsModel test7 = new ServiceLevelsModel(10.0, 10.0, 10.0);
+		ServiceLevelsModel test8 = new ServiceLevelsModel(25.0, 30.0, 45.0);
 
 		Assertions.assertFalse(test7.isValid());
 		Assertions.assertTrue(test8.isValid());
 
-		ServiceLevelsModel test9 = new ServiceLevelsModel(10.0, 10.0, 10.0);
-		ServiceLevelsModel test10 = new ServiceLevelsModel(25.0, 30.0, 45.0);
+		SettingsModel test9 = new SettingsModel("EURO", true, true);
+		SettingsModel test10 = new SettingsModel("EUR", true, true);
 
 		Assertions.assertFalse(test9.isValid());
 		Assertions.assertTrue(test10.isValid());
 
-		SettingsModel test11 = new SettingsModel("EURO", true, true);
-		SettingsModel test12 = new SettingsModel("EUR", true, true);
+		UrlModel test11 = new UrlModel("test.com");
+		UrlModel test12 = new UrlModel("http://test.com");
+		UrlModel test13 = new UrlModel("http://www.test.com/");
 
 		Assertions.assertFalse(test11.isValid());
 		Assertions.assertTrue(test12.isValid());
-
-		UrlModel test13 = new UrlModel("test.com");
-		UrlModel test14 = new UrlModel("http://test.com");
-		UrlModel test15 = new UrlModel("http://www.test.com/");
-
-		Assertions.assertFalse(test13.isValid());
-		Assertions.assertTrue(test14.isValid());
-		Assertions.assertTrue(test15.isValid());
+		Assertions.assertTrue(test13.isValid());
 
 	}
 

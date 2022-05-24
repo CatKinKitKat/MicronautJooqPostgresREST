@@ -6,6 +6,12 @@ package com.optiply.infrastructure.data.support.sql;
  * Used to equate the result of a transaction to a specific enum value
  */
 public enum QueryResult {
+	/**
+	 * Failed query result.
+	 */
 	FAILED,
+	/**
+	 * Success query result.
+	 */
 	SUCCESS
 }

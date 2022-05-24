@@ -14,7 +14,7 @@ import reactor.core.scheduler.Schedulers;
 import java.util.List;
 
 /**
- * The type Repository service.
+ * Repository service (middleware to remove business logic from controller).
  */
 public class RepositoryService {
 
@@ -31,23 +31,29 @@ public class RepositoryService {
 	public WebshopemailsRepository webshopemailsRepository;
 
 	/**
-	 * Gets webshops.
+	 * Finds webshops via a conditionally defined query sorted by a defined sort field.
 	 *
 	 * @param condition the condition
-	 * @param sortField the sort fields
+	 * @param sortField the sort field
 	 * @return the webshops
 	 */
 	public Mono<MutableHttpResponse<List<WebshopModel>>> getWebshops(Condition condition, SortField<?> sortField) {
 
 		return webshopRepository.findVarious(condition, sortField).flatMapSequential(this::getWebshopPriv)
-				.collectList().flatMap(webshops -> Mono.just(HttpResponse.ok(webshops)))
-				.switchIfEmpty(Mono.just(HttpResponse.notFound())).onErrorReturn(HttpResponse.serverError());
+				.collectList().flatMap(webshops -> {
+					if (webshops.isEmpty()) {
+						return Mono.empty();
+					}
+					return Mono.just(HttpResponse.ok(webshops));
+				}).switchIfEmpty(Mono.just(HttpResponse.notFound()))
+				.onErrorReturn(HttpResponse.serverError());
 
 
 	}
 
 	/**
-	 * Gets webshop.
+	 * Helper method for getWebshops(), works exaclty like the getWebshop() method, but without the
+	 * HttpResponse wrapping.
 	 *
 	 * @param handle the handle
 	 * @return the webshop
@@ -63,7 +69,7 @@ public class RepositoryService {
 	}
 
 	/**
-	 * Gets webshop.
+	 * Gets webshop by handle.
 	 *
 	 * @param handle the handle
 	 * @return the webshop
@@ -82,7 +88,7 @@ public class RepositoryService {
 	}
 
 	/**
-	 * Gets webshop settings.
+	 * Gets webshop settings by handle.
 	 *
 	 * @param handle the handle
 	 * @return the webshop settings
@@ -100,7 +106,7 @@ public class RepositoryService {
 	}
 
 	/**
-	 * Create webshop mono.
+	 * Creates a single webshop via a webshop full model (webshop model + settings).
 	 *
 	 * @param webshopModel the webshop model
 	 * @return the mono
@@ -132,7 +138,7 @@ public class RepositoryService {
 	}
 
 	/**
-	 * Create webshops mono.
+	 * Creates various webshops via a list of webshop full models (webshop model + settings).
 	 *
 	 * @param webshopModels the webshop models
 	 * @return the mono
@@ -146,23 +152,27 @@ public class RepositoryService {
 		}
 
 		return Mono.just(webshopModels).publishOn(Schedulers.boundedElastic()).flatMap(webshops -> {
-			for (WebshopFullModel webshopModel : webshops) {
-				webshopRepository.create(
-								webshopModel.getHandle(), webshopModel.getUrl(),
-								webshopModel.getServiceLevelA(), webshopModel.getServiceLevelB(), webshopModel.getServiceLevelC(),
-								webshopModel.getInterestRate(), webshopModel.getCurrency(),
-								webshopModel.getRunJobs(), webshopModel.getMultiSupplier()
-						).subscribeOn(Schedulers.boundedElastic())
-						.then(webshopemailsRepository.createVarious(webshopModel.getHandle(), webshopModel.getEmails()))
-						.subscribe();
-			}
-			return Mono.just(HttpResponse.ok("Webshops created."));
-		}).onErrorReturn(HttpResponse.serverError());
+					if (webshops.isEmpty()) {
+						return Mono.empty();
+					}
+					for (WebshopFullModel webshopModel : webshops) {
+						webshopRepository.create(
+										webshopModel.getHandle(), webshopModel.getUrl(),
+										webshopModel.getServiceLevelA(), webshopModel.getServiceLevelB(), webshopModel.getServiceLevelC(),
+										webshopModel.getInterestRate(), webshopModel.getCurrency(),
+										webshopModel.getRunJobs(), webshopModel.getMultiSupplier()
+								).subscribeOn(Schedulers.boundedElastic())
+								.then(webshopemailsRepository.createVarious(webshopModel.getHandle(), webshopModel.getEmails()))
+								.subscribe();
+					}
+					return Mono.just(HttpResponse.ok("Webshops created."));
+				}).switchIfEmpty(Mono.just(HttpResponse.badRequest()))
+				.onErrorReturn(HttpResponse.serverError());
 
 	}
 
 	/**
-	 * Delete webshop mono.
+	 * Deletes a single webshop by handle.
 	 *
 	 * @param handle the handle
 	 * @return the mono
@@ -180,7 +190,7 @@ public class RepositoryService {
 
 
 	/**
-	 * Update webshop mono.
+	 * Fully updates a single webshop by getting the webshop full model.
 	 *
 	 * @param handle       the handle
 	 * @param webshopModel the webshop model
@@ -212,7 +222,7 @@ public class RepositoryService {
 	}
 
 	/**
-	 * Update webshop handle mono.
+	 * Updates a single webshop's handle.
 	 *
 	 * @param handle    the handle
 	 * @param newHandle the new handle
@@ -231,7 +241,7 @@ public class RepositoryService {
 	}
 
 	/**
-	 * Update webshop url mono.
+	 * Updates a single webshop's url.
 	 *
 	 * @param handle the handle
 	 * @param url    the url
@@ -251,7 +261,7 @@ public class RepositoryService {
 
 
 	/**
-	 * Update webshop interest rate mono.
+	 * Updates a single webshop's interest rate.
 	 *
 	 * @param handle       the handle
 	 * @param interestRate the interest rate
@@ -271,7 +281,7 @@ public class RepositoryService {
 
 
 	/**
-	 * Update webshop settings mono.
+	 * Updates a single webshop's settings.
 	 *
 	 * @param handle        the handle
 	 * @param settingsModel the webshop settings model
@@ -293,7 +303,7 @@ public class RepositoryService {
 
 
 	/**
-	 * Update webshop service levels mono.
+	 * Updates a single webshop's service levels.
 	 *
 	 * @param handle             the handle
 	 * @param serviceLevelsModel the webshop service levels model
@@ -316,7 +326,7 @@ public class RepositoryService {
 
 
 	/**
-	 * Update webshop emails mono.
+	 * Updates a single webshop's emails.
 	 *
 	 * @param handle      the handle
 	 * @param emailsModel the emails model

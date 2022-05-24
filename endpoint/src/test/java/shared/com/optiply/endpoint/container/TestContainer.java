@@ -3,32 +3,32 @@ package com.optiply.endpoint.container;
 import org.testcontainers.containers.PostgreSQLContainer;
 
 /**
- * The type Test container.
+ * The TestContainer class to get a container for our tests.
  */
 public class TestContainer extends PostgreSQLContainer<TestContainer> {
 
 	/**
-	 * The constant IMAGE_VERSION.
+	 * The container's image name. Using AlpineLinux as base, it's tiny and not GNU.
 	 */
 	public static final String IMAGE_VERSION = "postgres:14.2-alpine";
 	/**
-	 * The constant DATABASE_NAME.
+	 * The container's database name.
 	 */
 	public static final String DATABASE_NAME = "test";
 	/**
-	 * The constant container.
+	 * The TestContainers class to spin up a Postgres Container.
 	 */
 	public static PostgreSQLContainer container;
 
 	/**
-	 * Instantiates a new Test container.
+	 * Instantiates this Class.
 	 */
 	public TestContainer() {
 		super(IMAGE_VERSION);
 	}
 
 	/**
-	 * Gets instance.
+	 * Returns the container instance, or creates a new one if it doesn't exist.
 	 *
 	 * @return the instance
 	 */
@@ -39,6 +39,11 @@ public class TestContainer extends PostgreSQLContainer<TestContainer> {
 		return container;
 	}
 
+	/**
+	 * Start container. Overrides the default start method to allow for the
+	 * container to be started with the correct database name and sets the
+	 * application.yaml file to use this container's database.
+	 */
 	@Override
 	public void start() {
 		super.start();

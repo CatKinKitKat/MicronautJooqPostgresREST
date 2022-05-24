@@ -16,7 +16,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 /**
- * The type Webshop body model.
+ * JSON Model for the EmailList Update
  */
 @Data
 @JsonPropertyOrder({
@@ -37,9 +37,9 @@ public class EmailListModel {
 	private List<String> emails = null;
 
 	/**
-	 * Is valid boolean.
+	 * Run validation checks..
 	 *
-	 * @return the boolean
+	 * @return is valid?
 	 */
 	@JsonIgnore
 	public Boolean isValid() {
@@ -53,7 +53,7 @@ public class EmailListModel {
 	}
 
 	/**
-	 * Is valid email address boolean.
+	 * Is the email address valid?
 	 *
 	 * @param email the email
 	 * @return the boolean

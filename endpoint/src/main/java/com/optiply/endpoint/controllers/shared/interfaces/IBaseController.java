@@ -4,12 +4,12 @@ import org.jooq.Condition;
 import org.jooq.SortField;
 
 /**
- * The interface Base controller.
+ * Interface for a base controller.
  */
 public interface IBaseController {
 
 	/**
-	 * Parse params webshop condition.
+	 * Parse params and return a condition.
 	 *
 	 * @param params the params
 	 * @return the condition
@@ -17,7 +17,7 @@ public interface IBaseController {
 	Condition parseParamsWebshop(String... params);
 
 	/**
-	 * Sort parser webshop sort field.
+	 * Sort parser for the webshops.
 	 *
 	 * @param sort  the sort
 	 * @param order the order

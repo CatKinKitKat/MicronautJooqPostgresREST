@@ -17,7 +17,7 @@ import org.junit.jupiter.api.*;
 import java.util.List;
 
 /**
- * The type Endpoint controller integration tests.
+ * Integration tests, by unit testing the controller.
  */
 @MicronautTest
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
@@ -25,14 +25,14 @@ import java.util.List;
 public class JSONControllerIntegrationTests extends TestEnvironment {
 
 	/**
-	 * The Client.
+	 * The Test Client.
 	 */
 	@Inject
 	@Client("/")
 	HttpClient client;
 
 	/**
-	 * The Object mapper.
+	 * Jackson Object Mapper.
 	 */
 	@Inject
 	ObjectMapper objectMapper;
@@ -419,6 +419,9 @@ public class JSONControllerIntegrationTests extends TestEnvironment {
 
 	}
 
+	/**
+	 * Test get sorted by int rate desc.
+	 */
 	@Test
 	@Order(9)
 	void testGetSortedByIntRateDesc() {
@@ -478,6 +481,9 @@ public class JSONControllerIntegrationTests extends TestEnvironment {
 
 	}
 
+	/**
+	 * Test get sorted by url asc.
+	 */
 	@Test
 	@Order(10)
 	void testGetSortedByUrlAsc() {
@@ -538,6 +544,9 @@ public class JSONControllerIntegrationTests extends TestEnvironment {
 
 	}
 
+	/**
+	 * Test get sorted by handle desc.
+	 */
 	@Test
 	@Order(11)
 	void testGetSortedByHandleDesc() {

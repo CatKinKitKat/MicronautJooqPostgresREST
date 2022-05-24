@@ -11,7 +11,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- * The type Email model.
+ * JSON Model for the Handle Update
  */
 @Data
 @JsonPropertyOrder({
@@ -31,9 +31,9 @@ public class HandleModel {
 	private String handle;
 
 	/**
-	 * Is valid email address boolean.
+	 * Run validation checks..
 	 *
-	 * @return the boolean
+	 * @return is valid?
 	 */
 	@JsonIgnore
 	public Boolean isValid() {

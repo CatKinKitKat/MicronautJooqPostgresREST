@@ -7,13 +7,12 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.optiply.infrastructure.data.models.tables.pojos.Webshop;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- * The type Webshop simple model.
+ * JSON Model for the Service Levels Update
  */
 @Data
 @JsonPropertyOrder({
@@ -45,20 +44,9 @@ public class ServiceLevelsModel {
 	private Double serviceLevelC;
 
 	/**
-	 * Instantiates a new Webshop simple model.
+	 * Run validation checks..
 	 *
-	 * @param webshop the webshop
-	 */
-	public ServiceLevelsModel(Webshop webshop) {
-		this.serviceLevelA = webshop.getA();
-		this.serviceLevelB = webshop.getB();
-		this.serviceLevelC = webshop.getC();
-	}
-
-	/**
-	 * Is valid boolean.
-	 *
-	 * @return the boolean
+	 * @return is valid?
 	 */
 	@JsonIgnore
 	public Boolean isValid() {

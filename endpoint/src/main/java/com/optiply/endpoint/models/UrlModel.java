@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 import org.apache.commons.validator.routines.UrlValidator;
 
 /**
- * The type Email model.
+ * JSON Model for the Url Update
  */
 @Data
 @JsonPropertyOrder({
@@ -32,7 +32,7 @@ public class UrlModel {
 	private String url;
 
 	/**
-	 * Is valid email address boolean.
+	 * Run validation checks..
 	 *
 	 * @return the boolean
 	 */

@@ -6,13 +6,13 @@ import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
 /**
- * The type Test environment.
+ * Wrapper class for our test container (an evironment of sorts).
  */
 @Testcontainers
 public class TestEnvironment {
 
 	/**
-	 * The constant postgreSQLContainer.
+	 * Gets the test container.
 	 */
 	@Container
 	public static PostgreSQLContainer postgreSQLContainer = TestContainer.getInstance();

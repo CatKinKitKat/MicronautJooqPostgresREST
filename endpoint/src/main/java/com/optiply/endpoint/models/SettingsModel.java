@@ -7,7 +7,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.optiply.infrastructure.data.models.tables.pojos.Webshop;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -16,10 +15,7 @@ import java.util.Currency;
 import java.util.Set;
 
 /**
- * The JSON representation of a certain Webshop's settings.
- * Should represent the settings of a certain Webshop without it's own data.
- *
- * @author G. Amaro
+ * JSON Model for the Settings Update
  */
 @Data
 @JsonPropertyOrder({
@@ -50,17 +46,6 @@ public class SettingsModel {
 	 */
 	@JsonProperty("multiSupplier")
 	private Boolean multiSupplier = false;
-
-	/**
-	 * Instantiates a new Webshop settings model.
-	 *
-	 * @param webshop the webshop
-	 */
-	public SettingsModel(Webshop webshop) {
-		this.currency = webshop.getCurrency();
-		this.runJobs = webshop.getRunJobs();
-		this.multiSupplier = webshop.getMultiSupply();
-	}
 
 	/**
 	 * Run validation checks..

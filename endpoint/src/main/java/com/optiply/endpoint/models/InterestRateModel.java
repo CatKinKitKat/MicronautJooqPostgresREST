@@ -11,7 +11,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- * The type Email model.
+ * JSON Model for the InterestRate Update
  */
 @Data
 @JsonPropertyOrder({
@@ -31,13 +31,13 @@ public class InterestRateModel {
 	private Short interestRate;
 
 	/**
-	 * Is valid email address boolean.
+	 * Run validation checks..
 	 *
-	 * @return the boolean
+	 * @return is valid?
 	 */
 	@JsonIgnore
 	public Boolean isValid() {
-		//return this.interestRate >= 0 && this.interestRate <= 100;
+		//return this.interestRate >= 0 && this.interestRate <= 100; //???
 		return this.interestRate >= 0;
 	}
 
