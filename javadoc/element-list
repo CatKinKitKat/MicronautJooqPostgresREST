@@ -1,0 +1,16 @@
+com.optiply.endpoint
+com.optiply.endpoint.config
+com.optiply.endpoint.container
+com.optiply.endpoint.controllers
+com.optiply.endpoint.controllers.shared
+com.optiply.endpoint.controllers.shared.interfaces
+com.optiply.endpoint.environment
+com.optiply.endpoint.models
+com.optiply.endpoint.services
+com.optiply.infrastructure.data.models
+com.optiply.infrastructure.data.models.tables
+com.optiply.infrastructure.data.models.tables.pojos
+com.optiply.infrastructure.data.models.tables.records
+com.optiply.infrastructure.data.repositories
+com.optiply.infrastructure.data.repositories.interfaces
+com.optiply.infrastructure.data.support.sql
